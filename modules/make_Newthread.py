@@ -34,4 +34,4 @@ def new_thread(Thread_Name, Make_User_Name):
 
 
 if __name__ == "__main__":
-    pass
+    new_thread(Thread_Name="愛工大", Make_User_Name="tomo")
