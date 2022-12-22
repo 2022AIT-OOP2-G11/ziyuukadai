@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--HTMLを記述する上で必須となる前置き-->
+<html>
+  <!--HTMLの文書の起点を表す記述-->
+  <head>
+    <!--ページ上には表示されない裏側の設定を記述するエリア-->
+    <meta charset="utf-8" />
+    <!--文字エンコードの指定。簡単に言うと文字化けを防ぐための記述-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--ページを様々な画面幅のデバイスでの表示に適応させるための記述-->
+    <title>掲示板</title>
+    <link rel="stylesheet" href="index2.css">
+    <!--ページタイトルを指定するための記述-->
+  </head>
+  <body>
+    <!--ページ上に実際に表示される要素を記述するエリア-->
+    <h1>掲示板</h1>
+    <h1>スレッド名</h1>
+    <div id="main">
+        <div class="box">
+            <p>テキスト</p>
+        </div>
+        <p>
+            <input type="text" name="氏名" />
+        </br>
+        <textarea name="freeans" rows="4" cols="40">自由に意見を記述してください </textarea>
+        </br>
+        <input type="submit" value="送信" />　
+        </p>
+    </div>
+
+    <nav>
+        <div class="box">
+            <p>テキスト</p>
+        </div>
+    </nav>
+  </body>
+</html>

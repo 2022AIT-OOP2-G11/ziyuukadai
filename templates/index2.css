@@ -1,0 +1,16 @@
+.box {
+  border: #4e7bcc 1px solid; /*境界線の指定*/
+  padding: 10px;
+}
+div#main {
+  background-color: #ffffff;
+  width: 584px;
+  float: left;
+}
+
+nav {
+  color: #339933;
+  background-color: #99cc33;
+  width: 500px;
+  float: right;
+}
