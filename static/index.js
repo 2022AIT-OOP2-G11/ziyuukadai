@@ -1,9 +1,8 @@
+// <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+{/* <script language="javascript" type="text/javascript" src="/static/index.js"> */}
+// </script>
+// ↑使う時HTMLにこれ入れる
 
-fetch("sample.json")
-.then(response => {
-    return response.json();
-})
-.then(jsondata => console.log(jsondata));
-// window.onload = function(){
-//     // ページ読み込み時に実行したい処理
-// }
+$.getJSON("/static/sample.json", (data) => {
+    console.log(data)
+});
