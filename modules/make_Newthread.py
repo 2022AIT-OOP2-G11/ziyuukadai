@@ -7,8 +7,9 @@ def new_thread(Thread_Name, Make_User_Name):
 
     #テーブル(表)があるか確認
     table_count = con.execute("SELECT * FROM sqlite_master WHERE type='table'")
+    print(table_count.fetchone())
 
-    if table_count: #なかったらテーブルを作成して追加
+    if table_count is None: #なかったらテーブルを作成して追加
         
         #テーブル作成SQL文
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
@@ -30,7 +31,7 @@ def new_thread(Thread_Name, Make_User_Name):
 
         #一番高いスレッドIDを作成
         count += 1
-        
+
         #テーブル追加SQL文
         con.execute("INSERT INTO スレッド一覧(スレッドID, スレッド名, ユーザー名, 最終更新時間, スレッドを立てた時間)" +
                         f" values('{count}', '{Thread_Name}', '{Make_User_Name}' ,datetime('now', 'localtime')" +
