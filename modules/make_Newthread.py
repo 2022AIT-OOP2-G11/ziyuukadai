@@ -126,13 +126,15 @@ def dictionary(results: list):
     return array
 
 
+def Update_Thread_Time(Thread_ID):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/Thread.db')
 
-    #スレッドの数を確認
-    c = con.execute("SELECT count(スレッドID) FROM スレッド一覧")
+    con.execute(f"UPDATE スレッド一覧 SET 最終更新時間 = datetime('now', 'localtime') WHERE スレッドID = {Thread_ID}")
 
-    # print(c.fetchone()[0])
+    con.commit()
+
+    con.close()
 
     count = c.fetchone()[0]
 
