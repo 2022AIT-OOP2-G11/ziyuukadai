@@ -136,14 +136,31 @@ def Update_Thread_Time(Thread_ID):
 
     con.close()
 
-    count = c.fetchone()[0]
+def Delete_One_Thread(Thread_ID, User_name):
+    # DB接続。ファイルがなければ作成する
+    con = sqlite3.connect('./DB/Thread.db')
+
+    #DBにあるスレッド作成者のユーザー名を取得する
+    check = con.execute(f"SELECT ユーザー名 FROM スレッド一覧 WHERE スレッドID = {Thread_ID}").fetchone()[0]
+
+    #スレッドの作成者が削除できる
+    if check == User_name:
+        con.execute(f"DELETE from スレッド一覧 WHERE スレッドID = {Thread_ID}")
+
+        con.execute(f"UPDATE スレッド一覧 SET スレッドID = (スレッドID - 1) WHERE スレッドID > {Thread_ID}")
+
+        message = "削除できました"
+
+    else:
+
+        message = "作成者ではないため削除できません"
 
 
+    con.commit()
 
-    print(count)
+    con.close()
 
-
-
+    return message
 
 
 
