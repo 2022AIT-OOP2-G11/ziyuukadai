@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-       #GETだったら全部のデータベースを取得してindex.htmlに送る
+       #GETだったら全部のスレッドを取得してindex.htmlに送る
         
         return render_template('index.html', threads=)
 
