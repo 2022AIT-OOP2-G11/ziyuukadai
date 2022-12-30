@@ -112,6 +112,20 @@ def Get_Thread_One(Thread_ID):
     con.close()
 
 
+def dictionary(results: list):
+    #辞書型の鍵の配列
+    dict_item = ["スレッド名", "ユーザー名", "最終更新時間", "スレッドを立てた時間"]
+    array = []
+
+    #先頭のスレッドIDを取得して削除
+    id = results.pop(0)
+
+    #[スレッドID, 内容]の配列を作成
+    array.extend([id, dict(zip(dict_item, results))])
+
+    return array
+
+
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/Thread.db')
 
