@@ -1,4 +1,5 @@
 import sqlite3  #DB使用のためのimport文
+import json
 
 def new_thread(Thread_Name, Make_User_Name):
     
@@ -6,10 +7,10 @@ def new_thread(Thread_Name, Make_User_Name):
     con = sqlite3.connect('./DB/Thread.db')
 
     #テーブル(表)があるか確認
-    table_count = con.execute("SELECT * FROM sqlite_master WHERE type='table'")
-    print(table_count.fetchone())
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+    # print(table_count) #デバック
 
-    if table_count is None: #なかったらテーブルを作成して追加
+    if table_count == 0: #なかったらテーブルを作成して追加
         
         #テーブル作成SQL文
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
@@ -39,6 +40,8 @@ def new_thread(Thread_Name, Make_User_Name):
 
 
     con.commit()
+
+    con.close()
 
 
 def Get_Thread_All():
