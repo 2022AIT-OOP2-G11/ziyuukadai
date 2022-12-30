@@ -80,6 +80,37 @@ def Get_Thread_All():
 
 
 
+def Get_Thread_One(Thread_ID):
+    # DB接続。ファイルがなければ作成する
+    con = sqlite3.connect('./DB/Thread.db')
+
+    #テーブル(表)があるか確認
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+
+    if table_count == 0:
+        #テーブル作成SQL文
+        con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
+                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+
+    #スレッドIDの内容を取得
+    get_one = con.execute(f"SELECT * FROM スレッド一覧 WHERE スレッドID = {Thread_ID}").fetchone()
+    
+    results = []
+    if get_one is not None:
+        results.append(dictionary(list(get_one)))
+    # print(get_one)
+
+    #スレッドIDを鍵とした辞書型を作成
+    one_results = dict(results)
+
+    #jsonファイル作成
+    with(open('./json/One_thread.json','w')) as f:
+        json.dump(one_results, f, indent=4, ensure_ascii=False)
+
+    con.commit()
+
+    con.close()
+
 
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/Thread.db')
