@@ -170,6 +170,15 @@ def Delete_One_Thread(Thread_ID, User_name):
 
 
 
+
+
+
+
 if __name__ == "__main__":
-    new_thread(Thread_Name="c", Make_User_Name="tomo")
+    # new_thread(Thread_Name="d", Make_User_Name="tomo")
     # Get_Thread_All()
+    # Get_Thread_One(2)
+    # Update_Thread_Time(2)
+    print(Delete_One_Thread(2, "yug"))
+
+    # pass
