@@ -45,6 +45,41 @@ def new_thread(Thread_Name, Make_User_Name):
 
 
 def Get_Thread_All():
+    # DB接続。ファイルがなければ作成する
+    con = sqlite3.connect('./DB/Thread.db')
+
+    #テーブル(表)があるか確認
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+
+    if table_count == 0:
+        #テーブル作成SQL文
+        con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
+                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+    
+    #スレッド全ての内容を取得
+    get_all = con.execute("SELECT * FROM スレッド一覧").fetchall()
+
+    results = []
+
+    #スレッドの内容を一つずつ取る
+    for i in get_all:
+        results.append(dictionary(list(i)))
+
+    #スレッドIDを鍵とした辞書型を作成
+    all_results = dict(results)
+
+    #jsonファイル作成
+    with(open('./json/All_thread.json','w')) as f:
+        json.dump(all_results, f, indent=4, ensure_ascii=False)
+
+    con.commit()
+
+    con.close()
+
+
+
+
+
 
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/Thread.db')
