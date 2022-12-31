@@ -50,7 +50,7 @@ def index():
 
 
 
-## ====== ⬇︎ここからログイン機能⬇︎ ======= ##
+## ====== ⬇︎ここからログイン⬇︎ ======= ##
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -76,12 +76,12 @@ def login():
         pass
     
 @app.route("/signup", methods=["GET", "POST"])
-def login():
+def signup():
     if request.method == "GET":
-        #ログアウト画面を表示
+        #サインアップ画面を表示
         pass
     elif  request.method == "POST":
-        #送信されたデータからログアウトを実行
+        #送信されたデータからサインアップを実行
         pass
 
 
