@@ -16,6 +16,12 @@ login_manager.init_app(app)
 #セッション有効時間を設定できます(現状デバッグ用に1分)
 app.permanent_session_lifetime = timedelta(minutes=1)
 
+#ログインに必要なユーザクラスを定義
+class User(UserMixin):
+    def __init__(self, id, user_name):
+        self.id = id
+        self.urew_name = user_name
+
 
 @app.route('/', methods=["GET", "POST"])
 def index():
