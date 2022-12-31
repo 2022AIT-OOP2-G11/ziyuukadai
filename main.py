@@ -21,6 +21,17 @@ class User(UserMixin):
     def __init__(self, id, user_name):
         self.id = id
         self.urew_name = user_name
+    #メモ::get_id()のオーバーライドが必要かも←調べる
+
+#セッションからユーザーをリロードするのに必要っぽい        
+@login_manager.user_loader
+#get_id()を書いたらここの引数にget_id()を指定する
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+#牧村用リンク
+#user class:  https://flask-login.readthedocs.io/en/latest/#Your%20User%20Class
+#user_login: https://flask-login.readthedocs.io/en/latest/#flask_login.LoginManager.user_loader
 
 
 @app.route('/', methods=["GET", "POST"])
