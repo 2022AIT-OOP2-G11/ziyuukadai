@@ -34,6 +34,7 @@ def load_user(user_id):
 #user_login: https://flask-login.readthedocs.io/en/latest/#flask_login.LoginManager.user_loader
 
 
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "GET":
@@ -47,5 +48,47 @@ def index():
         return redirect("/")
 
 
+
+
+## ====== ⬇︎ここからログイン機能⬇︎ ======= ##
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        #ログイン画面を表示
+        pass
+    elif  request.method == "POST":
+        #送信されたデータからログインを実行
+        pass
+
+@app.route("/logout")
+def login():
+    #ログアウト画面を表示
+    pass
+
+@app.route("/logout", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        #ログアウト画面を表示
+        pass
+    elif  request.method == "POST":
+        #送信されたデータからログアウトを実行
+        pass
+    
+@app.route("/signup", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        #ログアウト画面を表示
+        pass
+    elif  request.method == "POST":
+        #送信されたデータからログアウトを実行
+        pass
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+    
+    
+    
