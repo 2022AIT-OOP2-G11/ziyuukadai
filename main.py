@@ -62,18 +62,9 @@ def login():
         pass
 
 @app.route("/logout")
-def login():
+def logout():
     #ログアウト画面を表示
     pass
-
-@app.route("/logout", methods=["GET", "POST"])
-def login():
-    if request.method == "GET":
-        #ログアウト画面を表示
-        pass
-    elif  request.method == "POST":
-        #送信されたデータからログアウトを実行
-        pass
     
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
