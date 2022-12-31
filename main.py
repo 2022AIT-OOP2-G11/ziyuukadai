@@ -40,7 +40,8 @@ def index():
     if request.method == "GET":
        #GETだったら全部のスレッドを取得してindex.htmlに送る
         
-        return render_template('index.html', threads=)
+        return render_template('index.html')#←デバッグ用
+        #return render_template('index.html', threads=)
 
     elif request.method == "POST":
         #POSTだったらデータを受け取って、データベースに保存する
@@ -57,13 +58,14 @@ def login():
     if request.method == "GET":
         #ログイン画面を表示
         pass
+    
     elif  request.method == "POST":
         #送信されたデータからログインを実行
         pass
 
 @app.route("/logout")
 def logout():
-    #ログアウト画面を表示
+    #ログアウトを実行
     pass
     
 @app.route("/signup", methods=["GET", "POST"])
@@ -71,10 +73,16 @@ def signup():
     if request.method == "GET":
         #サインアップ画面を表示
         pass
+    
     elif  request.method == "POST":
         #送信されたデータからサインアップを実行
         pass
 
+#ログインしていない状態でログインが必要なページにアクセスしたときの処理
+@login_manager.unauthorized_handler
+def unauthorized():
+    #ログインしていない時の処理 
+    return redirect("/login")
 
 
 
