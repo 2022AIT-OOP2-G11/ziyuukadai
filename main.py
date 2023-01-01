@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import re #正規表現
 import json
 from modules.make_Newthread import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
-from modules.test_db import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
+from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False 
@@ -68,15 +68,15 @@ def index():
 #入るのにログインが必要なルート
 @app.route("/login_completed")
 @login_required
-def test_login():
-    return render_template("test_login/login_completed.html")
+def debug_login():
+    return render_template("debug_login/login_completed.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         #ログイン画面を表示
-        return render_template("test_login/login.html")
+        return render_template("debug_login/login.html")
     
     elif  request.method == "POST":
         #送信されたデータからログインを実行
@@ -99,7 +99,7 @@ def login():
         #ユーザが見つからなかったときはエラーメッセージを表示
         if user == None:
             message = "ユーザ名が違います"
-            return render_template("test_login/login.html", message=message)
+            return render_template("debug_login/login.html", message=message)
         
         #パスワードのチェック
         if check_password_hash(password_hash, password):
@@ -109,7 +109,7 @@ def login():
         else:
             #間違ってたらエラーメッセージを表示
             message = "パスワードが違います"
-            return render_template("test_login/login.html", message=message)
+            return render_template("debug_login/login.html", message=message)
 
 
 @app.route("/logout")
@@ -123,7 +123,7 @@ def logout():
 def signup():
     if request.method == "GET":
         #サインアップ画面を表示
-        return render_template("test_login/signup.html", completed = [])
+        return render_template("debug_login/signup.html", completed = [])
     
     elif  request.method == "POST":
         
@@ -131,7 +131,7 @@ def signup():
         #フォームの入力を取得
         if request.method == "POST":
             user_name = request.form.get("user_name")
-            email = request.form.get("email")
+            # email = request.form.get("email")
             password = request.form.get("password")
         
         #バリデーション　
@@ -139,10 +139,10 @@ def signup():
         completed = {} #正しく入力されたところは、再入力の必要をなくす
         if not user_name: message.append("ユーザ名を入力してください")
         else: completed["user_name"] = user_name
-        if not email: message.append("メールアドレスを入力してください")
-        elif not "@" in email: message.append("メールアドレスが不正です")
-        elif not "." in email: message.append("メールアドレスが不正です")
-        else: completed["email"] = email
+        # if not email: message.append("メールアドレスを入力してください")
+        # elif not "@" in email: message.append("メールアドレスが不正です")
+        # elif not "." in email: message.append("メールアドレスが不正です")
+        # else: completed["email"] = email
         if not password: message.append("パスワードを入力してください")
         elif re.findall("[^!-~]{1,}", password): print("使えない文字があります", re.findall("[^!-~]{1,}", password))
         elif not re.fullmatch("\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]{8,100}\Z", password): message.append("パスワードは大文字、小文字、数字を含んだ8文字以上100文字以下に設定してください")
@@ -165,7 +165,7 @@ def signup():
 def unauthorized():
     #ログインしていない時の処理 
     #デバッグ用に専用ページに飛ぶ
-    return render_template("test_login/unauthorized.html")
+    return render_template("debug_login/unauthorized.html")
 
 
 

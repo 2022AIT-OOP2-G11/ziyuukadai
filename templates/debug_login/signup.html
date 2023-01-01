@@ -11,8 +11,8 @@
     <form action="/signup" onsubmit="hide_password()" method="POST">
         <label for="user_name">ユーザ名</label>
         <input type="text" name="user_name" id="user_name" value={{completed["user_name"]}}>
-        <label for="email">メール</label>
-        <input type="text" name="email" id="email" value={{completed["email"]}}>
+        <!--<label for="email">メール</label>
+        <input type="text" name="email" id="email" value={{completed["email"]}}> -->
         <label for="password">パスワード</label>
         <input type="password" name="password" id="password" value={{completed["password"]}}>
         <div class="show_password" onclick="show_password()" style="width:16px;height:16px;background-color:#777;"></div>
