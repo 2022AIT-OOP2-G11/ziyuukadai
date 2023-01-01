@@ -25,11 +25,12 @@ class User(UserMixin):
         self.id = id
         self.user_name = user_name
 
+ #セッションからユーザーをリロードするための関数
+ #ユーザオブジェクトを返す
 @login_manager.user_loader
 def load_user(user_id):
-    #セッションからユーザーをリロードするための関数
-    #Userオブジェクトを返す#どういう原理かわからんけど引数にはユーザIDが来てる
     
+    # --- ↓DB操作に合わせて、処理を変更する↓ --- #
     #idからユーザデータを取得
     print("arg_load_user::", user_id)
     get_user_by_id(user_id)
@@ -41,9 +42,9 @@ def load_user(user_id):
     user_name = user_json[user_id]["ユーザ名"]
     
     return User(user_name=user_name, id=user_id)
-        
-        
 # ==== ⬆︎ここまでログインに必要な設定とか⬆️ ==== #
+
+
 
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
@@ -84,7 +85,7 @@ def login():
         user_name = request.form.get("user_name")
         password = request.form.get("password")
         
-        # ----- ↓DB操作に合わせて、処理を変更する↓ ----- #
+        # --- ↓DB操作に合わせて、処理を変更する↓ --- #
         #user名前で検索してヒットしたユーザのデータを取得する（←学籍番号で検索に変更する）
         get_user_by_name(user_name)
         with open('json/One_user.json', 'r') as f:
@@ -100,7 +101,7 @@ def login():
         user_name = user_json[user_id]["ユーザ名"]
         password_hash = user_json[user_id]["パスワード"]
         
-        #DBから取得したデータからUserインスタンスを作成
+        #DBから取得したデータからUserオブジェクトを作成
         user = User(user_name=user_name, id=user_id)
         
         
