@@ -81,7 +81,7 @@ def Get_user_All():
 
 
 
-def Get_user_One(user_id):
+def Get_user_One(user_name):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/user.db')
 
@@ -94,7 +94,7 @@ def Get_user_One(user_id):
                         ", パスワード STRING)")
 
     #ユーザIDの内容を取得
-    get_one = con.execute(f"SELECT * FROM ユーザ一覧 WHERE ユーザID = {user_id}").fetchone()
+    get_one = con.execute(f"SELECT * FROM ユーザ一覧 WHERE ユーザ名 = '{user_name}'").fetchone()
     
     results = []
     if get_one is not None:
@@ -115,7 +115,7 @@ def Get_user_One(user_id):
 
 def dictionary(results: list):
     #辞書型の鍵の配列
-    dict_item = ["ユーザID","ユーザー名", "パスワード"]
+    dict_item = ["ユーザー名", "パスワード"]
     array = []
 
     #先頭のユーザIDを取得して削除
