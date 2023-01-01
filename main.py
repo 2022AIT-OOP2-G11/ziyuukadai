@@ -1,11 +1,11 @@
 from flask import Flask, request ,render_template, redirect  # Flaskは必須、requestはリクエストパラメータを処理する場合に使用します。
-from flask_login import LoginManager, UserMixin, login_required
+from flask_login import LoginManager, UserMixin, login_required, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
 import json
 from modules.make_Newthread import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
-from modules.test_db import new_user, Get_user_All, Get_user_One, dictionary
+from modules.test_db import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False 
@@ -26,13 +26,24 @@ class User(UserMixin):
         self.user_name = user_name
         self.password = password
     
-    #メモ::get_id()のオーバーライドが必要かも←調べる
 
-#セッションからユーザーをリロードするのに必要っぽい        
+
+#セッションからユーザーをリロードするのに必要っぽい
+#Userオブジェクトを返す#どういう原理かわからんけど引数にはユーザIDが来てる
 @login_manager.user_loader
-#get_id()を書いたらここの引数にget_id()を指定する
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    
+    get_user_by_id(user_id)
+    
+    with open('json/One_user.json', 'r') as f:
+            user_json = json.load(f)
+    
+    user_id = [key for key in user_json.keys()][0]
+    user_name = user_json[user_id]["ユーザ名"]
+    password_hash = user_json[user_id]["パスワード"]
+    
+    return User(user_name=user_name, password=password_hash, id=user_id)
+        
 
 #牧村用リンク
 #user class:  https://flask-login.readthedocs.io/en/latest/#Your%20User%20Class
@@ -61,7 +72,7 @@ def index():
 @app.route("/test_login")
 @login_required
 def test_login():
-    return render_template("test_login/test.html")
+    return render_template("test_login/login_completed.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -75,21 +86,34 @@ def login():
         user_name = request.form.get("user_name")
         password = request.form.get("password")
         
-        Get_user_One(user_name)
+        get_user_by_name(user_name)
         with open('json/One_user.json', 'r') as f:
             user_json = json.load(f)
         
         print(user_json)
-        print(user_json["1"]["ユーザー名"])
+
         
         user_id = [key for key in user_json.keys()][0]
-        user_name = user_json[user_id]["name"]
-        password = user_json[user_id]["password"]
+        user_name = user_json[user_id]["ユーザ名"]
+        password_hash = user_json[user_id]["パスワード"]
         
-        user = User(user_name=user_name, password=password, user_id=user_id)
+        user = User(user_name=user_name, password=password_hash, id=user_id)
+        
+        print(user.password)
+        print(password)
+        print(check_password_hash(user.password, password))
         if user == None:
             message = "ユーザ名が違います"
-            return render_template("login.html", message=message)
+            return render_template("test_login/login.html", message=message)
+        
+        if check_password_hash(user.password, password):
+            #ログイン
+            login_user(user)
+            return redirect("/test_login")
+        else:
+            #エラー
+            message = "パスワードが違います"
+            return render_template("test_login/login.html", message=message)
 
 @app.route("/logout")
 def logout():
@@ -132,6 +156,7 @@ def signup():
         #エラーなし
         else:   
             #パスワードをハッシュ化してDBに保存
+            print(password)
             user = User(user_name=user_name, password=generate_password_hash(password, method="sha256"))
             
             #DBに追加

@@ -81,7 +81,7 @@ def Get_user_All():
 
 
 
-def Get_user_One(user_name):
+def get_user_by_name(user_name):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/user.db')
 
@@ -113,9 +113,44 @@ def Get_user_One(user_name):
     con.close()
 
 
+
+def get_user_by_id(user_id):
+    # DB接続。ファイルがなければ作成する
+    con = sqlite3.connect('./DB/user.db')
+
+    #テーブル(表)があるか確認
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+
+    if table_count == 0:
+        #テーブル作成SQL文
+        con.execute("CREATE TABLE ユーザ一覧(ユーザID INTEGER PRIMARY KEY, ユーザ名 STRING" +
+                        ", パスワード STRING)")
+
+    #ユーザIDの内容を取得
+    get_one = con.execute(f"SELECT * FROM ユーザ一覧 WHERE ユーザID = '{user_id}'").fetchone()
+    
+    results = []
+    if get_one is not None:
+        results.append(dictionary(list(get_one)))
+    # print(get_one)
+
+    #ユーザIDを鍵とした辞書型を作成
+    one_results = dict(results)
+
+    #jsonファイル作成
+    with(open('./json/One_user.json','w')) as f:
+        json.dump(one_results, f, indent=4, ensure_ascii=False)
+
+    con.commit()
+
+    con.close()
+
+
+
+
 def dictionary(results: list):
     #辞書型の鍵の配列
-    dict_item = ["ユーザー名", "パスワード"]
+    dict_item = ["ユーザ名", "パスワード"]
     array = []
 
     #先頭のユーザIDを取得して削除
