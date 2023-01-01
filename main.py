@@ -34,6 +34,9 @@ def load_user(user_id):
 #user_login: https://flask-login.readthedocs.io/en/latest/#flask_login.LoginManager.user_loader
 
 
+# ==== ⬆︎ここまでログインに必要な設定とか⬆️ ==== #
+
+# ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
 def index():
