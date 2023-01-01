@@ -28,8 +28,8 @@ class User(UserMixin):
     
 
 
-#セッションからユーザーをリロードするのに必要っぽい
-#Userオブジェクトを返す#どういう原理かわからんけど引数にはユーザIDが来てる
+#セッションからユーザーをリロードするのに必要
+#Userオブジェクトを返す#どういう原理かわからんけど引数にはユーザIDが来てる()
 @login_manager.user_loader
 def load_user(user_id):
     
@@ -118,7 +118,8 @@ def login():
 @app.route("/logout")
 def logout():
     #ログアウトを実行
-    pass
+    login_user()
+    return redirect("/login")
     
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
