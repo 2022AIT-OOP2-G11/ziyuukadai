@@ -53,6 +53,12 @@ def index():
 
 ## ====== ⬇︎ここからログイン⬇︎ ======= ##
 
+@app.route("/test_login")
+@login_required
+def test_login():
+    return render_template("test_login/test.html")
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -82,7 +88,7 @@ def signup():
 @login_manager.unauthorized_handler
 def unauthorized():
     #ログインしていない時の処理 
-    return redirect("/login")
+    return render_template("test_login/unauthorized.html")
 
 
 

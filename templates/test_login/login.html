@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+</head>
+<body>
+    
+    <h1>ログイン</h1>
+    <form action="/login" onsubmit="hide_password()" method="POST">
+        <label for="user_name">ユーザ名</label>
+        <input type="text" name="user_name" id="user_name">
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password">
+        <div class="show_password" onclick="show_password()" style="width:16px;height:16px;background-color:#777;"></div>
+        <button type="submit">login</button>
+    </form>
+
+    {% if message %}
+    <div class="message">
+        {{message}}
+    </div>
+    {% endif %}
+
+    <a href="/signup">まだアカウントを作っていない方はこちら</a>
+
+    <script>
+        var flag_show_password = 0
+        function show_password() {
+            console.log("入った")
+            if(flag_show_password == 0) {
+                flag_show_password = 1
+                form_password = document.getElementById("password")
+                form_password.type = "text"
+                setTimeout(() => {
+                    form_password.type = "password"
+                    flag_show_password = 0
+                  }, 2000);
+            }   
+        }
+
+        function hide_password() {
+            form_password = document.getElementById("password")
+            form_password.type = "password"
+            flag_show_password = 0
+        }
+
+    </script>
+</body>
+</html>
