@@ -44,6 +44,9 @@ def load_user(user_id):
         
 
 
+# ==== ⬆︎ここまでログインに必要な設定とか⬆️ ==== #
+
+# ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
 def index():
