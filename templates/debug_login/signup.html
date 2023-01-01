@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サインアップ</title>
+</head>
+<body>
+    <h1>アカウントを作成</h1>
+    <form action="/signup" onsubmit="hide_password()" method="POST">
+        <label for="user_name">ユーザ名</label>
+        <input type="text" name="user_name" id="user_name" value={{completed["user_name"]}}>
+        <!--<label for="email">メール</label>
+        <input type="text" name="email" id="email" value={{completed["email"]}}> -->
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" value={{completed["password"]}}>
+        <div class="show_password" onclick="show_password()" style="width:16px;height:16px;background-color:#777;"></div>
+        <button type="submit">sign up</button>
+    </form>
+    {% if message %}
+    <div class="message">
+        {% for m in  message%}
+            {{m}}<br>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <nav>
+        <ul>
+            <li><a href="/login">ログインページへ</a></li>
+            <li><a href="/login_completed">ログイン完了ページへ</a></li>
+        </ul>
+    </nav>
+    
+    
+    <script>
+        var flag_show_password = 0
+        function show_password() {
+            console.log("入った")
+            if(flag_show_password == 0) {
+                flag_show_password = 1
+                form_password = document.getElementById("password")
+                form_password.type = "text"
+                setTimeout(() => {
+                    form_password.type = "password"
+                    flag_show_password = 0
+                  }, 2000);
+            }
+        }
+
+        function hide_password() {
+            form_password = document.getElementById("password")
+            form_password.type = "password"
+            flag_show_password = 0
+        }
+
+    </script>
+</body>
+</html>
