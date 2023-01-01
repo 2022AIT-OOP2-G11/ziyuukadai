@@ -42,8 +42,7 @@ def load_user(user_id):
     
     return User(user_name=user_name, id=user_id)
         
-
-
+        
 # ==== ⬆︎ここまでログインに必要な設定とか⬆️ ==== #
 
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
@@ -161,8 +160,6 @@ def signup():
             return redirect("/login")
         
         
-        
-
 #ログインしていない状態でログインが必要なページにアクセスしたときの処理
 @login_manager.unauthorized_handler
 def unauthorized():
