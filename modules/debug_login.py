@@ -10,7 +10,7 @@ import json
 def new_user(user_name, password):
     
     # DB接続。ファイルがなければ作成する
-    con = sqlite3.connect('./DB/user.db')
+    con = sqlite3.connect('./DB/debug_user.db')
 
     #テーブル(表)があるか確認
     table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
@@ -48,7 +48,7 @@ def new_user(user_name, password):
 
 def Get_user_All():
     # DB接続。ファイルがなければ作成する
-    con = sqlite3.connect('./DB/user.db')
+    con = sqlite3.connect('./DB/debug_user.db')
 
     #テーブル(表)があるか確認
     table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
@@ -84,7 +84,7 @@ def Get_user_All():
 
 def get_user_by_name(user_name):
     # DB接続。ファイルがなければ作成する
-    con = sqlite3.connect('./DB/user.db')
+    con = sqlite3.connect('./DB/debug_user.db')
 
     #テーブル(表)があるか確認
     table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
@@ -117,7 +117,7 @@ def get_user_by_name(user_name):
 
 def get_user_by_id(user_id):
     # DB接続。ファイルがなければ作成する
-    con = sqlite3.connect('./DB/user.db')
+    con = sqlite3.connect('./DB/debug_user.db')
 
     #テーブル(表)があるか確認
     table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]

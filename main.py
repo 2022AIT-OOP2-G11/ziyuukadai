@@ -84,11 +84,18 @@ def login():
         user_name = request.form.get("user_name")
         password = request.form.get("password")
         
+        # ----- ↓DB操作に合わせて、処理を変更する↓ ----- #
         #user名前で検索してヒットしたユーザのデータを取得する（←学籍番号で検索に変更する）
         get_user_by_name(user_name)
         with open('json/One_user.json', 'r') as f:
             user_json = json.load(f)
-            
+        
+        #ユーザが見つからなかったときはエラーメッセージを表示
+        if len(user_json) == 0:
+            message = "ユーザ名が違います"
+            return render_template("debug_login/login.html", message=message)
+        
+        
         user_id = [key for key in user_json.keys()][0]
         user_name = user_json[user_id]["ユーザ名"]
         password_hash = user_json[user_id]["パスワード"]
@@ -96,10 +103,6 @@ def login():
         #DBから取得したデータからUserインスタンスを作成
         user = User(user_name=user_name, id=user_id)
         
-        #ユーザが見つからなかったときはエラーメッセージを表示
-        if user == None:
-            message = "ユーザ名が違います"
-            return render_template("debug_login/login.html", message=message)
         
         #パスワードのチェック
         if check_password_hash(password_hash, password):
@@ -144,18 +147,20 @@ def signup():
         # elif not "." in email: message.append("メールアドレスが不正です")
         # else: completed["email"] = email
         if not password: message.append("パスワードを入力してください")
-        elif re.findall("[^!-~]{1,}", password): print("使えない文字があります", re.findall("[^!-~]{1,}", password))
-        elif not re.fullmatch("\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]{8,100}\Z", password): message.append("パスワードは大文字、小文字、数字を含んだ8文字以上100文字以下に設定してください")
-        else: completed["password"] = password
+        else:
+            if re.findall("[^!-~]{1,}", password): message.append("使えない文字があります" + str(re.findall("[^!-~]{1,}", password)))
+            if not re.fullmatch("[!-~]{8,32}\Z", password): message.append("8文字以上32文字以下に設定してください")
+            if not re.fullmatch("\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]{0,}\Z", password): message.append("パスワードには大文字、小文字、数字を入れてください")
+     
         
         #エラーあり
         if message:
             print(message)
-            return render_template("signup.html", message=message, completed=completed)
+            return render_template("debug_login/signup.html", message=message, completed=completed)
         #エラーなし
         else:   
+            completed["password"] = password
             #パスワードをハッシュ化してDBに保存
-            #DBに追加
             new_user(user_name=user_name, password=generate_password_hash(password, method="sha256"))
             return redirect("/login")
         
