@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,7 @@
         <label for="password">パスワード</label>
         <input type="password" name="password" id="password" value={{completed["password"]}}>
         <div class="show_password" onclick="show_password()" style="width:16px;height:16px;background-color:#777;"></div>
-        <button type="submit">sign in</button>
+        <button type="submit">sign up</button>
     </form>
     {% if message %}
     <div class="message">
@@ -26,7 +26,7 @@
     </div>
     {% endif %}
 
-    <a href="/login">ログイン画面に戻る</a>
+    <a href="/login">ログイン画面へ</a>
     
     <script>
         var flag_show_password = 0

@@ -2,6 +2,7 @@ from flask import Flask, request ,render_template, redirect  # Flaskは必須、
 from flask_login import LoginManager, UserMixin, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
+import re #正規表現
 from modules.make_Newthread import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
 
 app = Flask(__name__)
@@ -19,8 +20,7 @@ app.permanent_session_lifetime = timedelta(minutes=1)
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
     def __init__(self, id, user_name):
-        self.id = id
-        self.urew_name = user_name
+        self.user_name = user_name
     #メモ::get_id()のオーバーライドが必要かも←調べる
 
 #セッションからユーザーをリロードするのに必要っぽい        
@@ -63,6 +63,7 @@ def test_login():
 def login():
     if request.method == "GET":
         #ログイン画面を表示
+        return render_template("test_login/login.html")
         pass
     
     elif  request.method == "POST":
@@ -78,11 +79,46 @@ def logout():
 def signup():
     if request.method == "GET":
         #サインアップ画面を表示
-        pass
+        return render_template("test_login/signup.html", completed = [])
     
     elif  request.method == "POST":
+        
         #送信されたデータからサインアップを実行
-        pass
+        if request.method == "POST":
+            user_name = request.form.get("user_name")
+            email = request.form.get("email")
+            password = request.form.get("password")
+        
+        print(not user_name)
+        #バリデーション
+        message = []
+        completed = {}
+        if not user_name: message.append("ユーザ名を入力してください")
+        else: completed["user_name"] = user_name
+        if not email: message.append("メールアドレスを入力してください")
+        elif not "@" in email: message.append("メールアドレスが不正です")
+        elif not "." in email: message.append("メールアドレスが不正です")
+        else: completed["email"] = email
+        if not password: message.append("パスワードを入力してください")
+        elif re.findall("[^!-~]{1,}", password): print("使えない文字があります", re.findall("[^!-~]{1,}", password))
+        elif not re.fullmatch("\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]{8,100}\Z", password): message.append("パスワードは大文字、小文字、数字を含んだ8文字以上100文字以下に設定してください")
+        else: completed["password"] = password
+        
+        #エラーあり
+        if message:
+            print(message)
+            return render_template("signup.html", message=message, completed=completed)
+        #エラーなし
+        else:   
+            #パスワードをハッシュ化してDBに保存
+            user = User(user_name=user_name, password=generate_password_hash(password, method="sha256"))
+            
+            #DBに追加
+            
+            return redirect("/login")
+        
+        
+        
 
 #ログインしていない状態でログインが必要なページにアクセスしたときの処理
 @login_manager.unauthorized_handler
