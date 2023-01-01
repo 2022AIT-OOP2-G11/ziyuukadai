@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
 from modules.make_Newthread import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
+from modules.test_db import new_user, Get_user_All, Get_user_One, dictionary
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False 
@@ -19,8 +20,12 @@ app.permanent_session_lifetime = timedelta(minutes=1)
 
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
-    def __init__(self, id, user_name):
+    def __init__(self, user_name, password):
         self.user_name = user_name
+        self.password = password
+    
+    def set_id(self, id):
+        self.id = id
     #メモ::get_id()のオーバーライドが必要かも←調べる
 
 #セッションからユーザーをリロードするのに必要っぽい        
@@ -114,7 +119,8 @@ def signup():
             user = User(user_name=user_name, password=generate_password_hash(password, method="sha256"))
             
             #DBに追加
-            
+            user_id = new_user(user_name=user.user_name, password=user.password)
+            user.set_id(user_id)
             return redirect("/login")
         
         
