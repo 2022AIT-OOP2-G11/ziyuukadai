@@ -1,5 +1,5 @@
 from flask import Flask, request ,render_template, redirect  # Flaskは必須、requestはリクエストパラメータを処理する場合に使用します。
-from flask_login import LoginManager, UserMixin, login_required, login_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
@@ -35,7 +35,7 @@ def load_user(user_id):
     print("arg_load_user::", user_id)
     get_user_by_id(user_id)
     
-    with open('json/One_user.json', 'r') as f:
+    with open('json/debug_one_user.json', 'r') as f:
             user_json = json.load(f)
     
     user_id = [key for key in user_json.keys()][0]
@@ -88,7 +88,7 @@ def login():
         # --- ↓DB操作に合わせて、処理を変更する↓ --- #
         #user名前で検索してヒットしたユーザのデータを取得する（←学籍番号で検索に変更する）
         get_user_by_name(user_name)
-        with open('json/One_user.json', 'r') as f:
+        with open('json/debug_one_user.json', 'r') as f:
             user_json = json.load(f)
         
         #ユーザが見つからなかったときはエラーメッセージを表示
@@ -119,7 +119,7 @@ def login():
 @app.route("/logout")
 def logout():
     #ログアウトを実行
-    login_user()
+    logout_user()
     return redirect("/login")
     
     

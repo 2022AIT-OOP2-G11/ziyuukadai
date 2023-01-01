@@ -71,7 +71,7 @@ def Get_user_All():
     all_results = dict(results)
 
     #jsonファイル作成
-    with(open('./json/All_user.json','w')) as f:
+    with(open('./json/debug_all_user.json','w')) as f:
         json.dump(all_results, f, indent=4, ensure_ascii=False)
 
     con.commit()
@@ -106,7 +106,7 @@ def get_user_by_name(user_name):
     one_results = dict(results)
 
     #jsonファイル作成
-    with(open('./json/One_user.json','w')) as f:
+    with(open('./json/debug_one_user.json','w')) as f:
         json.dump(one_results, f, indent=4, ensure_ascii=False)
 
     con.commit()
@@ -139,7 +139,7 @@ def get_user_by_id(user_id):
     one_results = dict(results)
 
     #jsonファイル作成
-    with(open('./json/One_user.json','w')) as f:
+    with(open('./json/debug_one_user.json','w')) as f:
         json.dump(one_results, f, indent=4, ensure_ascii=False)
 
     con.commit()
