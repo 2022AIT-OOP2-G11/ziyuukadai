@@ -1,6 +1,8 @@
 
 
-#ログイン機能デバッグ用
+
+
+# ===== ログイン機能デバッグ用 ===== #
 
 import sqlite3  #DB使用のためのimport文
 import json
@@ -43,7 +45,6 @@ def new_user(user_name, password):
     con.commit()
     con.close()
 
-    return count
 
 def Get_user_All():
     # DB接続。ファイルがなければ作成する

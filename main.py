@@ -12,7 +12,7 @@ app.config["JSON_AS_ASCII"] = False
 app.config["SESSION_COOKIE_SECURE"] = True #Cookieの送信をhttpsに限定
 
 #ログイン機能で必要な設定
-app.secret_key = "ahf))ajh>|f<hiwehf{haoj!w#g#+=)h"
+app.secret_key = "ahf))ajh>|f<hiwtakoyaki-ehf{haoj!w#g#+=)h"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -21,18 +21,17 @@ app.permanent_session_lifetime = timedelta(minutes=1)
 
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
-    def __init__(self, user_name, password, id=None):
+    def __init__(self, user_name, id=None):
         self.id = id
         self.user_name = user_name
-        self.password = password
-    
 
-
-#セッションからユーザーをリロードするのに必要
-#Userオブジェクトを返す#どういう原理かわからんけど引数にはユーザIDが来てる()
 @login_manager.user_loader
 def load_user(user_id):
+    #セッションからユーザーをリロードするための関数
+    #Userオブジェクトを返す#どういう原理かわからんけど引数にはユーザIDが来てる
     
+    #idからユーザデータを取得
+    print("arg_load_user::", user_id)
     get_user_by_id(user_id)
     
     with open('json/One_user.json', 'r') as f:
@@ -40,14 +39,9 @@ def load_user(user_id):
     
     user_id = [key for key in user_json.keys()][0]
     user_name = user_json[user_id]["ユーザ名"]
-    password_hash = user_json[user_id]["パスワード"]
     
-    return User(user_name=user_name, password=password_hash, id=user_id)
+    return User(user_name=user_name, id=user_id)
         
-
-#牧村用リンク
-#user class:  https://flask-login.readthedocs.io/en/latest/#Your%20User%20Class
-#user_login: https://flask-login.readthedocs.io/en/latest/#flask_login.LoginManager.user_loader
 
 
 
@@ -69,7 +63,8 @@ def index():
 
 ## ====== ⬇︎ここからログイン⬇︎ ======= ##
 
-@app.route("/test_login")
+#入るのにログインが必要なルート
+@app.route("/login_completed")
 @login_required
 def test_login():
     return render_template("test_login/login_completed.html")
@@ -83,43 +78,44 @@ def login():
     
     elif  request.method == "POST":
         #送信されたデータからログインを実行
+        #フォームの入力を指定する
         user_name = request.form.get("user_name")
         password = request.form.get("password")
         
+        #user名前で検索してヒットしたユーザのデータを取得する（←学籍番号で検索に変更する）
         get_user_by_name(user_name)
         with open('json/One_user.json', 'r') as f:
             user_json = json.load(f)
-        
-        print(user_json)
-
-        
+            
         user_id = [key for key in user_json.keys()][0]
         user_name = user_json[user_id]["ユーザ名"]
         password_hash = user_json[user_id]["パスワード"]
         
-        user = User(user_name=user_name, password=password_hash, id=user_id)
+        #DBから取得したデータからUserインスタンスを作成
+        user = User(user_name=user_name, id=user_id)
         
-        print(user.password)
-        print(password)
-        print(check_password_hash(user.password, password))
+        #ユーザが見つからなかったときはエラーメッセージを表示
         if user == None:
             message = "ユーザ名が違います"
             return render_template("test_login/login.html", message=message)
         
-        if check_password_hash(user.password, password):
-            #ログイン
+        #パスワードのチェック
+        if check_password_hash(password_hash, password):
+            #あってたらログイン
             login_user(user)
-            return redirect("/test_login")
+            return redirect("/login_completed")
         else:
-            #エラー
+            #間違ってたらエラーメッセージを表示
             message = "パスワードが違います"
             return render_template("test_login/login.html", message=message)
+
 
 @app.route("/logout")
 def logout():
     #ログアウトを実行
     login_user()
     return redirect("/login")
+    
     
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -130,15 +126,15 @@ def signup():
     elif  request.method == "POST":
         
         #送信されたデータからサインアップを実行
+        #フォームの入力を取得
         if request.method == "POST":
             user_name = request.form.get("user_name")
             email = request.form.get("email")
             password = request.form.get("password")
         
-        print(not user_name)
-        #バリデーション
-        message = []
-        completed = {}
+        #バリデーション　
+        message = [] #エラーがあるごとにメッセージを配列に追加していく
+        completed = {} #正しく入力されたところは、再入力の必要をなくす
         if not user_name: message.append("ユーザ名を入力してください")
         else: completed["user_name"] = user_name
         if not email: message.append("メールアドレスを入力してください")
@@ -157,12 +153,8 @@ def signup():
         #エラーなし
         else:   
             #パスワードをハッシュ化してDBに保存
-            print(password)
-            user = User(user_name=user_name, password=generate_password_hash(password, method="sha256"))
-            
             #DBに追加
-            user_id = new_user(user_name=user.user_name, password=user.password)
-            user.id = user_id
+            new_user(user_name=user_name, password=generate_password_hash(password, method="sha256"))
             return redirect("/login")
         
         
@@ -172,6 +164,7 @@ def signup():
 @login_manager.unauthorized_handler
 def unauthorized():
     #ログインしていない時の処理 
+    #デバッグ用に専用ページに飛ぶ
     return render_template("test_login/unauthorized.html")
 
 
