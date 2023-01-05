@@ -1,3 +1,8 @@
+.comment {
+  border: #4e7bcc 1px solid; /*境界線の指定*/
+  height: 430px; /* 横幅を200pxに指定 */
+  overflow-y: scroll; /* 縦方向にスクロール可能にする */
+}
 .box {
   border: #4e7bcc 1px solid; /*境界線の指定*/
 }
