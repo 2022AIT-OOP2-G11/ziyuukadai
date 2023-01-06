@@ -51,10 +51,25 @@ def load_user(user_id):
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-       #GETだったら全部のスレッドを取得してindex.htmlに送る
-        
-        return render_template('index.html')#←デバッグ用
-        #return render_template('index.html', threads=)
+    #GETだったら全部のスレッドを取得してindex.htmlに送る
+        Get_Thread_All()
+        #読み込むファイルパスの指定
+        json_file = open("json/All_thread.json",'r')
+        json_dict = json.load(json_file)
+        #値を格納する場所
+        thread_dict_list= []
+        #json取り出してdictでまとめる
+        for mykey,myvalue in json_dict.items():
+            thread_dict_template = {'id': '', 'スレッド名': '', 'ユーザー名': '','スレッドを立てた時間': '','最終更新時間': ''}
+            thread_dict_template['id'] = mykey
+            thread_dict_template['スレッド名'] = myvalue['スレッド名']
+            thread_dict_template['ユーザー名'] = myvalue['ユーザー名']
+            thread_dict_template['最終更新時間'] = myvalue['最終更新時間']
+            thread_dict_template['スレッドを立てた時間'] = myvalue['スレッドを立てた時間']
+            
+            #まとめたdictをlistに追加
+            thread_dict_list.append(thread_dict_template)
+        return render_template('index.html',threads = thread_dict_list)
 
     elif request.method == "POST":
         #POSTだったらデータを受け取って、データベースに保存する
