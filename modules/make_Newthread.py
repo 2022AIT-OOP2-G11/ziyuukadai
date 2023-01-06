@@ -1,6 +1,7 @@
 import sqlite3  #DB使用のためのimport文
 import json
 
+#スレッド新規作成
 def new_thread(Thread_Name, Make_User_Name):
     
     # DB接続。ファイルがなければ作成する
@@ -43,13 +44,13 @@ def new_thread(Thread_Name, Make_User_Name):
 
     con.close()
 
-
+#全てのスレッドをjsonで取得
 def Get_Thread_All():
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
 
     #テーブル(表)があるか確認
-    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='スレッド一覧'").fetchone()[0]
 
     if table_count == 0:
         #テーブル作成SQL文
@@ -79,13 +80,13 @@ def Get_Thread_All():
 
 
 
-
+#引数のスレッドIDのスレッドを取得
 def Get_Thread_One(Thread_ID):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
 
     #テーブル(表)があるか確認
-    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='スレッド一覧'").fetchone()[0]
 
     if table_count == 0:
         #テーブル作成SQL文
@@ -111,7 +112,7 @@ def Get_Thread_One(Thread_ID):
 
     con.close()
 
-
+#辞書型にする関数
 def dictionary(results: list):
     #辞書型の鍵の配列
     dict_item = ["スレッド名", "ユーザー名", "最終更新時間", "スレッドを立てた時間"]
@@ -125,7 +126,7 @@ def dictionary(results: list):
 
     return array
 
-
+#更新時間の更新
 def Update_Thread_Time(Thread_ID):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
@@ -136,6 +137,8 @@ def Update_Thread_Time(Thread_ID):
 
     con.close()
 
+#引数にスレッドIDとスレッドを消そうとしてるユーザー名をいれ、スレッドの作成者と消そうとしてるユーザー名の時は消せるようにし、
+#違ったら消せないようにする
 def Delete_One_Thread(Thread_ID, User_name):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
