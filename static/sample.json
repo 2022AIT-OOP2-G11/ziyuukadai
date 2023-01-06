@@ -1,5 +1,7 @@
 [
     {
-        "id":1,"スレッドID":"ghlahfj","ユーザー名":"hoge"
+        "id": 1,
+        "name": "hoge",
+        "aaa": "hage"
     }
 ]
