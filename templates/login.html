@@ -13,7 +13,7 @@
     <h2>新規登録</h2>
 
     <div class="container-fluid">
-        <form>
+        <form action="/login" method="POST">
             <div class="form-group">
             <label>学籍番号</label>
             <input type="text" class="col-3" id="student_id" placeholder="学籍番号">
@@ -23,6 +23,8 @@
             <input type="password" class="col-3" id="password" placeholder="パスワード">
             </div>
             <button type="submit" class="btn btn-primary" id="send">送信</button>
+
+            <button type="submit" class="btn btn-primary" id="move">新規登録はこちら</button>
         </form>
     </div>
     
