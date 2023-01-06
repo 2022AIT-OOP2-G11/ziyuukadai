@@ -73,6 +73,10 @@ def index():
 
     elif request.method == "POST":
         #POSTだったらデータを受け取って、データベースに保存する
+        user_name = request.form.get("user_name")
+        tread_name = request.form.get("title")
+
+        new_thread(tread_name,user_name)
         
         return redirect("/")
 
