@@ -7,7 +7,7 @@ def new_thread(Thread_Name, Make_User_Name):
     con = sqlite3.connect('./DB/Thread.db')
 
     #テーブル(表)があるか確認
-    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='スレッド一覧'").fetchone()[0]
     # print(table_count) #デバック
 
     if table_count == 0: #なかったらテーブルを作成して追加
@@ -175,10 +175,10 @@ def Delete_One_Thread(Thread_ID, User_name):
 
 
 if __name__ == "__main__":
-    # new_thread(Thread_Name="d", Make_User_Name="tomo")
+    new_thread(Thread_Name="d", Make_User_Name="tomo")
     # Get_Thread_All()
     # Get_Thread_One(2)
     # Update_Thread_Time(2)
-    print(Delete_One_Thread(2, "yug"))
+    # print(Delete_One_Thread(2, "yug"))
 
     # pass
