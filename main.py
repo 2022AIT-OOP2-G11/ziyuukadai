@@ -49,6 +49,7 @@ def load_user(user_id):
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
+@login_required#←これがついてるページに入るにはログイン必要
 def index():
     if request.method == "GET":
     #GETだったら全部のスレッドを取得してindex.htmlに送る
@@ -89,14 +90,14 @@ def index():
 @app.route("/login_completed")
 @login_required
 def debug_login():
-    return render_template("debug_login/login_completed.html")
+    return render_template("login_completed.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         #ログイン画面を表示
-        return render_template("debug_login/login.html")
+        return render_template("login.html")
     
     elif  request.method == "POST":
         #送信されたデータからログインを実行
@@ -113,7 +114,7 @@ def login():
         #ユーザが見つからなかったときはエラーメッセージを表示
         if len(user_json) == 0:
             message = "ユーザ名が違います"
-            return render_template("debug_login/login.html", message=message)
+            return render_template("login.html", message=message)
         
         
         user_id = [key for key in user_json.keys()][0]
@@ -132,7 +133,7 @@ def login():
         else:
             #間違ってたらエラーメッセージを表示
             message = "パスワードが違います"
-            return render_template("debug_login/login.html", message=message)
+            return render_template("login.html", message=message)
 
 
 @app.route("/logout")
@@ -146,7 +147,7 @@ def logout():
 def signup():
     if request.method == "GET":
         #サインアップ画面を表示
-        return render_template("debug_login/signup.html", completed = [])
+        return render_template("signup.html", completed = [])
     
     elif  request.method == "POST":
         
@@ -176,7 +177,7 @@ def signup():
         #エラーあり
         if message:
             print(message)
-            return render_template("debug_login/signup.html", message=message, completed=completed)
+            return render_template("signup.html", message=message, completed=completed)
         #エラーなし
         else:   
             completed["password"] = password
@@ -189,8 +190,9 @@ def signup():
 @login_manager.unauthorized_handler
 def unauthorized():
     #ログインしていない時の処理 
+    return redirect("/signup")
     #デバッグ用に専用ページに飛ぶ
-    return render_template("debug_login/unauthorized.html")
+    #return render_template("debug_login/unauthorized.html")
 
 
 
