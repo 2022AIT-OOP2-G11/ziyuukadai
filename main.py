@@ -86,13 +86,6 @@ def index():
 
 ## ====== ⬇︎ここからログイン⬇︎ ======= ##
 
-#入るのにログインが必要なルート
-@app.route("/login_completed")
-@login_required
-def debug_login():
-    return render_template("login_completed.html")
-
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -191,8 +184,6 @@ def signup():
 def unauthorized():
     #ログインしていない時の処理 
     return redirect("/signup")
-    #デバッグ用に専用ページに飛ぶ
-    #return render_template("debug_login/unauthorized.html")
 
 
 
