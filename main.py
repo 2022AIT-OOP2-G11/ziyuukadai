@@ -69,7 +69,6 @@ def index():
             
             #まとめたdictをlistに追加
             thread_dict_list.append(thread_dict_template)
-            print(thread_dict_list)
         return render_template('index.html',threads = thread_dict_list)
 
     elif request.method == "POST":
