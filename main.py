@@ -194,6 +194,19 @@ def unauthorized():
 
 
 
+# ===== サンプル用 ====== #
+@app.route("/sample")
+def unauthorized():
+    #ログインしていない時の処理 
+    #デバッグ用に専用ページに飛ぶ
+    elements = [
+        {"id":1, "user_name":"takoyaki3", "content":"こんにちは"},
+        {"id":2, "user_name":"nikoniko", "content":"おはよう"},
+        {"id":3, "user_name":"takashi", "content":"お腹すいた"},
+    ]
+    return render_template("sample/for文のサンプル.html", elems=elements)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     
