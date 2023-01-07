@@ -69,6 +69,7 @@ def index():
             
             #まとめたdictをlistに追加
             thread_dict_list.append(thread_dict_template)
+            print(thread_dict_list)
         return render_template('index.html',threads = thread_dict_list)
 
     elif request.method == "POST":
@@ -192,6 +193,19 @@ def unauthorized():
     #デバッグ用に専用ページに飛ぶ
     return render_template("debug_login/unauthorized.html")
 
+
+
+# ===== サンプル用 ====== #
+@app.route("/sample")
+def unauthorized():
+    #ログインしていない時の処理 
+    #デバッグ用に専用ページに飛ぶ
+    elements = [
+        {"id":1, "user_name":"takoyaki3", "content":"こんにちは"},
+        {"id":2, "user_name":"nikoniko", "content":"おはよう"},
+        {"id":3, "user_name":"takashi", "content":"お腹すいた"},
+    ]
+    return render_template("sample/for文のサンプル.html", elems=elements)
 
 
 if __name__ == '__main__':

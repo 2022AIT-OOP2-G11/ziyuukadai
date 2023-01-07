@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for文のサンプル</title>
+</head>
+<body>
+
+<!-- main.pyを実行して http://127.0.0.1:5000/sample にアクセスすると動作が見れます。-->
+    <h3>for文のサンプル</h3>
+    <p>どんなデータが送られてきているかはmain.pyの最後の方に書いてあります。</p>
+    ▼こんな感じで全てのデータが表示できて、idとかも指定できます
+    <div class="elem_area">
+        {% for elem in elems%}
+        <div class="elem" id="elem{{elem["id"]}}">
+            {{elem["user_name"]}} : {{elem["content"]}}
+        </div>
+        {%endfor%}
+    </div>
+
+    
+
+
+    <br><br>
+    <div>
+        <div>・表示するところに合わせて書き換えて使ってね</div>
+        <div>・レイアウト・デザインはお好みでお願いします！！</div>
+        
+    </div>
+    <style>
+        .elem_area {
+            background-color:#f0f0f0;
+            width:480px;
+            boder-radius:2px;
+            padding:4px;
+        }
+    </style>
+
+</body>
+</html>
+
