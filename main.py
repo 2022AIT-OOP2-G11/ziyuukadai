@@ -188,17 +188,35 @@ def unauthorized():
 
 
 # ===== サンプル用 ====== #
-@app.route("/sample")
-def unauthorized():
-    #ログインしていない時の処理 
-    #デバッグ用に専用ページに飛ぶ
-    elements = [
-        {"id":1, "user_name":"takoyaki3", "content":"こんにちは"},
-        {"id":2, "user_name":"nikoniko", "content":"おはよう"},
-        {"id":3, "user_name":"takashi", "content":"お腹すいた"},
-    ]
-    return render_template("sample/for文のサンプル.html", elems=elements)
+#@app.route("/sample")
+#def unauthorized():
+ #   #ログインしていない時の処理 
+  #  #デバッグ用に専用ページに飛ぶ
+   # elements = [
+    #    {"id":1, "user_name":"takoyaki3", "content":"こんにちは"},
+     #   {"id":2, "user_name":"nikoniko", "content":"おはよう"},
+      #  {"id":3, "user_name":"takashi", "content":"お腹すいた"},
+    #]
+    #return render_template("sample/for文のサンプル.html", elems=elements)
 
+@app.route("/thread")
+def thread():
+    #↓デバッグ用
+    comments = [
+        {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
+        {"id":2, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:11:00"},
+        {"id":3, "ユーザ名":"takashi", "コメント":"お腹すいた","投稿時間":"23:01:01:12:00"},
+        {"id":4, "ユーザ名":"nanashi", "コメント":"今日は暑い","投稿時間":"23:01:01:10:01"},
+        {"id":5, "ユーザ名":"satoshi", "コメント":"おはようございます","投稿時間":"23:01:01:11:02"},
+        {"id":6, "ユーザ名":"nnn", "コメント":"あは","投稿時間":"23:01:01:012:03"},
+        {"id":7, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:04"},
+        {"id":8, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:011:05"},
+        {"id":9, "ユーザ名":"takashi", "コメント":"めっちゃお腹すいた","投稿時間":"23:01:01:012:06"},
+        {"id":10, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:07"},
+        {"id":11, "ユーザ名":"ukiuki", "コメント":"やったー","投稿時間":"23:01:01:011:08"},
+        {"id":12, "ユーザ名":"wanwan", "コメント":"お腹いっぱい","投稿時間":"23:01:01:012:09"},
+    ]
+    return render_template("thread.html", comments=comments)
 
 if __name__ == '__main__':
     app.run(debug=True)
