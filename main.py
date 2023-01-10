@@ -169,6 +169,7 @@ def signup():
         # elif not "@" in email: message.append("メールアドレスが不正です")
         # elif not "." in email: message.append("メールアドレスが不正です")
         # else: completed["email"] = email
+        #if re.fullmatch("\A[ECMDFHK][EVCBMPDSALTHKX][0-9]{5}[(EE)(CC)(MM)(DD)(FF)(HH)(KK)]"):
         if not password: message.append("パスワードを入力してください")
         else:
             if re.findall("[^!-~]{1,}", password): message.append("使えない文字があります" + str(re.findall("[^!-~]{1,}", password)))
