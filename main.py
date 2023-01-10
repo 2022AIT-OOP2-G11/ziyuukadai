@@ -200,24 +200,23 @@ def unauthorized():
     #return render_template("sample/for文のサンプル.html", elems=elements)
 
 @app.route("/thread")
-def unauthorized():
-    #ログインしていない時の処理 
-    #デバッグ用に専用ページに飛ぶ
-    elements = [
-        {"id":1, "user_name":"takoyaki3", "content":"こんにちは","localtime":"23:01:01:10:00"},
-        {"id":2, "user_name":"nikoniko", "content":"おはよう","localtime":"23:01:01:11:00"},
-        {"id":3, "user_name":"takashi", "content":"お腹すいた","localtime":"23:01:01:12:00"},
-        {"id":4, "user_name":"nanashi", "content":"今日は暑い","localtime":"23:01:01:10:01"},
-        {"id":5, "user_name":"satoshi", "content":"おはようございます","localtime":"23:01:01:11:02"},
-        {"id":6, "user_name":"nnn", "content":"あは","localtime":"23:01:01:012:03"},
-        {"id":7, "user_name":"takoyaki3", "content":"元気ですか？","localtime":"23:01:01:010:04"},
-        {"id":8, "user_name":"nikoniko", "content":"おはよう","localtime":"23:01:01:011:05"},
-        {"id":9, "user_name":"takashi", "content":"めっちゃお腹すいた","localtime":"23:01:01:012:06"},
-        {"id":10, "user_name":"takoyaki3", "content":"元気ですか？","localtime":"23:01:01:010:07"},
-        {"id":11, "user_name":"ukiuki", "content":"やったー","localtime":"23:01:01:011:08"},
-        {"id":12, "user_name":"wanwan", "content":"お腹いっぱい","localtime":"23:01:01:012:09"},
+def thread():
+    #↓デバッグ用
+    comments = [
+        {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
+        {"id":2, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:11:00"},
+        {"id":3, "ユーザ名":"takashi", "コメント":"お腹すいた","投稿時間":"23:01:01:12:00"},
+        {"id":4, "ユーザ名":"nanashi", "コメント":"今日は暑い","投稿時間":"23:01:01:10:01"},
+        {"id":5, "ユーザ名":"satoshi", "コメント":"おはようございます","投稿時間":"23:01:01:11:02"},
+        {"id":6, "ユーザ名":"nnn", "コメント":"あは","投稿時間":"23:01:01:012:03"},
+        {"id":7, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:04"},
+        {"id":8, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:011:05"},
+        {"id":9, "ユーザ名":"takashi", "コメント":"めっちゃお腹すいた","投稿時間":"23:01:01:012:06"},
+        {"id":10, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:07"},
+        {"id":11, "ユーザ名":"ukiuki", "コメント":"やったー","投稿時間":"23:01:01:011:08"},
+        {"id":12, "ユーザ名":"wanwan", "コメント":"お腹いっぱい","投稿時間":"23:01:01:012:09"},
     ]
-    return render_template("thread.html", elems=elements)
+    return render_template("thread.html", comments=comments)
 
 if __name__ == '__main__':
     app.run(debug=True)
