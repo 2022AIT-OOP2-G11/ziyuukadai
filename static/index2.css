@@ -16,6 +16,11 @@ body {
   box-shadow: 0px 0px 0px 10px #d6ebff;
   border: dashed 2px white;
 }
+
+span {
+  color: #3eb370;
+}
+
 .text {
   font-size: 2em;
   color: #fff;
@@ -51,4 +56,39 @@ textarea {
   width: 100%;
   font-size: 15pt;
   resize: none;
+}
+
+.button a {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 240px;
+  padding: 10px 25px;
+  color: #543618;
+  transition: 0.3s ease-in-out;
+  font-weight: 600;
+  background: #eeee;
+  border: 0.2rem solid #543618;
+  box-shadow: 0.2rem 0.2rem 0px 0.1rem #cccccc;
+}
+.button a:hover {
+  transform: translate3d(0.2rem, 0.2rem, 0);
+  box-shadow: none;
+  opacity: 1;
+  transition: all 0.2s;
+}
+.button a:after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-top: 3px solid #543618;
+  border-right: 3px solid #543618;
+  transform: rotate(45deg) translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  border-radius: 1px;
+  transition: 0.3s ease-in-out;
 }
