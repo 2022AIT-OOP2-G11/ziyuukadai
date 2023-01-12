@@ -8,7 +8,7 @@ import json
 # comment_add -> コメントを追加(引数 : スレッドid, 内容, ユーザー名)
 # comment_get_id -> スレッドidに応じたスレッドの内容をjsonファイルへ保存(引数 : thread_id)
 
-content_db = './DB/content.db' #DBの保存場所
+content_db = './DB/DataBase.db' #DBの保存場所
 
 #指定されたスレッドのDBに接続し、テーブルが作成されていない場合作成
 def connect_db():
