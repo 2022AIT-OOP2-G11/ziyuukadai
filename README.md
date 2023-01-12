@@ -1,17 +1,20 @@
 # ziyuukadai(←お名前募集中)
 
 
-## やること
+## 使用した外部ライブラリ
 
+ライブラリ名|バージョン
+flask　|2.2.2  
+flask-login|0.6.2  
 
-## DBの構造
+## インストール
 
-■スレッド
-|　id |スレット名 |ユーザ名|最終更新時間|立てた時間|
-----|---|---|----|-----|
-| 1, 2, ... |string|string|YY:MM:DD:mm:ss|YY:MM:DD:mm:ss|
+flaskのインストール
+``` 
+$ pip install flask
+```
 
-■コメント
-| id |スレッドid| 内容|ユーザー名|投稿時間|
-----|--|----|----|----|
-| 1, 2, ...| int |  string  |  string  |　　　　YY:MM:DD:mm:ss　　 |
+flask-loginのインストール
+``` 
+$ pip install flask-login
+```
