@@ -217,7 +217,14 @@ def thread():
         {"id":12, "ユーザ名":"wanwan", "コメント":"お腹いっぱい","投稿時間":"23:01:01:012:09"},
     ]
     return render_template("thread.html", comments=comments)
-
+@app.route("/index")
+def index():
+    #↓デバッグ用
+    indexs = [
+    {"id":1, "スレッド名":"宿題がちで終わらん", "ユーザ名":"takoyaki3","スレッドを立てた時間":"2023-01-0610:20","最終更新時間":"2023-01-06 10:20"},
+    {"id":2, "スレッド名":"確率統計、意味不明", "ユーザ名":"takoyaki3","スレッドを立てた時間":"2023-01-0610:23", "最終更新時間":"2023-01-06 10:23"},
+]
+    return render_template("index.html", indexs=indexs)
 if __name__ == '__main__':
     app.run(debug=True)
     
