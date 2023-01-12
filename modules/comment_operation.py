@@ -21,9 +21,11 @@ def connect_db():
     if table_count == 0:
         con.execute("CREATE TABLE コメント(id INTEGER PRIMARY KEY AUTOINCREMENT, スレッドid INTEGER NOT NULL, 内容 TEXT NOT NULL, ユーザー名 TEXT, 投稿時間 TIMESTAMP)")
 
+    return con
+
 #コメントを追加 → (スレッドid, 内容, ユーザー名)
 def comment_add(thread_id, content, user_name): 
-    con=connect_db()
+    con = connect_db()
     
     #DBにデータを保存
     con.execute("INSERT INTO コメント(スレッドid, 内容, ユーザー名, 投稿時間)" +  f"values('{thread_id}', '{content}', '{user_name}', datetime('now','localtime'))")
