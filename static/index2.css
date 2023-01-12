@@ -1,6 +1,7 @@
 body {
-  background-color: #696969;
+  background-color: #000;
   font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
+  color: #800000;
   /*
   background-color: #111;
   color: #fff;
@@ -29,10 +30,27 @@ h1 {
   text-align: center;
   float: right;
 }
+.account:hover .word {
+  display: inline;
+}
+.word {
+  position: right;
+  display: none;
+  padding: 2px;
+  color: aliceblue;
+  border-radius: 5px;
+  background-color: #800000;
+  width: 100px;
+  top: 50px;
+  left: 0px;
+  font-size: 12px;
+  text-align: center;
+}
+
 .comment {
   color: #fff;
-  background-color: #ffffff;
-  border: #191970 1px solid; /*境界線の指定*/
+  background-color: #000;
+  border: #fff 1px solid; /*境界線の指定*/
   height: 550px; /* 横幅を550pxに指定 */
   overflow-y: scroll; /* 縦方向にスクロール可能にする */
   padding: 0.2em 0.5em;
@@ -50,21 +68,23 @@ span {
 
 a.btn {
   display: block;
+  line-height: 0.2;
+  padding: 10px 0;
   text-align: center;
   vertical-align: middle;
   text-decoration: none;
-  width: 50px;
+  width: 10px;
+  height: 10px;
   margin: auto;
-  padding: 1rem 3rem;
+  padding: 1rem 1rem;
   font-weight: normal;
-  border: 2px solid #27acd9;
-  color: #27acd9;
+  color: #800000;
   transition: 0.5s;
-  float: right;
+  float: left;
 }
 a.btn:hover {
   color: #fff;
-  background: #27acd9;
+  background: #800000;
 }
 
 .text {
@@ -82,16 +102,23 @@ nav {
 }
 
 .heading {
+  color: #800000;
   border-bottom: solid 2px;
 }
 
 input {
-  border: #4e7bcc 1px solid;
+  color: #fff;
+  box-shadow: 0px 0px 0px 5px #000;
+  border: dashed 2px white;
+  background-color: #000;
   font-size: 15pt;
 }
 
 textarea {
-  border: #191970 1px solid;
+  color: #fff;
+  box-shadow: 0px 0px 0px 5px #000;
+  border: dashed 2px white;
+  background-color: #000;
   width: 100%;
   height: 350px;
   font-size: 15pt;
