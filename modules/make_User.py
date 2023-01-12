@@ -130,12 +130,13 @@ def delete_user(student_number, password):
     con = connect_db()
 
     con.execute(f"DELETE FROM ユーザー WHERE 学籍番号 = '{student_number}' and パスワード = '{password}'")
-    con.execute(f"UPDATE ユーザ SET id = (id - 1) WHERE id > {Thread_ID}")
+    #con.execute(f"UPDATE ユーザ SET id = (id - 1) WHERE id > {Thread_ID}")
 
     get_all_users()
 
     con.commit()
     con.close()
+    
 
 
 
