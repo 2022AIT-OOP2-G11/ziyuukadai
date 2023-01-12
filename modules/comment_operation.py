@@ -53,7 +53,24 @@ def comment_get_id(thread_id):
     con.close()
 
 
+def Delete_Comment(Comment_ID, User_name):
+    # DB接続。
+    con = sqlite3.connect(content_db)
 
+    #DBにあるコメント作成者のユーザー名を取得する
+    check = con.execute(f"SELECT ユーザー名 FROM コメント WHERE id = {Comment_ID}").fetchone()[0]
+
+    #コメントの作成者が削除できる
+    if check == User_name:
+        con.execute(f"DELETE from コメント WHERE id = {Comment_ID}")
+
+        con.execute(f"UPDATE コメント SET id = (id - 1) WHERE id > {Comment_ID}")
+
+
+
+    con.commit()
+
+    con.close()
 
 
 
