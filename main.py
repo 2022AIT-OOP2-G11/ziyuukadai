@@ -218,7 +218,7 @@ def thread():
     ]
     return render_template("thread.html", comments=comments)
 @app.route("/index")
-def index():
+def indexv():
     #↓デバッグ用
     indexs = [
     {"id":1, "スレッド名":"宿題がちで終わらん", "ユーザ名":"takoyaki3","スレッドを立てた時間":"2023-01-0610:20","最終更新時間":"2023-01-06 10:20"},
