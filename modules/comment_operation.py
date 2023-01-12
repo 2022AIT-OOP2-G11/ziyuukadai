@@ -23,7 +23,7 @@ def connect_db():
 
 #コメントを追加 → (スレッドid, 内容, ユーザー名)
 def comment_add(thread_id, content, user_name): 
-    con = sqlite3.connect(content_db)
+    con=connect_db()
     
     #DBにデータを保存
     con.execute("INSERT INTO コメント(スレッドid, 内容, ユーザー名, 投稿時間)" +  f"values('{thread_id}', '{content}', '{user_name}', datetime('now','localtime'))")
@@ -33,7 +33,7 @@ def comment_add(thread_id, content, user_name):
 
 #スレッドidに応じたスレッドの内容をjsonファイルへ保存
 def comment_get_id(thread_id):
-    con = sqlite3.connect(content_db)
+    con = connect_db()
 
     thread_content = con.execute(f"SELECT * FROM コメント WHERE スレッドid = {thread_id}").fetchall()
 
@@ -76,5 +76,8 @@ def Delete_Comment(Comment_ID, User_name):
 if __name__ == "__main__":
     comment_add(1, "かくにん", "takoyaki3")
     comment_get_id(1)
+
+
+
 
 
