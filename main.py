@@ -6,7 +6,7 @@ import re #正規表現
 import json
 from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
-
+from modules.comment_operation import connect_db,comment_add,comment_get_id
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False 
 app.config["SESSION_COOKIE_SECURE"] = True #Cookieの送信をhttpsに限定
@@ -199,27 +199,39 @@ def unauthorized():
     #]
     #return render_template("sample/for文のサンプル.html", elems=elements)
 
-@app.route("/thread")
+@app.route("/thread",methods = ["GET","POST"])
 def thread():
-    #↓デバッグ用
-    comments = [
-        {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
-        {"id":2, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:11:00"},
-        {"id":3, "ユーザ名":"takashi", "コメント":"お腹すいた","投稿時間":"23:01:01:12:00"},
-        {"id":4, "ユーザ名":"nanashi", "コメント":"今日は暑い","投稿時間":"23:01:01:10:01"},
-        {"id":5, "ユーザ名":"satoshi", "コメント":"おはようございます","投稿時間":"23:01:01:11:02"},
-        {"id":6, "ユーザ名":"nnn", "コメント":"あは","投稿時間":"23:01:01:012:03"},
-        {"id":7, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:04"},
-        {"id":8, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:011:05"},
-        {"id":9, "ユーザ名":"takashi", "コメント":"めっちゃお腹すいた","投稿時間":"23:01:01:012:06"},
-        {"id":10, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:07"},
-        {"id":11, "ユーザ名":"ukiuki", "コメント":"やったー","投稿時間":"23:01:01:011:08"},
-        {"id":12, "ユーザ名":"wanwan", "コメント":"お腹いっぱい","投稿時間":"23:01:01:012:09"},
-    ]
-    return render_template("thread.html", comments=comments)
+    if request.method == "GET":
+        #threadのパラメータを取得
+        thread = request.args.get("thid")
+        #thread番号を取得
+        id  = int(thread[2:])
+        
+        #json書き込み
+        comment_get_id(thread_id = id)
+        #読み込み
+        json_file = open("json/thread_id_content.json",'r')
+        json_dict = json.load(json_file)
+       
+        #値格納場所
+        comment_dict_list = []
+    
+        
+        for myvalue in json_dict:
+
+            comment_dict_template = {"コメント":""}
+            comment_dict_template["コメント"] = myvalue["内容"]
+            #dictをlistに追加
+            comment_dict_list.append(comment_dict_template)
+        
+        return render_template("thread.html",comment = comment_dict_list)
+
+    elif request.method == "POST":
+        pass
+    return render_template("thread.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
+
     
     
