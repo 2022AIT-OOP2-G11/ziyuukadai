@@ -27,6 +27,24 @@
             <input type="password" class="col-3" id="password" placeholder="パスワード">
             </div>
             <button type="submit" class="btn btn-primary" id="send">送信</button>
+
+
+            <div class="err_message">
+                
+                    {% if message[0] %}
+                    <p>{{message[0]}}</p>
+                    {% else %}
+                    <input name="user_name" value="">
+                    {% endif %}
+
+                    {% if message[1] %}
+                    <p>{{message[1]}}</p>
+                    {% else %}
+                    <input name="password" value="">
+                    {% endif %}
+
+                    <!-- <p>{{completed}}</p> -->
+            </div>
         </form>
     </div>
     
