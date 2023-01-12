@@ -30,6 +30,8 @@ span {
   transform: translateX(100%); /*初期位置*/
 }
 
+
+
 p {
   zoom: 1.5;
   }
@@ -57,6 +59,7 @@ input {
 
 textarea {
   border: #4e7bcc 1px solid;
+  height: 200px;
   width: 100%;
   font-size: 15pt;
   resize: none;
