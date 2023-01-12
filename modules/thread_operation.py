@@ -203,7 +203,7 @@ def Search_Thread_Name(word: str):
             word_list.insert(wild_num, '¥')
             search_word = "".join(word_list)
 
-        search_sql += ' スレッド名 LIKE \'%' + search_word + '%\''
+        search_sql += f' スレッド名 LIKE \'%{search_word}%\''
 
         if word_len > 1 and word_len != time:
             search_sql += ' or'
