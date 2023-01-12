@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rakus</title>
+    <title>新規登録</title>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -16,7 +16,7 @@
         <form action="/signup" method="POST">
             <div class="form-group">
             <label>ユーザー名</label>
-            <input type="text" class="col-3" id="user_name" placeholder="ユーザー名">
+            <input type="text" class="col-3" id="user_name" placeholder="ユーザー名" value="{{completed['user_name']}}">
             </div>
             <div class="form-group">
             <label>学籍番号</label>
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
             <label>パスワード</label>
-            <input type="password" class="col-3" id="password" placeholder="パスワード">
+            <input type="password" class="col-3" id="password" placeholder="パスワード" value="{{completed['password']}}">
             </div>
             <button type="submit" class="btn btn-primary" id="send">送信</button>
 
@@ -33,14 +33,10 @@
                 
                     {% if message[0] %}
                     <p>{{message[0]}}</p>
-                    {% else %}
-                    <input name="user_name" value="">
                     {% endif %}
 
                     {% if message[1] %}
                     <p>{{message[1]}}</p>
-                    {% else %}
-                    <input name="password" value="">
                     {% endif %}
 
                     <!-- <p>{{completed}}</p> -->
