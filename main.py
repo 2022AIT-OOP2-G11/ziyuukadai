@@ -8,7 +8,7 @@ from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One,
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import connect_db,comment_add,comment_get_id
 app = Flask(__name__)
-app.config["JSON_AS_ASCII"] = False 
+app.config["JSON_AS_ASCII"] = False
 app.config["SESSION_COOKIE_SECURE"] = True #Cookieの送信をhttpsに限定
 
 #ログイン機能で必要な設定
@@ -140,7 +140,7 @@ def logout():
 def signup():
     if request.method == "GET":
         #サインアップ画面を表示
-        return render_template("signup.html", completed = [])
+        return render_template("signup.html",message=[], completed = [])
     
     elif  request.method == "POST":
         
@@ -165,7 +165,7 @@ def signup():
             if re.findall("[^!-~]{1,}", password): message.append("使えない文字があります" + str(re.findall("[^!-~]{1,}", password)))
             if not re.fullmatch("[!-~]{8,32}\Z", password): message.append("8文字以上32文字以下に設定してください")
             if not re.fullmatch("\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]{0,}\Z", password): message.append("パスワードには大文字、小文字、数字を入れてください")
-     
+    
         
         #エラーあり
         if message:
