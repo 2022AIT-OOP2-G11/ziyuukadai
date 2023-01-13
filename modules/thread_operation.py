@@ -281,7 +281,8 @@ def Search_User_Name(word: str):
 
 
     #スレッドIDの内容を取得
-    get_search = con.execute('SELECT * FROM スレッド一覧 WHERE スレッド名 LIKE \'%%f%%\'').fetchall()
+    get_search = con.execute(search_sql).fetchall()
+    #get_search = con.execute('SELECT * FROM スレッド一覧 WHERE スレッド名 LIKE \'%%f%%\'').fetchall()
 
     results = []
     #スレッドの内容を一つずつ取る
@@ -308,6 +309,6 @@ if __name__ == "__main__":
     # Update_Thread_Time(2)
     # print(Delete_One_Thread(2, "yug"))
     # Search_Thread_Name('f') 
-    # Search_User_Name('とも')
+    Search_User_Name('tomo')
 
     pass
