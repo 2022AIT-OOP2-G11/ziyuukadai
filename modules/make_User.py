@@ -7,7 +7,13 @@ import json
 
 # connect_db -> スレッドに接続する。もし、テーブルがなければテーブルを作成(引数なし)
 # user_add -> ユーザを追加(引数 : ユーザ名, 学籍番号, パスワード)
-# comment_get_id -> スレッドidに応じたスレッドの内容をjsonファイルへ保存(引数 : thread_id)
+# get_all_users -> 全てのユーザーをjsonファイルへ保存(引数なし)
+# get_id_by_user -> idからユーザを取得(json)(引数 : id)
+# get_studentnumber_by_user -> 学籍番号からユーザを取得(json)
+
+# delete_user -> 学籍番号とパスワードからユーザをDBから削除する(引数 : 学籍番号, パスワード)
+
+
 
 content_db = './DB/DataBase.db' #DBの保存場所
 
@@ -118,6 +124,19 @@ def get_studentnumber_by_user(student_number):
     con.commit()
 
     con.close()
+
+#学籍番号とパスワードでユーザを削除
+def delete_user(student_number, password):
+    con = connect_db()
+
+    con.execute(f"DELETE FROM ユーザー WHERE 学籍番号 = '{student_number}' and パスワード = '{password}'")
+    #con.execute(f"UPDATE ユーザ SET id = (id - 1) WHERE id > {Thread_ID}")
+
+    get_all_users()
+
+    con.commit()
+    con.close()
+    
 
 
 
