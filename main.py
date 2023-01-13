@@ -149,11 +149,18 @@ def signup():
         if request.method == "POST":
             user_name = request.form.get("user_name")
             # email = request.form.get("email")
+            student_id = request.form.get("student_id")
             password = request.form.get("password")
         
         #バリデーション　
         message = [] #エラーがあるごとにメッセージを配列に追加していく
-        completed = {} #正しく入力されたところは、再入力の必要をなくす
+        
+        completed = {
+            #正しく入力されたところは、再入力の必要をなくす
+            "user_name":"",
+            "student_id":"",
+            "password":""
+        } 
         if not user_name: message.append("ユーザ名を入力してください")
         else: completed["user_name"] = user_name
         # if not email: message.append("メールアドレスを入力してください")
