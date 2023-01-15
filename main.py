@@ -150,26 +150,33 @@ def signup():
         #フォームの入力を取得
         if request.method == "POST":
             user_name = request.form.get("user_name")
-            # email = request.form.get("email")
             student_id = request.form.get("student_id")
+            # email = request.form.get("email")
             password = request.form.get("password")
         
         #バリデーション　
         message = [] #エラーがあるごとにメッセージを配列に追加していく
+        completed = {} #正しく入力されたところは、再入力の必要をなくす
         
-        completed = {
-            #正しく入力されたところは、再入力の必要をなくす
-            "user_name":"",
-            "student_id":"",
-            "password":""
-        } 
+        #ユーザ名
         if not user_name: message.append("ユーザ名を入力してください")
         else: completed["user_name"] = user_name
         # if not email: message.append("メールアドレスを入力してください")
         # elif not "@" in email: message.append("メールアドレスが不正です")
         # elif not "." in email: message.append("メールアドレスが不正です")
         # else: completed["email"] = email
-        #if re.fullmatch("\A[ECMDFHK][EVCBMPDSALTHKX][0-9]{5}[(EE)(CC)(MM)(DD)(FF)(HH)(KK)]"):
+        
+        #学籍番号
+        major =  re. match("\A[evcbmpdsalthkx]{1}", student_id)
+        if not student_id: message.append("学籍番号を入力してください")
+        else:
+            if not major: message.append("正しい学籍番号を入力してください")
+            else: 
+                regex = "\A" + major.group() + "{1}[0-9]{5}" + major.group() + "{2}\Z"
+                if not re.fullmatch(regex, student_id): message.append("正しい学籍番号を入力してください")
+                else: completed["student_id"] = student_id
+            
+        #パスワード
         if not password: message.append("パスワードを入力してください")
         else:
             if re.findall("[^!-~]{1,}", password): message.append("使えない文字があります" + str(re.findall("[^!-~]{1,}", password)))
@@ -209,39 +216,27 @@ def sample():
     ]
     return render_template("sample/for文のサンプル.html", elems=elements)
 
-@app.route("/thread",methods = ["GET","POST"])
+@app.route("/thread")
 def thread():
-    if request.method == "GET":
-        #threadのパラメータを取得
-        thread = request.args.get("thid")
-        #thread番号を取得
-        id  = int(thread[2:])
-        
-        #json書き込み
-        comment_get_id(thread_id = id)
-        #読み込み
-        json_file = open("json/thread_id_content.json",'r')
-        json_dict = json.load(json_file)
-       
-        #値格納場所
-        comment_dict_list = []
-    
-        
-        for myvalue in json_dict:
-
-            comment_dict_template = {"コメント":""}
-            comment_dict_template["コメント"] = myvalue["内容"]
-            #dictをlistに追加
-            comment_dict_list.append(comment_dict_template)
-        
-        return render_template("thread.html",comment = comment_dict_list)
-
-    elif request.method == "POST":
-        pass
-    return render_template("thread.html")
+    #↓デバッグ用
+    comments = [
+        {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
+        {"id":2, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:11:00"},
+        {"id":3, "ユーザ名":"takashi", "コメント":"お腹すいた","投稿時間":"23:01:01:12:00"},
+        {"id":4, "ユーザ名":"nanashi", "コメント":"今日は暑い","投稿時間":"23:01:01:10:01"},
+        {"id":5, "ユーザ名":"satoshi", "コメント":"おはようございます","投稿時間":"23:01:01:11:02"},
+        {"id":6, "ユーザ名":"nnn", "コメント":"あは","投稿時間":"23:01:01:012:03"},
+        {"id":7, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:04"},
+        {"id":8, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:011:05"},
+        {"id":9, "ユーザ名":"takashi", "コメント":"めっちゃお腹すいた","投稿時間":"23:01:01:012:06"},
+        {"id":10, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:07"},
+        {"id":11, "ユーザ名":"ukiuki", "コメント":"やったー","投稿時間":"23:01:01:011:08"},
+        {"id":12, "ユーザ名":"wanwan", "コメント":"お腹いっぱい","投稿時間":"23:01:01:012:09"},
+    ]
+    return render_template("thread.html", comments=comments)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
+    
     
     
