@@ -7,6 +7,8 @@ import json
 from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import connect_db,comment_add,comment_get_id
+from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
+
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["SESSION_COOKIE_SECURE"] = True #Cookieの送信をhttpsに限定
@@ -17,7 +19,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 #セッション有効時間を設定できます(現状デバッグ用に1分)
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = timedelta(minutes=.5)
 
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
@@ -32,10 +34,10 @@ def load_user(user_id):
     
     # --- ↓DB操作に合わせて、処理を変更する↓ --- #
     #idからユーザデータを取得
-    print("arg_load_user::", user_id)
-    get_user_by_id(user_id)
+    #print("arg_load_user::", user_id)
+    get_id_by_user(user_id)
     
-    with open('json/debug_one_user.json', 'r') as f:
+    with open('json/Id_by_Users.json', 'r') as f:
             user_json = json.load(f)
     
     user_id = [key for key in user_json.keys()][0]
@@ -49,6 +51,7 @@ def load_user(user_id):
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
+@login_required
 #@login_required#←これがついてるページに入るにはログイン必要
 def index():
     if request.method == "GET":
@@ -95,23 +98,23 @@ def login():
     elif  request.method == "POST":
         #送信されたデータからログインを実行
         #フォームの入力を指定する
-        user_name = request.form.get("user_name")
+        student_id = request.form.get("student_id")
         password = request.form.get("password")
         
         # --- ↓DB操作に合わせて、処理を変更する↓ --- #
         #user名前で検索してヒットしたユーザのデータを取得する（←学籍番号で検索に変更する）
-        get_user_by_name(user_name)
-        with open('json/debug_one_user.json', 'r') as f:
+        get_studentnumber_by_user(student_number=student_id)
+        with open("json/Num_by_Users.json", "r") as f:
             user_json = json.load(f)
         
         #ユーザが見つからなかったときはエラーメッセージを表示
         if len(user_json) == 0:
-            message = "ユーザ名が違います"
+            message = "学籍番号が違います"
             return render_template("login.html", message=message)
         
         
         user_id = [key for key in user_json.keys()][0]
-        user_name = user_json[user_id]["ユーザ名"]
+        user_name = user_json[user_id]["学籍番号"]
         password_hash = user_json[user_id]["パスワード"]
         
         #DBから取得したデータからUserオブジェクトを作成
@@ -122,7 +125,7 @@ def login():
         if check_password_hash(password_hash, password):
             #あってたらログイン
             login_user(user)
-            return redirect("/login_completed")
+            return redirect("/")
         else:
             #間違ってたらエラーメッセージを表示
             message = "パスワードが違います"
@@ -182,7 +185,7 @@ def signup():
         else:   
             completed["password"] = password
             #パスワードをハッシュ化してDBに保存
-            new_user(user_name=user_name, password=generate_password_hash(password, method="sha256"))
+            user_add(username=user_name, password=generate_password_hash(password, method="sha256"), student_number=student_id)
             return redirect("/login")
         
         
@@ -190,7 +193,7 @@ def signup():
 @login_manager.unauthorized_handler
 def unauthorized():
     #ログインしていない時の処理 
-    return redirect("/signup")
+    return redirect("/login")
 
 
 

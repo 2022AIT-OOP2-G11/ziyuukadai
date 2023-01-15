@@ -42,7 +42,7 @@ def user_add(username, student_number, password):
 
 def dictionary(results: list):
     #辞書型の鍵の配列
-    dict_item = ["ユーザー名", "学籍番号", "パスワード"]
+    dict_item = ["ユーザ名", "学籍番号", "パスワード"]
     array = []
 
     #先頭のスレッドIDを取得して削除
