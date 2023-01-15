@@ -19,15 +19,15 @@
         <form action="/signup" method="POST">
             <div class="form-group">
             <label>ユーザー名</label>
-            <input type="text" class="col-3" id="user_name" placeholder="ユーザー名" value="{{completed['user_name']}}">
+            <input type="text" class="col-3" name="user_name" id="user_name" placeholder="ユーザー名" value="{{completed['user_name']}}">
             </div>
             <div class="form-group">
             <label>学籍番号</label>
-            <input type="text" class="col-3" id="student_id" placeholder="学籍番号">
+            <input type="text" class="col-3" name="student_id" id="student_id" placeholder="学籍番号">
             </div>
             <div class="form-group">
             <label>パスワード</label>
-            <input type="password" class="col-3" id="password" placeholder="パスワード" value="{{completed['password']}}">
+            <input type="password" class="col-3" name="password" id="password" placeholder="パスワード" value="{{completed['password']}}">
             </div>
             <button type="submit" class="btn btn-primary" id="send">送信</button>
 
