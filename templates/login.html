@@ -6,21 +6,26 @@
 
     <title>Rakus</title>
     
+    <link rel="stylesheet" href="../static/login.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+
+<header>
     <h1>Hello AIT!</h1>
-    <h2>新規登録</h2>
+</header>
+
+<body>
+    <h2>ログイン</h2>
 
     <div class="container-fluid">
         <form action="/login" method="POST">
             <div class="form-group">
             <label>学籍番号</label>
-            <input type="text" class="col-3" id="student_id" placeholder="学籍番号">
+            <input type="text" class="col-3" name="student_id" id="student_id" placeholder="学籍番号">
             </div>
             <div class="form-group">
             <label>パスワード</label>
-            <input type="password" class="col-3" id="password" placeholder="パスワード">
+            <input type="password" class="col-3" name="password" id="password" placeholder="パスワード">
             </div>
             <button type="submit" class="btn btn-primary" id="send">送信</button>
 
