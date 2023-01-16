@@ -65,20 +65,27 @@ button.btn--login.btn--cubic:hover {
     right: 1rem;
 }
 
-button.btn--signup.btn--emboss {
-    border-radius: 0.5em;
-    background-color: #696969;
-    text-shadow: -1px -1px 1px gainsboro;
-    border-bottom: 5px solid black;
+.container{
+    font-family: arial;
+    font-size: 24px;
+    margin-left: 10.2em;
+    width: 350px;
+    height: 200px;
+    outline: dashed 1px black;
 }
-button.btn--signup.btn--cubic:hover {
-    margin-top: 3px;
-    border-bottom: 2px solid black;
+
+.btn--signup,
+.btn-signup.btn--signup {
+    height: 50px;
+    width: 130px;
+    text-align: center;
+    color: black;
+    background-color: #fff;
 }
-.fa-position-right {
-    position: absolute;
-    top: calc(50% - .5em);
-    right: 1rem;
+.btn--signup:hover,
+.btn-signup.btn--signup:hover {
+    color: #fff;
+    background: #800000;
 }
 
 p{
