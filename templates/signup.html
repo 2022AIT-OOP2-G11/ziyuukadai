@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>新規登録</title>
-    
+
+    <link rel="stylesheet" href="../static/signup.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Hello AIT!</h1>
+    <h1>ようこそ14号館へ</h1>
     <h2>新規登録</h2>
 
     <div class="container-fluid">
@@ -17,32 +18,35 @@
         <!-- <input name="user_name">みたいな感じでname属性がないとpython側が受け取れなかった　-->
         <!-- つけてくれてるidと同じ感じで、各インプットにnameをつけてほしい！ -->
         <form action="/signup" method="POST">
-            <div class="form-group">
-            <label>ユーザー名</label>
-            <input type="text" class="col-3" name="user_name" id="user_name" placeholder="ユーザー名" value="{{completed['user_name']}}">
-            </div>
-            <div class="form-group">
-            <label>学籍番号</label>
-            <input type="text" class="col-3" name="student_id" id="student_id" placeholder="学籍番号">
-            </div>
-            <div class="form-group">
-            <label>パスワード</label>
-            <input type="password" class="col-3" name="password" id="password" placeholder="パスワード" value="{{completed['password']}}">
-            </div>
-            <button type="submit" class="btn btn-primary" id="send">送信</button>
+
+            <div class="box">
+                <div class="form-group">
+                <div class="box-title">ユーザー名</div>
+                <input type="text" class="col-3" name="user_name" id="user_name" placeholder="ユーザー名" value="{{completed['user_name']}}">
+                </div>
+                <div class="form-group">
+                <div class="box-title">学籍番号</div>
+                <input type="text" class="col-3" name="student_id" id="student_id" placeholder="学籍番号">
+                </div>
+                <div class="form-group">
+                <div class="box-title">パスワード</div>
+                <input type="password" class="col-3" name="password" id="password" placeholder="パスワード" value="{{completed['password']}}">
+                </div>
+                <button type="submit" class="btn btn-primarybtn btn--login btn--emboss btn--cubic" id="send">送信</button>
 
 
-            <div class="err_message">
-                
-                    {% if message[0] %}
-                    <p>{{message[0]}}</p>
-                    {% endif %}
+                <div class="err_message">
+                    
+                        {% if message[0] %}
+                        <p>{{message[0]}}</p>
+                        {% endif %}
 
-                    {% if message[1] %}
-                    <p>{{message[1]}}</p>
-                    {% endif %}
+                        {% if message[1] %}
+                        <p>{{message[1]}}</p>
+                        {% endif %}
 
-                    <!-- <p>{{completed}}</p> -->
+                        <!-- <p>{{completed}}</p> -->
+                </div>
             </div>
         </form>
     </div>
