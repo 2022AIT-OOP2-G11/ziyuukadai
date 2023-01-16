@@ -50,6 +50,7 @@ input {
 }
 
 button.btn--login.btn--emboss {
+    width: 5em;
     border-radius: 0.5em;
     background-color: #696969;
     text-shadow: -1px -1px 1px gainsboro;
