@@ -1,7 +1,7 @@
 body {
-  background-color: #000;
+  background-color: #c0c0c0;
   font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
-  color: #800000;
+  color: #c0c0c0;
   /*
   background-color: #111;
   color: #fff;
@@ -15,18 +15,42 @@ body {
     linear-gradient(#111 50%, transparent 50%);
   background-size: 20px 20px;*/
 }
+
+.title {
+  margin: 0 1em 3em;
+  border-radius: 0.5em; /*角丸*/
+  background: #800000; /*背景色*/
+  overflow: hidden;
+}
+
+.title p {
+  margin: 0;
+  font-size: 3em; /*文字サイズ*/
+  color: #fff; /*文字の色*/
+  animation: flowing 10s linear infinite; /*アニメーション*/
+  transform: translateX(100%); /*最初の位置*/
+}
+
+@keyframes flowing {
+  100% {
+    transform: translateX(-100%); /*終了の位置*/
+  }
+}
 h1 {
   color: #800000;
 }
+h5 {
+  color: #c0c0c0;
+}
 .account {
-  border: #000 2px solid; /*境界線の指定*/
+  border: #fff 2px solid; /*境界線の指定*/
   border-radius: 50%;
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   box-sizing: border-box;
   background-image: url("../static/icon.png");
-  padding: 15px 15px 15px 15px;
+  padding: 8px 8px 8px 8px;
   text-align: center;
   float: right;
 }
@@ -38,32 +62,32 @@ h1 {
   display: none;
   padding: 2px;
   color: aliceblue;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #800000;
-  width: 100px;
+  width: 150px;
   top: 50px;
   left: 0px;
-  font-size: 12px;
+  font-size: 10px;
   text-align: center;
 }
 
 .comment {
-  color: #fff;
-  background-color: #000;
+  color: #000;
+  background-color: #c0c0c0;
   border: #fff 1px solid; /*境界線の指定*/
-  height: 550px; /* 横幅を550pxに指定 */
+  height: 500px; /* 横幅を550pxに指定 */
   overflow-y: scroll; /* 縦方向にスクロール可能にする */
   padding: 0.2em 0.5em;
   margin: 2em 0;
-  background: #000;
-  box-shadow: 0px 0px 0px 10px #000;
-  border: dashed 2px white;
+  background: #c0c0c0;
+  box-shadow: 0px 0px 0px 10px #c0c0c0;
+  border: dashed 2px #000;
   width: 58%;
   float: left;
 }
 
 span {
-  color: #ff7f50;
+  color: #32cd32;
 }
 
 a.btn {
@@ -107,18 +131,18 @@ nav {
 }
 
 input {
-  color: #fff;
-  box-shadow: 0px 0px 0px 5px #000;
-  border: dashed 2px white;
-  background-color: #000;
+  color: #000;
+  box-shadow: 0px 0px 0px 5px #c0c0c0;
+  border: dashed 2px #000;
+  background-color: #c0c0c0;
   font-size: 15pt;
 }
 
 textarea {
-  color: #fff;
-  box-shadow: 0px 0px 0px 5px #000;
-  border: dashed 2px white;
-  background-color: #000;
+  color: #000;
+  box-shadow: 0px 0px 0px 5px #c0c0c0;
+  border: dashed 2px #000;
+  background-color: #c0c0c0;
   width: 100%;
   height: 350px;
   font-size: 15pt;
