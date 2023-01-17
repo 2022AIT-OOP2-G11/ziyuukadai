@@ -23,9 +23,10 @@ app.permanent_session_lifetime = timedelta(minutes=.5)
 
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
-    def __init__(self, user_name, id=None):
+    def __init__(self, user_name, student_id, id=None):
         self.id = id
         self.user_name = user_name
+        self.student_id = student_id
 
  #セッションからユーザーをリロードするための関数
  #ユーザオブジェクトを返す
@@ -42,8 +43,9 @@ def load_user(user_id):
     
     user_id = [key for key in user_json.keys()][0]
     user_name = user_json[user_id]["ユーザ名"]
+    student_id = user_json[user_id]["学籍番号"]
     
-    return User(user_name=user_name, id=user_id)
+    return User(user_name=user_name, student_id=student_id, id=user_id)
 # ==== ⬆︎ここまでログインに必要な設定とか⬆️ ==== #
 
 
@@ -113,11 +115,12 @@ def login():
         
         
         user_id = [key for key in user_json.keys()][0]
-        user_name = user_json[user_id]["学籍番号"]
+        user_name = user_json[user_id]["ユーザ名"]
+        student_id = user_json[user_id]["学籍番号"]
         password_hash = user_json[user_id]["パスワード"]
         
         #DBから取得したデータからUserオブジェクトを作成
-        user = User(user_name=user_name, id=user_id)
+        user = User(user_name=user_name, student_id=student_id, id=user_id)
         
         
         #パスワードのチェック
