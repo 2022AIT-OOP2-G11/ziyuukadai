@@ -165,7 +165,7 @@ def Delete_One_Thread(Thread_ID, User_name):
 
     return message
 
-#検索関数
+#スレッド検索関数
 def Search_Thread_Name(word: str):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
@@ -203,7 +203,7 @@ def Search_Thread_Name(word: str):
             word_list.insert(wild_num, '¥')
             search_word = "".join(word_list)
 
-        search_sql += ' スレッド名 LIKE \'%' + search_word + '%\''
+        search_sql += f' スレッド名 LIKE \'%{search_word}%\''
 
         if word_len > 1 and word_len != time:
             search_sql += ' or'
@@ -233,14 +233,82 @@ def Search_Thread_Name(word: str):
 
     con.close()
 
+#ユーザー検索
+def Search_User_Name(word: str):
+    # DB接続。ファイルがなければ作成する
+    con = sqlite3.connect('./DB/DataBase.db')
+
+    #テーブル(表)があるか確認
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='スレッド一覧'").fetchone()[0]
+
+    if table_count == 0:
+        #テーブル作成SQL文
+        con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
+                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+
+    search_word_list = word.split()
+    word_len = len(search_word_list)
+    escape_flag = False
+    time = 0
+
+    search_sql = "SELECT * FROM スレッド一覧 WHERE"
+
+    for search_word in search_word_list:
+
+        time += 1
+
+        if('%' in search_word):
+            escape_flag = True
+            wild_num = search_word.find('%')
+            word_list = list(search_word)
+            word_list.insert(wild_num, '¥')
+            search_word = "".join(word_list)
+
+        if('_' in search_word):
+            escape_flag = True
+            wild_num = search_word.find('_')
+            word_list = list(search_word)
+            word_list.insert(wild_num, '¥')
+            search_word = "".join(word_list)
+
+        search_sql += f' ユーザー名 LIKE \'%{search_word}%\''
+
+        if word_len > 1 and word_len != time:
+            search_sql += ' or'
+
+    if escape_flag:
+        search_sql += ' ESCAPE \'¥\''
+
+
+    #スレッドIDの内容を取得
+    get_search = con.execute(search_sql).fetchall()
+    #get_search = con.execute('SELECT * FROM スレッド一覧 WHERE スレッド名 LIKE \'%%f%%\'').fetchall()
+
+    results = []
+    #スレッドの内容を一つずつ取る
+    for i in get_search:
+        results.append(dictionary(list(i)))
+
+    #スレッドIDを鍵とした辞書型を作成
+    search_results = dict(results)
+    
+
+    #jsonファイル作成
+    with(open('./json/Search_User.json','w')) as f:
+        json.dump(search_results, f, indent=4, ensure_ascii=False)
+
+    con.commit()
+
+    con.close()
     
 
 if __name__ == "__main__":
-    # new_thread(Thread_Name="a", Make_User_Name="tomo")
+    # new_thread(Thread_Name="ffff", Make_User_Name="そろ")
     # Get_Thread_All()
     # Get_Thread_One(2)
     # Update_Thread_Time(2)
     # print(Delete_One_Thread(2, "yug"))
-    # Search_Thread_Name('10_') 
+    # Search_Thread_Name('f') 
+    Search_User_Name('tomo')
 
     pass

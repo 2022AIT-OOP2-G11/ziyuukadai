@@ -1,0 +1,101 @@
+body {
+  background-color: #fff;
+  background-image: radial-gradient(#f5f5f5 20%, transparent 20%),
+    radial-gradient(#f5f5f5 20%, transparent 20%);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}
+.comment {
+  background-color: #ffffff;
+  border: #4e7bcc 1px solid; /*境界線の指定*/
+  height: 390px; /* 横幅を200pxに指定 */
+  overflow-y: scroll; /* 縦方向にスクロール可能にする */
+  padding: 0.2em 0.5em;
+  margin: 2em 0;
+  background: #d6ebff;
+  box-shadow: 0px 0px 0px 10px #d6ebff;
+  border: dashed 2px white;
+  width: 58%;
+  float: left;
+}
+
+span {
+  color: #3eb370;
+}
+
+.text {
+  font-size: 2em;
+  color: #fff;
+  animation: flowing 10s linear infinite;
+  transform: translateX(100%); /*初期位置*/
+}
+
+
+
+p {
+  zoom: 1.5;
+  }
+  
+
+/*div#main {
+  width: 58%;
+  float: left;
+}*/
+
+nav {
+  background-color: #ffffff;
+  width: 38%;
+  float: right;
+}
+
+.heading {
+  border-bottom: solid 2px;
+}
+
+input {
+  border: #4e7bcc 1px solid;
+  font-size: 15pt;
+}
+
+textarea {
+  border: #4e7bcc 1px solid;
+  height: 200px;
+  width: 100%;
+  font-size: 15pt;
+  resize: none;
+}
+
+.button a {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 240px;
+  padding: 10px 25px;
+  color: #543618;
+  transition: 0.3s ease-in-out;
+  font-weight: 600;
+  background: #eeee;
+  border: 0.2rem solid #543618;
+  box-shadow: 0.2rem 0.2rem 0px 0.1rem #cccccc;
+}
+.button a:hover {
+  transform: translate3d(0.2rem, 0.2rem, 0);
+  box-shadow: none;
+  opacity: 1;
+  transition: all 0.2s;
+}
+.button a:after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-top: 3px solid #543618;
+  border-right: 3px solid #543618;
+  transform: rotate(45deg) translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  border-radius: 1px;
+  transition: 0.3s ease-in-out;
+}

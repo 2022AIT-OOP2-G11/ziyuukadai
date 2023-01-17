@@ -6,25 +6,42 @@
 
     <title>Rakus</title>
     
+    <link rel="stylesheet" href="../static/login.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <h1>Hello AIT!</h1>
-    <h2>新規登録</h2>
+    <h1>ようこそ14号館へ</h1>
+    <h2>ログイン画面</h2>
 
     <div class="container-fluid">
         <form action="/login" method="POST">
-            <div class="form-group">
-            <label>学籍番号</label>
-            <input type="text" class="col-3" id="student_id" placeholder="学籍番号">
-            </div>
-            <div class="form-group">
-            <label>パスワード</label>
-            <input type="password" class="col-3" id="password" placeholder="パスワード">
-            </div>
-            <button type="submit" class="btn btn-primary" id="send">送信</button>
+            <div class="box">
+                <div class="form-group">
+                    <div class="box-title">学籍番号</div>
+                    <input type="text" class="col-3" name="student_id" id="student_id" placeholder="学籍番号">
+                </div>
+                <div class="form-group">
+                    <div class="box-title">パスワード</div>
+                    <input type="password" class="col-3" name="password" id="password" placeholder="パスワード">
+                </div>
+                <button type="submit" class="btn btn-primarybtn btn--login btn--emboss btn--cubic" id="send">ログイン</button>
+                
 
-            <button type="submit" class="btn btn-primary" id="move">新規登録はこちら</button>
+                
+                <!-- <div class="elem_area"> -->
+                    <!-- <p>{{message}}</p> -->
+                    {% if message %}
+                    <p>{{message}}</p>
+                    {% elif message %}
+                    <p>{{message}}</p>
+                    {% endif %}
+                <!-- </div> -->
+
+                <button type="submit" class="btn btn-primarybtn btn--signup" id="move">新規登録はこちら</button>
+
+            </div>
+                
         </form>
     </div>
     
