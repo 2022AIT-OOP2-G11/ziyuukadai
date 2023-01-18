@@ -107,7 +107,6 @@ def get_studentnumber_by_user(student_number):
     con = connect_db()
 
     studentnumber_by_users = con.execute(f"SELECT * FROM ユーザー WHERE 学籍番号 = '{student_number}'").fetchone()
-    # print(studentnumber_by_users)
 
     results = []
 
@@ -125,18 +124,34 @@ def get_studentnumber_by_user(student_number):
 
     con.close()
 
+#ユーザの学籍番号からidを取得
+def get_id_from_studentnum(student_number):
+    con = connect_db()
+
+    user_id = con.execute(f"SELECT id FROM ユーザー WHERE 学籍番号 = '{student_number}'").fetchone()[0]
+
+
+    return user_id
+
+
 #学籍番号とパスワードでユーザを削除
 def delete_user(student_number, password):
     con = connect_db()
 
+    #学籍番号とパスワードからユーザーを削除
     con.execute(f"DELETE FROM ユーザー WHERE 学籍番号 = '{student_number}' and パスワード = '{password}'")
-    #con.execute(f"UPDATE ユーザ SET id = (id - 1) WHERE id > {Thread_ID}")
+    #ユーザーのidの修正
+    con.execute(f"UPDATE ユーザー SET id = (id - 1) WHERE id > {get_id_from_studentnum(student_number)}")
 
     get_all_users()
 
     con.commit()
     con.close()
     
+
+#デバッグ用
+if __name__ == "__main__":
+    delete_user('k20125', 'kkkkkkkkkk')
 
 
 
