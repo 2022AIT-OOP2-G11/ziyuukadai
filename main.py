@@ -231,7 +231,7 @@ def thread():
          #json読み込み
          json_file1 = open("json/thread_id_content.json",'r')
          json_dict1 = json.load(json_file1)
-         
+         print(json_dict1)
           #値を格納する場所
          thread_dict_list= []
          #取り出し
@@ -244,19 +244,27 @@ def thread():
             thread_dict['投稿時間'] =myvalue['投稿時間']
             thread_dict_list.append(thread_dict)
          
-         return render_template("thread.html",comments = thread_dict_list)
+            
+         Get_Thread_One(Thread_ID=thread_id)
+         json_file1 = open("json/One_thread.json",'r')
+         json_dict1 = json.load(json_file1)
+         print(json_dict1)
+         thread_name = json_dict1[str(thread_id)]["スレッド名"]   
+         
+         
+         return render_template("thread.html",comments = thread_dict_list, thread_name = thread_name, thread_id=thread_id)
     elif request.method == "POST":
 
         #POSTだったらデータを受け取って、データベースに保存する
 
         user_name = request.form.get("user_name")
         content_name = request.form.get("content")
+        id = request.form.get("thread_id")
         #json読み込み
         json_file1 = open("json/thread_id_content.json",'r')
         json_dict1 = json.load(json_file1)
         #最新のコメントのスレッドidを取得
-        detail = json_dict1[-1]
-        id = detail["スレッドid"]
+        
 
         comment_add(thread_id=id, content=content_name, user_name=user_name)
         url = "/thread?thid=th" + str(id)
