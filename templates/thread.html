@@ -22,8 +22,8 @@
         <span class="word">ログアウト</span>
       </button>
       </h5>
-    <h1 class="heading">スレッド名
-      <a href="" class="btn"><</a>
+    <h1 class="heading">{{thread_name}}
+      <a href="/" class="btn"><</a>
     </h1>
     <div id="main">
         <div class="comment">
@@ -43,6 +43,7 @@
     <nav>
         <div class="box">
           <form action="/thread" method="POST">
+            <input type="hidden" name="thread_id" value={{thread_id}}>
             <p>
               <h2 class="heading">コメント入力</h2>
               <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>

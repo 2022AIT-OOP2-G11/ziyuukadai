@@ -6,7 +6,7 @@ import re #正規表現
 import json
 from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
-from modules.comment_operation import connect_db,comment_add,comment_get_id
+from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
 
 app = Flask(__name__)
@@ -81,7 +81,8 @@ def index():
         user_name = request.form.get("user_name")
         tread_name = request.form.get("title")
 
-        new_thread(tread_name,user_name)
+
+        new_thread(Thread_Name=tread_name,Make_User_Name=user_name)
         
         return redirect("/")
 
@@ -224,25 +225,52 @@ def thread():
     if request.method == "GET":
          thread = request.args.get("thid")
          thread_id = thread[2:]
+         print(thread_id)
          #idで書き込み
-         comment_get_id(thread_id)
+         comment_get_id(thread_id=thread_id)
          #json読み込み
          json_file1 = open("json/thread_id_content.json",'r')
          json_dict1 = json.load(json_file1)
-         
+         print(json_dict1)
           #値を格納する場所
          thread_dict_list= []
          #取り出し
          for myvalue in json_dict1:
-            thread_dict = {'コメント':''}
+            thread_dict = {'id': '','スレッドid':'','ユーザ名':'','コメント':'','投稿時間':''}
+            thread_dict['id'] = myvalue['id']
+            thread_dict['スレッドid'] = myvalue['スレッドid']
+            thread_dict['ユーザ名'] = myvalue['ユーザー名']
             thread_dict['コメント'] = myvalue['内容']
-         
+            thread_dict['投稿時間'] =myvalue['投稿時間']
             thread_dict_list.append(thread_dict)
          
-         return render_template("thread.html",comments = thread_dict_list)
+            
+         Get_Thread_One(Thread_ID=thread_id)
+         json_file1 = open("json/One_thread.json",'r')
+         json_dict1 = json.load(json_file1)
+         print(json_dict1)
+         thread_name = json_dict1[str(thread_id)]["スレッド名"]   
+         
+         
+         return render_template("thread.html",comments = thread_dict_list, thread_name = thread_name, thread_id=thread_id)
     elif request.method == "POST":
-        pass 
-        return render_template("thread.html")
+
+        #POSTだったらデータを受け取って、データベースに保存する
+
+        user_name = request.form.get("user_name")
+        content_name = request.form.get("content")
+        id = request.form.get("thread_id")
+        #json読み込み
+        json_file1 = open("json/thread_id_content.json",'r')
+        json_dict1 = json.load(json_file1)
+        #最新のコメントのスレッドidを取得
+        
+
+        comment_add(thread_id=id, content=content_name, user_name=user_name)
+        url = "/thread?thid=th" + str(id)
+        print(url)
+        return redirect(url)
+        
 
 if __name__ == '__main__':
     app.run(debug=True)
