@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
 import json
-from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, Update_Thread_Time, Delete_One_Thread
+from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, Update_Thread_Time, Delete_One_Thread, Search_Thread_Name
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
@@ -74,7 +74,7 @@ def index():
             
             #まとめたdictをlistに追加
             thread_dict_list.append(thread_dict_template)
-        print(thread_dict_list)
+        # print(thread_dict_list)
         return render_template('index.html',threads = thread_dict_list)
 
     elif request.method == "POST":
@@ -86,6 +86,37 @@ def index():
         new_thread(Thread_Name=tread_name,Make_User_Name=user_name)
         
         return redirect("/")
+
+
+@app.route("/search", methods=["POST"])
+def search():
+    if  request.method == "POST":
+        print('a')
+        search_word = request.form.get("search_word")
+        print(search_word)
+
+        Search_Thread_Name(search_word)
+        #読み込むファイルパスの指定
+        json_file = open("json/Search_thread.json",'r')
+        json_dict = json.load(json_file)
+
+        #値を格納する場所
+        search_thread_list= []
+        #json取り出してdictでまとめる
+        for mykey,myvalue in json_dict.items():
+            thread_dict_template = {'id': '', 'スレッド名': '', 'ユーザー名': '','スレッドを立てた時間': '','最終更新時間': ''}
+            thread_dict_template['id'] = mykey
+            thread_dict_template['スレッド名'] = myvalue['スレッド名']
+            thread_dict_template['ユーザー名'] = myvalue['ユーザー名']
+            thread_dict_template['最終更新時間'] = myvalue['最終更新時間']
+            thread_dict_template['スレッドを立てた時間'] = myvalue['スレッドを立てた時間']
+            
+            #まとめたdictをlistに追加
+            search_thread_list.append(thread_dict_template)
+
+        return render_template('index.html',threads = search_thread_list)
+
+
 
 
 
