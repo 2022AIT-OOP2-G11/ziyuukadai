@@ -6,7 +6,7 @@ import re #正規表現
 import json
 from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
-from modules.comment_operation import connect_db,comment_add,comment_get_id
+from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
 
 app = Flask(__name__)
@@ -242,8 +242,25 @@ def thread():
          
          return render_template("thread.html",comments = thread_dict_list)
     elif request.method == "POST":
-        pass 
-        return render_template("thread.html")
+
+        #POSTだったらデータを受け取って、データベースに保存する
+
+        user_name = request.form.get("user_name")
+        content_name = request.form.get("content")
+        #json読み込み
+        json_file1 = open("json/thread_id_content.json",'r')
+        json_dict1 = json.load(json_file1)
+        #最新のコメントのスレッドidを取得
+        detail = json_dict1[-1]
+        id = detail["スレッドid"]
+        
+        print("="*40)
+        print(id,user_name,content_name)
+        print("="*40)
+
+        comment_add(thread_id=id, content=content_name, user_name=user_name)
+        return redirect("/thread?thid", id)
+        
 
 if __name__ == '__main__':
     app.run(debug=True)
