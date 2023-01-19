@@ -53,7 +53,7 @@ def load_user(user_id):
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
-#@login_required#←これがついてるページに入るにはログイン必要
+@login_required#←これがついてるページに入るにはログイン必要
 def index():
     if request.method == "GET":
     #GETだったら全部のスレッドを取得してindex.htmlに送る
@@ -221,6 +221,7 @@ def sample():
     return render_template("sample/for文のサンプル.html", elems=elements)
 
 @app.route("/thread" ,methods = ["GET","POST"])
+@login_required#←これがついてるページに入るにはログイン必要
 def thread():
     if request.method == "GET":
          thread = request.args.get("thid")

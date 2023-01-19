@@ -38,7 +38,7 @@
                     {% endif %}
                 <!-- </div> -->
 
-                <button type="submit" class="btn btn-primarybtn btn--signup" id="move">新規登録はこちら</button>
+                <button type="button"  class="btn btn-primarybtn btn--signup" id="move" onclick="move_signup()">新規登録はこちら</button>
 
             </div>
                 
@@ -47,5 +47,10 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        function move_signup() {
+            document.location.href="/signup"
+        }
+    </script>
 </body>
 </html>
