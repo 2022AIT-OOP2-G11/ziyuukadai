@@ -1,8 +1,6 @@
 import sqlite3
 import json
 
-from werkzeug.security import generate_password_hash, check_password_hash
-
 # テーブル名 : ユーザー
 # id        ユーザ名	  学籍番号	  パスワード
 # 1,2...     String      String     String
@@ -126,41 +124,34 @@ def get_studentnumber_by_user(student_number):
 
     con.close()
 
+#ユーザの学籍番号からidを取得
+def get_id_from_studentnum(student_number):
+    con = connect_db()
+
+    user_id = con.execute(f"SELECT id FROM ユーザー WHERE 学籍番号 = '{student_number}'").fetchone()[0]
+
+
+    return user_id
+
 
 #学籍番号とパスワードでユーザを削除
 def delete_user(student_number, password):
     con = connect_db()
 
-    message = "" # 返り値用変数 
-    hash_pass = "" #ハッシュ化されたパスワードをDBから読み出し
+    #学籍番号とパスワードからユーザーを削除
+    con.execute(f"DELETE FROM ユーザー WHERE 学籍番号 = '{student_number}' and パスワード = '{password}'")
+    #ユーザーのidの修正
+    con.execute(f"UPDATE ユーザー SET id = (id - 1) WHERE id > {get_id_from_studentnum(student_number)}")
 
-    #hash化されたパスワードをDB内で学籍番号で検索して取り出し -> ユーザが見つからない場合、終了
-    try:
-        hash_pass = con.execute(f"SELECT パスワード FROM ユーザー WHERE 学籍番号 = '{student_number}'").fetchone()[0]
-    except TypeError as e:
-        message = 'ユーザーが見つかりません'
-
-        con.close()
-        return message
-
-    #パスワードが正しければ削除
-    if check_password_hash(hash_pass, password):
-        #学籍番号とパスワードからユーザーを削除
-        con.execute(f"DELETE FROM ユーザー WHERE 学籍番号 = '{student_number}'")
-        #ユーザーのidの修正
-        con.execute(f"UPDATE ユーザー SET id = (id - 1) WHERE id > (SELECT id FROM ユーザー WHERE 学籍番号 = '{student_number}')")
-
-        get_all_users()
-        message = "ユーザの削除が完了しました"
-
-    else :
-        message = "パスワードが正しくありません"
+    get_all_users()
 
     con.commit()
     con.close()
-
-    return message
     
+
+#デバッグ用
+if __name__ == "__main__":
+    delete_user('k20125', 'kkkkkkkkkk')
 
 
 
