@@ -46,7 +46,7 @@
             <input type="hidden" name="thread_id" value={{thread_id}}>
             <p>
               <h2 class="heading">コメント入力</h2>
-              <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
+              <input type="hidden" name="user_name" maxlength="10" placeholder="氏名"value={{current_user.user_name}}>
             </br>
             </br>
             <textarea name="content" maxlength="100" placeholder="コメント"></textarea>
