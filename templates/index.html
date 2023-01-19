@@ -36,7 +36,7 @@
             </p>-->
             {% for elem in threads%}
 
-            <div class="elem" id="th{{threads["id"]}}"onclick = "clickclick()">
+            <div class="elem" id="th{{elem["id"]}}"onclick = "clickclick(this)">
             {{elem["ユーザー名"]}}<span>{{elem["スレッド名"]}}</span> : {{elem["スレッドを立てた時間"]}}
             <br>
             {{elem["内容"]}}
@@ -65,7 +65,7 @@
           <form action="/" method="POST">
             <p>
                     <h2 class="heading">新規スレッド作成</h2>
-                <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
+                <input type="hidden" name="user_name" maxlength="10" placeholder="氏名" value={{current_user.user_name}} >
             </br>
           </br>
             <textarea name="title" maxlength="100" placeholder="スレッド名"></textarea>
@@ -81,13 +81,9 @@
         </div>
     </nav>
     <script>
-      consol.log("hello")
-      let id1;
-      function clickclick(){
-         id1 == 1
+      function clickclick(elem){
+        document.location.href = '/thread?thid='+elem.id;  //通常の遷移
       }
-      window.location.href = '/thread?thid=id1';  //通常の遷移
-      window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
     </script>
   </body>
 </html>
