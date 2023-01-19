@@ -166,7 +166,7 @@ def Delete_One_Thread(Thread_ID, User_name):
     return message
 
 #スレッド検索関数
-def Search_Thread_Name(word: str):
+def Search_Thread(word: str):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
 
@@ -178,38 +178,94 @@ def Search_Thread_Name(word: str):
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
                         ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
 
-    search_word_list = word.split()
-    word_len = len(search_word_list)
+    
+    #スレッド検索とユーザ名検索分割
+    word_list = word.split(' | ')
+    search_thread_word = word_list[0]
+    search_user_word = word_list[1]
+    search_thread_flag = False
+    search_user_flag = False
+    
+    #スレッド検索文字分割
+    search_thread_word_list = search_thread_word.split()
+    word_len = len(search_thread_word_list)
     escape_flag = False
     time = 0
 
-    search_sql = "SELECT * FROM スレッド一覧 WHERE"
+    if word_len > 0:
+        search_thread_flag = True
+        search_thread_sql = "SELECT * FROM スレッド一覧 WHERE"
 
-    for search_word in search_word_list:
+        for search_word in search_thread_word_list:
 
-        time += 1
+            time += 1
 
-        if('%' in search_word):
-            escape_flag = True
-            wild_num = search_word.find('%')
-            word_list = list(search_word)
-            word_list.insert(wild_num, '¥')
-            search_word = "".join(word_list)
+            if('%' in search_word):
+                escape_flag = True
+                wild_num = search_word.find('%')
+                word_list = list(search_word)
+                word_list.insert(wild_num, '¥')
+                search_word = "".join(word_list)
 
-        if('_' in search_word):
-            escape_flag = True
-            wild_num = search_word.find('_')
-            word_list = list(search_word)
-            word_list.insert(wild_num, '¥')
-            search_word = "".join(word_list)
+            if('_' in search_word):
+                escape_flag = True
+                wild_num = search_word.find('_')
+                word_list = list(search_word)
+                word_list.insert(wild_num, '¥')
+                search_word = "".join(word_list)
 
-        search_sql += f' スレッド名 LIKE \'%{search_word}%\''
+            search_thread_sql += f' スレッド名 LIKE \'%{search_word}%\''
 
-        if word_len > 1 and word_len != time:
-            search_sql += ' or'
+            if word_len > 1 and word_len != time:
+                search_thread_sql += ' or'
 
-    if escape_flag:
-        search_sql += ' ESCAPE \'¥\''
+        if escape_flag:
+            search_thread_sql += ' ESCAPE \'¥\''
+
+    #ユーザ名検索文字分割
+    search_user_word_list = search_user_word.split()
+    word_len = len(search_user_word_list)
+    escape_flag = False
+    time = 0
+
+    if word_len > 0:
+        search_user_flag = True
+        search_user_sql = "SELECT * FROM スレッド一覧 WHERE"
+
+        for search_word in search_user_word_list:
+
+            time += 1
+
+            if('%' in search_word):
+                escape_flag = True
+                wild_num = search_word.find('%')
+                word_list = list(search_word)
+                word_list.insert(wild_num, '¥')
+                search_word = "".join(word_list)
+
+            if('_' in search_word):
+                escape_flag = True
+                wild_num = search_word.find('_')
+                word_list = list(search_word)
+                word_list.insert(wild_num, '¥')
+                search_word = "".join(word_list)
+
+            search_user_sql += f' ユーザー名 LIKE \'%{search_word}%\''
+
+            if word_len > 1 and word_len != time:
+                search_user_sql += ' or'
+
+        if escape_flag:
+            search_user_sql += ' ESCAPE \'¥\''
+
+    if search_thread_flag and search_user_flag:
+        search_sql = f"{search_thread_sql} INTERSECT {search_user_sql}"
+    elif search_thread_flag:
+        search_sql = search_thread_sql
+    elif search_user_flag:
+        search_sql = search_user_sql
+
+    
 
 
     #スレッドIDの内容を取得
@@ -227,74 +283,6 @@ def Search_Thread_Name(word: str):
 
     #jsonファイル作成
     with(open('./json/Search_thread.json','w')) as f:
-        json.dump(search_results, f, indent=4, ensure_ascii=False)
-
-    con.commit()
-
-    con.close()
-
-#ユーザー検索
-def Search_User_Name(word: str):
-    # DB接続。ファイルがなければ作成する
-    con = sqlite3.connect('./DB/DataBase.db')
-
-    #テーブル(表)があるか確認
-    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='スレッド一覧'").fetchone()[0]
-
-    if table_count == 0:
-        #テーブル作成SQL文
-        con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
-                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
-
-    search_word_list = word.split()
-    word_len = len(search_word_list)
-    escape_flag = False
-    time = 0
-
-    search_sql = "SELECT * FROM スレッド一覧 WHERE"
-
-    for search_word in search_word_list:
-
-        time += 1
-
-        if('%' in search_word):
-            escape_flag = True
-            wild_num = search_word.find('%')
-            word_list = list(search_word)
-            word_list.insert(wild_num, '¥')
-            search_word = "".join(word_list)
-
-        if('_' in search_word):
-            escape_flag = True
-            wild_num = search_word.find('_')
-            word_list = list(search_word)
-            word_list.insert(wild_num, '¥')
-            search_word = "".join(word_list)
-
-        search_sql += f' ユーザー名 LIKE \'%{search_word}%\''
-
-        if word_len > 1 and word_len != time:
-            search_sql += ' or'
-
-    if escape_flag:
-        search_sql += ' ESCAPE \'¥\''
-
-
-    #スレッドIDの内容を取得
-    get_search = con.execute(search_sql).fetchall()
-    #get_search = con.execute('SELECT * FROM スレッド一覧 WHERE スレッド名 LIKE \'%%f%%\'').fetchall()
-
-    results = []
-    #スレッドの内容を一つずつ取る
-    for i in get_search:
-        results.append(dictionary(list(i)))
-
-    #スレッドIDを鍵とした辞書型を作成
-    search_results = dict(results)
-    
-
-    #jsonファイル作成
-    with(open('./json/Search_User.json','w')) as f:
         json.dump(search_results, f, indent=4, ensure_ascii=False)
 
     con.commit()
