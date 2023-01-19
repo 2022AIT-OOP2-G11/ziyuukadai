@@ -219,24 +219,30 @@ def sample():
     ]
     return render_template("sample/for文のサンプル.html", elems=elements)
 
-@app.route("/thread")
+@app.route("/thread" ,methods = ["GET","POST"])
 def thread():
-    #↓デバッグ用
-    comments = [
-        {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
-        {"id":2, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:11:00"},
-        {"id":3, "ユーザ名":"takashi", "コメント":"お腹すいた","投稿時間":"23:01:01:12:00"},
-        {"id":4, "ユーザ名":"nanashi", "コメント":"今日は暑い","投稿時間":"23:01:01:10:01"},
-        {"id":5, "ユーザ名":"satoshi", "コメント":"おはようございます","投稿時間":"23:01:01:11:02"},
-        {"id":6, "ユーザ名":"nnn", "コメント":"あは","投稿時間":"23:01:01:012:03"},
-        {"id":7, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:04"},
-        {"id":8, "ユーザ名":"nikoniko", "コメント":"おはよう","投稿時間":"23:01:01:011:05"},
-        {"id":9, "ユーザ名":"takashi", "コメント":"めっちゃお腹すいた","投稿時間":"23:01:01:012:06"},
-        {"id":10, "ユーザ名":"takoyaki3", "コメント":"元気ですか？","投稿時間":"23:01:01:010:07"},
-        {"id":11, "ユーザ名":"ukiuki", "コメント":"やったー","投稿時間":"23:01:01:011:08"},
-        {"id":12, "ユーザ名":"wanwan", "コメント":"お腹いっぱい","投稿時間":"23:01:01:012:09"},
-    ]
-    return render_template("thread.html", comments=comments)
+    if request.method == "GET":
+         thread = request.args.get("thid")
+         thread_id = thread[2:]
+         #idで書き込み
+         comment_get_id(thread_id)
+         #json読み込み
+         json_file1 = open("json/thread_id_content.json",'r')
+         json_dict1 = json.load(json_file1)
+         
+          #値を格納する場所
+         thread_dict_list= []
+         #取り出し
+         for myvalue in json_dict1:
+            thread_dict = {'コメント':''}
+            thread_dict['コメント'] = myvalue['内容']
+         
+            thread_dict_list.append(thread_dict)
+         
+         return render_template("thread.html",comments = thread_dict_list)
+    elif request.method == "POST":
+        pass 
+        return render_template("thread.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

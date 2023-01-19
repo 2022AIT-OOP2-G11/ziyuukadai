@@ -57,7 +57,7 @@
           この掲示板はAIT在学生のための掲示板です。</br>
         個人が特定できる情報の記載や、</br>
       公序良俗に反する行為はやめましょう。</p>
-          <form action="/thread" method="POST">
+          <form action="/thread" method="GET">
             <p>
                     <h2 class="heading">新規スレッド作成</h2>
                 <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
@@ -67,6 +67,7 @@
             <!--<input class="button" type="submit" value="送信"  />-->
             <div class="button">
               <a href="#">送信</a>
+              <a href="thread?thid=th1">aaaa</a>
             </div>
             </p>
             </div>
