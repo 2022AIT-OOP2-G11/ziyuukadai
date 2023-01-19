@@ -2,6 +2,10 @@ body {
   background-color: #c0c0c0;
   font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
   color: #c0c0c0;
+  background-image: url("back.jpg"); /* 画像 */
+  background-size: cover; /* 全画面 */
+  background-attachment: fixed; /* 固定 */
+  background-position: center center;
   /*
   background-color: #111;
   color: #fff;
@@ -49,7 +53,7 @@ h5 {
   width: 75px;
   height: 75px;
   box-sizing: border-box;
-  background-image: url("../static/icon.png");
+  background-image: url("../static/icon-2.png");
   padding: 8px 8px 8px 8px;
   text-align: center;
   float: right;
@@ -84,6 +88,7 @@ h5 {
   border: dashed 2px #000;
   width: 58%;
   float: left;
+  opacity: 0.8;
 }
 
 span {
@@ -120,6 +125,7 @@ a.btn:hover {
 .box {
   width: 38%;
   float: right;
+  opacity: 0.8;
 }
 nav {
   background-color: #ffffff;
