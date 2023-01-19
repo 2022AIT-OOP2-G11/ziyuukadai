@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "/usr/bin/python3"
+=======
+    "python.pythonPath": "/Users/k21108kk/.pyenv/versions/3.10.6/bin/python"
+>>>>>>> 4707f266903d4b2cf3db866c698afbb08c660b64
 }

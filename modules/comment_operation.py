@@ -14,18 +14,15 @@ content_db = './DB/DataBase.db' #DBの保存場所
 def connect_db():
     con = sqlite3.connect(content_db) #DBに接続
 
-    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='コメント'").fetchone()[0]
-
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table'").fetchone()[0]
 
     #テーブルが作成されていない場合は作成
     if table_count == 0:
         con.execute("CREATE TABLE コメント(id INTEGER PRIMARY KEY AUTOINCREMENT, スレッドid INTEGER NOT NULL, 内容 TEXT NOT NULL, ユーザー名 TEXT, 投稿時間 TIMESTAMP)")
 
-    return con
-
 #コメントを追加 → (スレッドid, 内容, ユーザー名)
 def comment_add(thread_id, content, user_name): 
-    con = connect_db()
+    con = sqlite3.connect(content_db)
     
     #DBにデータを保存
     con.execute("INSERT INTO コメント(スレッドid, 内容, ユーザー名, 投稿時間)" +  f"values('{thread_id}', '{content}', '{user_name}', datetime('now','localtime'))")
@@ -35,7 +32,7 @@ def comment_add(thread_id, content, user_name):
 
 #スレッドidに応じたスレッドの内容をjsonファイルへ保存
 def comment_get_id(thread_id):
-    con = connect_db()
+    con = sqlite3.connect(content_db)
 
     thread_content = con.execute(f"SELECT * FROM コメント WHERE スレッドid = {thread_id}").fetchall()
 
@@ -74,11 +71,6 @@ def Delete_Comment(Comment_ID, User_name):
     con.commit()
 
     con.close()
-
-if __name__ == "__main__":
-    comment_add(1, "かくにん", "takoyaki3")
-    comment_get_id(1)
-
 
 
 
