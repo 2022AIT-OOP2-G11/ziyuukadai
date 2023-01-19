@@ -65,7 +65,7 @@
           <form action="/" method="POST">
             <p>
                     <h2 class="heading">新規スレッド作成</h2>
-                <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
+                <input type="hidden" name="user_name" maxlength="10" placeholder="氏名" value={{current_user.user_name}} >
             </br>
           </br>
             <textarea name="title" maxlength="100" placeholder="スレッド名"></textarea>

@@ -53,7 +53,7 @@ def load_user(user_id):
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
-#@login_required#←これがついてるページに入るにはログイン必要
+@login_required#←これがついてるページに入るにはログイン必要
 def index():
     if request.method == "GET":
     #GETだったら全部のスレッドを取得してindex.htmlに送る
