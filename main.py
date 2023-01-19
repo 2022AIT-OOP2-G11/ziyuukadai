@@ -141,6 +141,8 @@ def logout():
     #ログアウトを実行
     logout_user()
     return redirect("/login")
+
+
     
     
 @app.route("/signup", methods=["GET", "POST"])
