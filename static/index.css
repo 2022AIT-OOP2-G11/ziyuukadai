@@ -1,7 +1,7 @@
 body {
   background-color: #c0c0c0;
   font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
-  color: #c0c0c0;
+  color: #800000;
   background-image: url("aikoudai.jpg"); /* 画像 */
   background-size: cover; /* 全画面 */
   background-attachment: fixed; /* 固定 */
