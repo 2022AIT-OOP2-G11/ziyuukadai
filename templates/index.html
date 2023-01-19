@@ -3,6 +3,7 @@
 <!--HTMLを記述する上で必須となる前置き-->
 <html>
 
+
   <!--HTMLの文書の起点を表す記述-->
   <head>
     <!--ページ上には表示されない裏側の設定を記述するエリア-->
@@ -17,25 +18,24 @@
   <body>
     <!--ページ上に実際に表示される要素を記述するエリア-->
     <h1>AIT 14号館</h1>
-    <h1 class="heading"></h1>
+    <h1 class="heading">スレッド名</h1>
     <div id="main">
         <div class="comment">
             <!--<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
               テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
             </p>-->
-            {% for elem in threads%}
-            <div class="elem" id="th{{elem["id"]}}" onclick="clickclick(this)">
-            <span>{{elem["ユーザー名"]}}:{{elem["スレッド名"]}}</span> {{elem["最終更新時間"]}}
+            {% for elem in indexs%}
+
+            <div class="elem" id="elem{{indexs["id"]}}"onclick = "clickclick()">
+            <div class="elem" id="elem{{indexs["id"]}}">
+            <span>{{elem["スレッド名"]}}</span> : {{elem["投稿時間"]}}
             <br>
             {{elem["内容"]}}
             </div>
             <br>
             {%endfor%}
-          
         </div>
-      </div>
-
-
+        </div>
         <!--<form action="/thread" method="POST">
         <p>
                 <h2 class="heading">コメント入力</h2>
@@ -64,34 +64,32 @@
         個人が特定できる情報の記載や、</br>
       公序良俗に反する行為はやめましょう。</p>
           </br>
-          <form action="/" method="POST">
+          <form action="/thread" method="POST">
             <p>
-              
                     <h2 class="heading">新規スレッド作成</h2>
-                <input type="hidden" name="user_name" maxlength="10" placeholder="氏名"value={{current_user.user_name}} />
+                <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
             </br>
-            <p>{{current_user.user_name}}</p>
-            <textarea name="title" maxlength="100" placeholder="内容"></textarea>
+            <textarea name="content" maxlength="100" placeholder="内容"></textarea>
             </br>
             <!--<input class="button" type="submit" value="送信"  />-->
             <div class="button">
-              <input type="submit" value="送信">
               <a href="#">送信</a>
-              <a href="thread?thid=th1">aaaa</a>
             </div>
             </p>
             </div>
           </form>
-            <!--<p>注意書き</p>-->
         </div>
     </nav>
     <script>
       consol.log("hello")
-      function clickclick(elem){   
-        
-        window.location.href = '/thread?thid=' + elem.id;  //通常の遷移
-        //window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
+      let id1;
+      function clickclick(){
+         id1 == 1
       }
+      window.location.href = '/thread?thid=id1';  //通常の遷移
+      window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
     </script>
   </body>
 </html>
+
+ 
