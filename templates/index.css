@@ -6,57 +6,59 @@ background-image: url("aikoudai.jpg"); /* 画像 */
 background-size: cover; /* 全画面 */
 background-attachment: fixed; /* 固定 */
 background-position: center center;
+body {
+  display: flex;
+  flex-direction: column;
 }
 
 .navigation {
-height: 90px;
-text-align: center;
-background-color: #ffffff;
+  height: 90px;
+  text-align: center;
+  /*background-color: #ffffff;*/
 }
-main{
-    display: flex;
-   /* min-height: 100vh;*/
+main {
+  display: flex;
+  /* min-height: 100vh;*/
 
-    margin: 15px 0 30px 0;
+  margin: 15px 0 30px 0;
 }
-.form_right{
-    flex: 1;
-    background-color: #ffffff;
-    text-align: center;
-    margin-right: 15px;
+.form_right {
+  flex: 1;
+  /*background-color: #ffffff;*/
+  text-align: center;
+  margin-right: 15px;
 }
-.box_left{
-    flex: 1;
-    background-color: #ffffff;
-    text-align: center;
-    margin-right: 15px;
-  }
-  
-  div#main {
-    background-color: #ffffff;
-    width: 58%;
-    float: left;
-  }
-  
-  nav {
-    background-color: #ffffff;
-    width: 38%;
-    float: right;
-  }
-  
-  .heading {
-    border-bottom: solid 2px;
-  }
-  
-  input {
-    border: #4e7bcc 1px solid;
-    font-size: 15pt;
-  }
-  
-  textarea {
-    border: #4e7bcc 1px solid;
-    width: 100%;
-    font-size: 15pt;
-    resize: none;
-  }
-  
+.box_left {
+  flex: 1;
+  /*background-color: #ffffff;*/
+  text-align: center;
+  margin-right: 15px;
+}
+
+div#main {
+  /*background-color: #ffffff;*/
+  width: 58%;
+  float: left;
+}
+
+nav {
+  /*background-color: #ffffff;*/
+  width: 38%;
+  float: right;
+}
+
+.heading {
+  border-bottom: solid 2px;
+}
+
+input {
+  border: #4e7bcc 1px solid;
+  font-size: 15pt;
+}
+
+textarea {
+  border: #4e7bcc 1px solid;
+  width: 100%;
+  font-size: 15pt;
+  resize: none;
+}
