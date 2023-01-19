@@ -25,8 +25,8 @@
             </p>-->
             {% for elem in threads%}
 
-            <div class="elem" id="elem{{threads["id"]}}"onclick = "clickclick()">
-            <div class="elem" id="elem{{threads["id"]}}">
+            <div class="elem" id="th{{elem["id"]}}"onclick="clickclick(this)">
+            <div class="elem" id="th{{elem["id"]}}">
             <span>{{elem["ユーザー名"]}}:{{elem["スレッド名"]}}</span> {{elem["最終更新時間"]}}
             <br>
             {{elem["内容"]}}
@@ -83,12 +83,11 @@
     </nav>
     <script>
       consol.log("hello")
-      let id1;
-      function clickclick(){
-         id1 == 1
+      function clickclick(elem){   
+        
+        window.location.href = '/thread?thid=' + elem.id;  //通常の遷移
+        //window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
       }
-      window.location.href = '/thread?thid=id1';  //通常の遷移
-      window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
     </script>
   </body>
 </html>
