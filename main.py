@@ -6,7 +6,7 @@ import re #正規表現
 import json
 from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
-
+from modules.comment_operation import connect_db,comment_add,comment_get_id
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False 
 app.config["SESSION_COOKIE_SECURE"] = True #Cookieの送信をhttpsに限定
@@ -199,8 +199,9 @@ def unauthorized():
     #]
     #return render_template("sample/for文のサンプル.html", elems=elements)
 
-@app.route("/thread")
+@app.route("/thread",methods = ["GET","POST"])
 def thread():
+<<<<<<< HEAD
     #↓デバッグ用
     comments = [
         {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
@@ -225,8 +226,39 @@ def indexv():
     {"id":2, "スレッド名":"確率統計、意味不明", "ユーザ名":"takoyaki3","スレッドを立てた時間":"2023-01-0610:23", "最終更新時間":"2023-01-06 10:23"},
 ]
     return render_template("index.html", indexs=indexs)
+=======
+    if request.method == "GET":
+        #threadのパラメータを取得
+        thread = request.args.get("thid")
+        #thread番号を取得
+        id  = int(thread[2:])
+        
+        #json書き込み
+        comment_get_id(thread_id = id)
+        #読み込み
+        json_file = open("json/thread_id_content.json",'r')
+        json_dict = json.load(json_file)
+       
+        #値格納場所
+        comment_dict_list = []
+    
+        
+        for myvalue in json_dict:
+
+            comment_dict_template = {"コメント":""}
+            comment_dict_template["コメント"] = myvalue["内容"]
+            #dictをlistに追加
+            comment_dict_list.append(comment_dict_template)
+        
+        return render_template("thread.html",comment = comment_dict_list)
+
+    elif request.method == "POST":
+        pass
+    return render_template("thread.html")
+
+>>>>>>> 4707f266903d4b2cf3db866c698afbb08c660b64
 if __name__ == '__main__':
     app.run(debug=True)
-    
+
     
     

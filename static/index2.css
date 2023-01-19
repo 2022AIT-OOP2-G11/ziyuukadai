@@ -1,24 +1,70 @@
 body {
-  background-color: #fff;
-  background-image: radial-gradient(#f5f5f5 20%, transparent 20%),
-    radial-gradient(#f5f5f5 20%, transparent 20%);
+  background-color: #696969;
+  font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
+  /*
+  background-color: #111;
+  color: #fff;
+  background-image: radial-gradient(#808080 20%, transparent 20%),
+    radial-gradient(#808080 20%, transparent 20%);
   background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
+  background-position: 0 0, 20px 20px;*/
+  /*background-color: #808080;
+  color: #fff;
+  background-image: linear-gradient(-90deg, #111 50%, transparent 50%),
+    linear-gradient(#111 50%, transparent 50%);
+  background-size: 20px 20px;*/
+}
+h1 {
+  color: #800000;
+}
+.account {
+  border: #000 2px solid; /*境界線の指定*/
+  border-radius: 50%;
+  display: block;
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+  background-image: url("../static/icon.png");
+  padding: 15px 15px 15px 15px;
+  text-align: center;
+  float: right;
 }
 .comment {
+  color: #fff;
   background-color: #ffffff;
-  border: #4e7bcc 1px solid; /*境界線の指定*/
-  height: 390px; /* 横幅を200pxに指定 */
+  border: #191970 1px solid; /*境界線の指定*/
+  height: 550px; /* 横幅を550pxに指定 */
   overflow-y: scroll; /* 縦方向にスクロール可能にする */
   padding: 0.2em 0.5em;
   margin: 2em 0;
-  background: #d6ebff;
-  box-shadow: 0px 0px 0px 10px #d6ebff;
+  background: #000;
+  box-shadow: 0px 0px 0px 10px #000;
   border: dashed 2px white;
+  width: 58%;
+  float: left;
 }
 
 span {
-  color: #3eb370;
+  color: #ff7f50;
+}
+
+a.btn {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  width: 50px;
+  margin: auto;
+  padding: 1rem 3rem;
+  font-weight: normal;
+  border: 2px solid #27acd9;
+  color: #27acd9;
+  transition: 0.5s;
+  float: right;
+}
+a.btn:hover {
+  color: #fff;
+  background: #27acd9;
 }
 
 .text {
@@ -28,18 +74,11 @@ span {
   transform: translateX(100%); /*初期位置*/
 }
 .box {
-  border: #4e7bcc 1px solid; /*境界線の指定*/
-}
-
-div#main {
-  width: 58%;
-  float: left;
-}
-
-nav {
-  background-color: #ffffff;
   width: 38%;
   float: right;
+}
+nav {
+  background-color: #ffffff;
 }
 
 .heading {
@@ -52,43 +91,9 @@ input {
 }
 
 textarea {
-  border: #4e7bcc 1px solid;
+  border: #191970 1px solid;
   width: 100%;
+  height: 350px;
   font-size: 15pt;
   resize: none;
-}
-
-.button a {
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 0 auto;
-  max-width: 240px;
-  padding: 10px 25px;
-  color: #543618;
-  transition: 0.3s ease-in-out;
-  font-weight: 600;
-  background: #eeee;
-  border: 0.2rem solid #543618;
-  box-shadow: 0.2rem 0.2rem 0px 0.1rem #cccccc;
-}
-.button a:hover {
-  transform: translate3d(0.2rem, 0.2rem, 0);
-  box-shadow: none;
-  opacity: 1;
-  transition: all 0.2s;
-}
-.button a:after {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-top: 3px solid #543618;
-  border-right: 3px solid #543618;
-  transform: rotate(45deg) translateY(-50%);
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  border-radius: 1px;
-  transition: 0.3s ease-in-out;
 }

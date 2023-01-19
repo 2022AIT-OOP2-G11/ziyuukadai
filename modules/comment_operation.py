@@ -8,7 +8,7 @@ import json
 # comment_add -> コメントを追加(引数 : スレッドid, 内容, ユーザー名)
 # comment_get_id -> スレッドidに応じたスレッドの内容をjsonファイルへ保存(引数 : thread_id)
 
-content_db = './DB/content.db' #DBの保存場所
+content_db = './DB/DataBase.db' #DBの保存場所
 
 #指定されたスレッドのDBに接続し、テーブルが作成されていない場合作成
 def connect_db():
@@ -53,7 +53,24 @@ def comment_get_id(thread_id):
     con.close()
 
 
+def Delete_Comment(Comment_ID, User_name):
+    # DB接続。
+    con = sqlite3.connect(content_db)
 
+    #DBにあるコメント作成者のユーザー名を取得する
+    check = con.execute(f"SELECT ユーザー名 FROM コメント WHERE id = {Comment_ID}").fetchone()[0]
+
+    #コメントの作成者が削除できる
+    if check == User_name:
+        con.execute(f"DELETE from コメント WHERE id = {Comment_ID}")
+
+        con.execute(f"UPDATE コメント SET id = (id - 1) WHERE id > {Comment_ID}")
+
+
+
+    con.commit()
+
+    con.close()
 
 
 
