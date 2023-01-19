@@ -41,8 +41,8 @@ h2{
     padding:1.5em !important;
     z-index: 0;
     background-color:white;/*背景色*/
-    width: 25em;
-    height: 12em;
+    width: 22.5em;
+    height: 13em;
     opacity: 0.85;
 }
 .box:before{
@@ -94,6 +94,10 @@ button.btn--login.btn--cubic:hover {
     outline: dashed 1px black;
 }
 
+.move-botton{
+    margin-top: 1.8em;
+    margin-left: 6em;
+}
 .btn--signup,
 .btn-signup.btn--signup {
     height: 50px;
