@@ -19,7 +19,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 #セッション有効時間を設定できます(現状デバッグ用に1分)
-app.permanent_session_lifetime = timedelta(minutes=.5)
+app.permanent_session_lifetime = timedelta(minutes=)
 
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
@@ -53,7 +53,7 @@ def load_user(user_id):
 # ====　⬇︎ここからルーティングおねがいします⬇︎ ==== #
 
 @app.route('/', methods=["GET", "POST"])
-@login_required#←これがついてるページに入るにはログイン必要
+#@login_required#←これがついてるページに入るにはログイン必要
 def index():
     if request.method == "GET":
     #GETだったら全部のスレッドを取得してindex.htmlに送る
@@ -221,7 +221,7 @@ def sample():
     return render_template("sample/for文のサンプル.html", elems=elements)
 
 @app.route("/thread" ,methods = ["GET","POST"])
-@login_required#←これがついてるページに入るにはログイン必要
+#@login_required#←これがついてるページに入るにはログイン必要
 def thread():
     if request.method == "GET":
          thread = request.args.get("thid")
