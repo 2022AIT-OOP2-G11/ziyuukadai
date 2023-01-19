@@ -81,7 +81,8 @@ def index():
         user_name = request.form.get("user_name")
         tread_name = request.form.get("title")
 
-        new_thread(tread_name,user_name)
+
+        new_thread(Thread_Name=tread_name,Make_User_Name=user_name)
         
         return redirect("/")
 
