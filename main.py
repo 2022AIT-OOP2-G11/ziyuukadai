@@ -201,7 +201,6 @@ def unauthorized():
 
 @app.route("/thread",methods = ["GET","POST"])
 def thread():
-<<<<<<< HEAD
     #↓デバッグ用
     comments = [
         {"id":1, "ユーザ名":"takoyaki3", "コメント":"こんにちは","投稿時間":"23:01:01:10:00"},
@@ -226,7 +225,7 @@ def indexv():
     {"id":2, "スレッド名":"確率統計、意味不明", "ユーザ名":"takoyaki3","スレッドを立てた時間":"2023-01-0610:23", "最終更新時間":"2023-01-06 10:23"},
 ]
     return render_template("index.html", indexs=indexs)
-=======
+
     if request.method == "GET":
         #threadのパラメータを取得
         thread = request.args.get("thid")
@@ -256,7 +255,7 @@ def indexv():
         pass
     return render_template("thread.html")
 
->>>>>>> 4707f266903d4b2cf3db866c698afbb08c660b64
+
 if __name__ == '__main__':
     app.run(debug=True)
 
