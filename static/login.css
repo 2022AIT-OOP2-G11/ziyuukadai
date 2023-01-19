@@ -1,5 +1,6 @@
 body {
-    background-color: #696969;
+    background-image: url("./aikoudai.jpg");
+    /* background-color: #696969; */
     font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
 }
 header {
@@ -7,9 +8,12 @@ header {
     
 }
 h1{
-    color: #800000;
-    
+    margin: 0 1em 3em;
+    border-radius: 0.5em; /*角丸*/
+    background: #800000; /*背景色*/
+    overflow: hidden;
 }
+
 h2{
     color: #800000;
     border-bottom:solid;
@@ -24,6 +28,8 @@ h2{
     z-index: 0;
     background-color:white;/*背景色*/
     width: 25em;
+    height: 12em;
+    opacity: 0.85;
 }
 .box:before{
     position: absolute;
