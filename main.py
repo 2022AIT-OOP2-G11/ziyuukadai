@@ -235,9 +235,12 @@ def thread():
          thread_dict_list= []
          #取り出し
          for myvalue in json_dict1:
-            thread_dict = {'コメント':''}
+            thread_dict = {'id': '','スレッドid':'','ユーザ名':'','コメント':'','投稿時間':''}
+            thread_dict['id'] = myvalue['id']
+            thread_dict['スレッドid'] = myvalue['スレッドid']
+            thread_dict['ユーザ名'] = myvalue['ユーザー名']
             thread_dict['コメント'] = myvalue['内容']
-         
+            thread_dict['投稿時間'] =myvalue['投稿時間']
             thread_dict_list.append(thread_dict)
          
          return render_template("thread.html",comments = thread_dict_list)
@@ -253,13 +256,9 @@ def thread():
         #最新のコメントのスレッドidを取得
         detail = json_dict1[-1]
         id = detail["スレッドid"]
-        
-        print("="*40)
-        print(id,user_name,content_name)
-        print("="*40)
 
         comment_add(thread_id=id, content=content_name, user_name=user_name)
-        return redirect("/thread?thid", id)
+        return redirect("/thread?thid",id)
         
 
 if __name__ == '__main__':
