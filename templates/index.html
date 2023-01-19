@@ -65,12 +65,12 @@
       公序良俗に反する行為はやめましょう。</p>
           </br>
           <form action="/" method="POST">
-            <h1>{{current_user.user_name}}</h1>
             <p>
               
                     <h2 class="heading">新規スレッド作成</h2>
                 <input type="hidden" name="user_name" maxlength="10" placeholder="氏名"value={{current_user.user_name}} />
             </br>
+            <p>{{current_user.user_name}}</p>
             <textarea name="title" maxlength="100" placeholder="内容"></textarea>
             </br>
             <!--<input class="button" type="submit" value="送信"  />-->
