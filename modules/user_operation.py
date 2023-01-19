@@ -131,10 +131,10 @@ def get_studentnumber_by_user(student_number):
 def delete_user(student_number, password):
     con = connect_db()
 
-    message = ""
-    hash_pass = ""
+    message = "" # 返り値用変数 
+    hash_pass = "" #ハッシュ化されたパスワードをDBから読み出し
 
-    #パスワードが正しければ削除
+    #hash化されたパスワードをDB内で学籍番号で検索して取り出し -> ユーザが見つからない場合、終了
     try:
         hash_pass = con.execute(f"SELECT パスワード FROM ユーザー WHERE 学籍番号 = '{student_number}'").fetchone()[0]
     except TypeError as e:
@@ -142,8 +142,8 @@ def delete_user(student_number, password):
 
         con.close()
         return message
-    print(hash_pass)
 
+    #パスワードが正しければ削除
     if check_password_hash(hash_pass, password):
         #学籍番号とパスワードからユーザーを削除
         con.execute(f"DELETE FROM ユーザー WHERE 学籍番号 = '{student_number}'")
@@ -156,17 +156,11 @@ def delete_user(student_number, password):
     else :
         message = "パスワードが正しくありません"
 
-    print(message)
-
     con.commit()
     con.close()
 
     return message
     
-
-#デバッグ用
-if __name__ == "__main__":
-    delete_user('k23400', 'ddddddddd')
 
 
 
