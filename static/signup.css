@@ -30,7 +30,7 @@ h2{
     color: #800000;
     border-bottom:solid;
     border-color:#800000;
-    border-width:5px;/*5ピクセルの太さにする*/
+    border-width:2px;/*5ピクセルの太さにする*/
 }
 .box{
     margin: 2em auto;
@@ -40,6 +40,7 @@ h2{
     z-index: 0;
     background-color:white;/*背景色*/
     width: 25em;
+    opacity: 0.85;
 }
 .box:before{
     position: absolute;
