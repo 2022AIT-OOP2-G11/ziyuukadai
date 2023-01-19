@@ -225,8 +225,9 @@ def thread():
     if request.method == "GET":
          thread = request.args.get("thid")
          thread_id = thread[2:]
+         print(thread_id)
          #idで書き込み
-         comment_get_id(thread_id)
+         comment_get_id(thread_id=thread_id)
          #json読み込み
          json_file1 = open("json/thread_id_content.json",'r')
          json_dict1 = json.load(json_file1)
@@ -258,7 +259,9 @@ def thread():
         id = detail["スレッドid"]
 
         comment_add(thread_id=id, content=content_name, user_name=user_name)
-        return redirect("/thread?thid",id)
+        url = "/thread?thid=th" + str(id)
+        print(url)
+        return redirect(url)
         
 
 if __name__ == '__main__':
