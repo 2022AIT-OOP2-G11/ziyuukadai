@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="ja">
 <!--HTMLを記述する上で必須となる前置き-->
 <html>
 
@@ -9,7 +10,7 @@
     <!--文字エンコードの指定。簡単に言うと文字化けを防ぐための記述-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--ページを様々な画面幅のデバイスでの表示に適応させるための記述-->
-    <title>掲示板</title>
+    <title>AIT 14号館</title>
     <link rel="stylesheet" href="../static/index.css">
     <!--ページタイトルを指定するための記述-->
   </head>
@@ -23,6 +24,8 @@
               テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
             </p>-->
             {% for elem in indexs%}
+
+            <div class="elem" id="elem{{indexs["id"]}}"onclick = "clickclick()">
             <div class="elem" id="elem{{indexs["id"]}}">
             <span>{{elem["スレッド名"]}}</span> : {{elem["投稿時間"]}}
             <br>
@@ -52,12 +55,14 @@
             <input type="text" size="25" placeholder="　スレッド検索">
             <input type="submit" value="検索">
           </form>
-          
+        </br>
+
           <p>〜注意書き〜</br>
           この掲示板はAIT在学生のための掲示板です。</br>
         個人が特定できる情報の記載や、</br>
       公序良俗に反する行為はやめましょう。</p>
-          <form action="/thread" method="GET">
+          </br>
+          <form action="/thread" method="POST">
             <p>
                     <h2 class="heading">新規スレッド作成</h2>
                 <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
@@ -75,5 +80,14 @@
             <!--<p>注意書き</p>-->
         </div>
     </nav>
+    <script>
+      consol.log("hello")
+      let id1;
+      function clickclick(){
+         id1 == 1
+      }
+      window.location.href = '/thread?thid=id1';  //通常の遷移
+      window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
+    </script>
   </body>
 </html>
