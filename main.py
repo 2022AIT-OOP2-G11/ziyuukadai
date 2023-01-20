@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
 import json
-from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, Update_Thread_Time, Delete_One_Thread, Search_Thread_Name
+from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, Update_Thread_Time, Delete_One_Thread, Search_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
@@ -91,11 +91,12 @@ def index():
 @app.route("/search", methods=["POST"])
 def search():
     if  request.method == "POST":
-        print('a')
-        search_word = request.form.get("search_word")
-        print(search_word)
+        search_thread = request.form.get("search_thread")
+        search_user = request.form.get("search_user")
 
-        Search_Thread_Name(search_word)
+        search_word = f"{search_thread} | {search_user}"
+
+        Search_Thread(search_word)
         #読み込むファイルパスの指定
         json_file = open("json/Search_thread.json",'r')
         json_dict = json.load(json_file)
