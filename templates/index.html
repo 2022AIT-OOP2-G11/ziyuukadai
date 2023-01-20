@@ -26,19 +26,19 @@
     </div>
     <h1 class="heading">スレッド選択</h1>
     <div id="main">
-      <form method="get" action="#" class="search_container">
-        <input type="text" size="25" placeholder="　スレッド検索">
-        <input type="submit" value="検索">
+      <form method="post" action="/search" class="search_container">
+        <input type="text" size="25" placeholder="スレッド名で検索" name="search_thread">
+        <input type="text" size="25" placeholder="ユーザ名で検索" name="search_user">
+        <input type="submit" value="検索" >
       </form>
         <div class="comment">
             <!--<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
               テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
             </p>-->
-            {% for elem in indexs%}
+            {% for elem in threads%}
 
-            <div class="elem" id="elem{{indexs["id"]}}"onclick = "clickclick()">
-            <div class="elem" id="elem{{indexs["id"]}}">
-            <span>{{elem["スレッド名"]}}</span> : {{elem["投稿時間"]}}
+            <div class="elem" id="th{{elem["id"]}}"onclick = "clickclick(this)">
+            {{elem["ユーザー名"]}}<span>{{elem["スレッド名"]}}</span> : {{elem["スレッドを立てた時間"]}}
             <br>
             {{elem["内容"]}}
             </div>
@@ -66,7 +66,7 @@
           <form action="/" method="POST">
             <p>
                     <h2 class="heading">新規スレッド作成</h2>
-                <input type="text" name="user_name" maxlength="10" placeholder="氏名"/>
+                <input type="hidden" name="user_name" maxlength="10" placeholder="氏名" value={{current_user.user_name}} >
             </br>
           </br>
             <textarea name="title" maxlength="100" placeholder="スレッド名"></textarea>
@@ -82,13 +82,9 @@
         </div>
     </nav>
     <script>
-      consol.log("hello")
-      let id1;
-      function clickclick(){
-         id1 == 1
+      function clickclick(elem){
+        document.location.href = '/thread?thid='+elem.id;  //通常の遷移
       }
-      window.location.href = '/thread?thid=id1';  //通常の遷移
-      window.open('thread?thid=id1', '_blank'); // 新しいタブを開き、ページを表示
     </script>
   </body>
 </html>

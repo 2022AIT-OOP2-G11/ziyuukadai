@@ -46,6 +46,10 @@ body {
   float: left;
 }
 
+.elem:hover {
+  cursor: pointer;
+}
+
 span {
   color: #3eb370;
 }
