@@ -81,10 +81,11 @@ def index():
     elif request.method == "POST":
         #POSTだったらデータを受け取って、データベースに保存する
         user_name = request.form.get("user_name")
+        student_num = request.form.get("student_id")
         tread_name = request.form.get("title")
 
 
-        new_thread(Thread_Name=tread_name,Make_User_Name=user_name)
+        new_thread(Thread_Name=tread_name,Make_User_Name=user_name, Student_Num=student_num)
         
         return redirect("/")
 

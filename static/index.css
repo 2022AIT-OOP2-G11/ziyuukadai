@@ -114,3 +114,7 @@ textarea {
   border: dashed 2px #000;
   opacity: 0.8;
 }
+
+.search_container > input{
+  margin-right: 10px;
+}
