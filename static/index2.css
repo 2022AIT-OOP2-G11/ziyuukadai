@@ -116,11 +116,21 @@ a.btn {
   width: 10px;
   height: 10px;
   margin: auto;
-  padding: 1rem 1rem;
+  padding: 1.3rem ;
   font-weight: normal;
   color: #800000;
   transition: 0.5s;
   float: left;
+}
+#delete {
+  vertical-align: middle;
+  margin-bottom: 10px;
+  fill: #901111;
+}
+#delete:hover {
+  fill: #c0c0c0;
+  background: #800000;
+  transition-duration: .2s;
 }
 a.btn:hover {
   color: #fff;

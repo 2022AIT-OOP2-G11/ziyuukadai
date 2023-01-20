@@ -7,6 +7,9 @@ body {
   background-attachment: fixed; /* 固定 */
   background-position: center center;
 }
+.wrapper {
+  
+}
 
 .title {
   margin: 0 1em 3em;

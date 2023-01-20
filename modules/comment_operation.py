@@ -21,11 +21,34 @@ def connect_db():
         con.execute("CREATE TABLE コメント(id INTEGER PRIMARY KEY AUTOINCREMENT, スレッドid INTEGER NOT NULL, 内容 TEXT NOT NULL, ユーザー名 TEXT, 投稿時間 TIMESTAMP)")
 
 #コメントを追加 → (スレッドid, 内容, ユーザー名)
-def comment_add(thread_id, content, user_name): 
-    con = sqlite3.connect(content_db)
-    
+def comment_add(thread_id, content, user_name, student_num): 
+     # DB接続。ファイルがなければ作成する
+    con = sqlite3.connect('./DB/DataBase.db')
+
+    #テーブル(表)があるか確認
+    table_count = con.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='コメント'").fetchone()[0]
+    # print(table_count) #デバック
+
+    if table_count == 0: #なかったらテーブルを作成して追加
+        
+        #テーブル作成SQL文
+        con.execute("CREATE TABLE コメント(id INTEGER PRIMARY KEY, スレッドid INTEGER NOT NULL" +
+                        ", 内容 TEXT NOT NULL, ユーザー名 STRING NOT NULL, 学籍番号 STRING NOT NULL, '投稿時間' TIMESTAMP)")
+
+        #新規作成した時スレッドIDが0のため1を代入
+        count = 1
+
+    else: #あったらコメントの個数を取得して追加する
+        #コメントの数を確認
+        thread_count = con.execute("SELECT count(id) FROM コメント")
+        count = int(thread_count.fetchone()[0])
+
+        #一番高いスレッドIDを作成
+        count += 1
+        
+        
     #DBにデータを保存
-    con.execute("INSERT INTO コメント(スレッドid, 内容, ユーザー名, 投稿時間)" +  f"values('{thread_id}', '{content}', '{user_name}', datetime('now','localtime'))")
+    con.execute("INSERT INTO コメント(スレッドid, 内容, ユーザー名, 学籍番号 ,投稿時間)" +  f"values('{thread_id}', '{content}', '{user_name}', '{student_num}', datetime('now','localtime'))")
 
     con.commit()
     con.close()
@@ -37,7 +60,7 @@ def comment_get_id(thread_id):
     thread_content = con.execute(f"SELECT * FROM コメント WHERE スレッドid = {thread_id}").fetchall()
 
     #jsonデータのkeyを設定
-    dict_item = ["id", "スレッドid", "内容", "ユーザー名", "投稿時間"]
+    dict_item = ["id", "スレッドid", "内容", "ユーザー名", "学籍番号","投稿時間"]
     result = []
 
     #{key : item}の形式で辞書型リストに格納
@@ -75,3 +98,6 @@ def Delete_Comment(Comment_ID, User_name):
 
 
 
+if __name__ == "__main__":
+    comment_add(thread_id=1,content="takoyaki",user_name="testkun",student_num="K")
+    comment_get_id(1)
