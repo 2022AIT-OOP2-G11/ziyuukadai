@@ -1,4 +1,14 @@
 body {
+  background-color: #c0c0c0;
+  font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
+  color: #c0c0c0;
+  background-image: url("aikoudai.jpg"); /* 画像 */
+  background-size: cover; /* 全画面 */
+  background-attachment: fixed; /* 固定 */
+  background-position: center center;
+}
+
+body {
   display: flex;
   flex-direction: column;
 }

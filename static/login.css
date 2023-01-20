@@ -1,20 +1,38 @@
 body {
-    background-color: #696969;
+    background-image: url("./aikoudai.jpg");
+    /* background-color: #696969; */
     font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
 }
-header {
+/* header {
     background-color: #696969;
     
+} */
+
+.title{
+    margin: 0 1em 3em;
+    color: #fff;
+    border-radius: 0.5em; /*角丸*/
+    background: #800000; /*背景色*/
+    overflow: hidden;
 }
-h1{
-    color: #800000;
-    
+.title p {
+    margin: 0;
+    font-size: 3em; /*文字サイズ*/
+    color: #fff; /*文字の色*/
+    animation: flowing 10s linear infinite; /*アニメーション*/
+    transform: translateX(100%); /*最初の位置*/
 }
+@keyframes flowing {
+    100% {
+        transform: translateX(-100%); /*終了の位置*/
+    }
+}
+
 h2{
     color: #800000;
     border-bottom:solid;
     border-color:#800000;
-    border-width:5px;/*5ピクセルの太さにする*/
+    border-width:2px;/*5ピクセルの太さにする*/
 }
 .box{
     margin: 2em auto;
@@ -23,7 +41,9 @@ h2{
     padding:1.5em !important;
     z-index: 0;
     background-color:white;/*背景色*/
-    width: 25em;
+    width: 22.5em;
+    height: 13em;
+    opacity: 0.85;
 }
 .box:before{
     position: absolute;
@@ -74,6 +94,10 @@ button.btn--login.btn--cubic:hover {
     outline: dashed 1px black;
 }
 
+.move-botton{
+    margin-top: 1.8em;
+    margin-left: 6em;
+}
 .btn--signup,
 .btn-signup.btn--signup {
     height: 50px;

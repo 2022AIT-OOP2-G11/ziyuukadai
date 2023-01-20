@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
 import json
-from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, dictionary, Update_Thread_Time, Delete_One_Thread
+from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, Update_Thread_Time, Delete_One_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
@@ -19,7 +19,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 #セッション有効時間を設定できます(現状デバッグ用に1分)
-app.permanent_session_lifetime = timedelta(minutes=.5)
+app.permanent_session_lifetime = timedelta(minutes=1)
 
 #ログインに必要なユーザクラスを定義
 class User(UserMixin):
@@ -221,6 +221,7 @@ def sample():
     return render_template("sample/for文のサンプル.html", elems=elements)
 
 @app.route("/thread" ,methods = ["GET","POST"])
+#@login_required#←これがついてるページに入るにはログイン必要
 def thread():
     if request.method == "GET":
          thread = request.args.get("thid")
