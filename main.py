@@ -233,14 +233,30 @@ def signup():
             import smtplib
 
             #認証メールを送る
+            from_password = "zN&XM4mkkG/KX_7"
             from_email = "building14@outlook.jp"
-            to_email = str(student_id) + "@aiteh.ac.jp"
+            to_email = str(student_id) + "@aitech.ac.jp"
             subject = "14号館 認証コード"
             content = """
                 あなたの認証パスワードは
                 <h1>7788</h1>
                 です
             """
+            message = MIMEText(content, "html")
+            message["Subject"] = subject
+            message["To"] = to_email
+            message["From"] = from_email
+            
+            smtp = smtplib.SMTP("smtp.office365.com", 587)
+            smtp.set_debuglevel(True)
+            smtp.ehlo()
+            if smtp.has_extn("STARTTLS"):
+                smtp.starttls()
+            smtp.ehlo()
+            smtp.login(from_email, from_password)
+            smtp.send_message(message)
+            
+            
             print(to_email)
             return render_template("/mail_authorize.html")
                         
@@ -251,9 +267,11 @@ def signup():
             user_add(username=user_name, password=generate_password_hash(password, method="sha256"), student_number=student_id)
             return redirect("/login")
         
-# @app.route("mail_authorize")
-# def mail_authorize():
-#     request.form.get
+@app.route("/mail_authorize", methods=["POST"])
+def mail_authorize():
+    num = request.form.get("authorize_num")
+    print(num)
+    return()
     
 #ログインしていない状態でログインが必要なページにアクセスしたときの処理
 @login_manager.unauthorized_handler
