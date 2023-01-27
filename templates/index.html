@@ -38,10 +38,13 @@
             {% for elem in threads%}
 
             <div class="elem" id="th{{elem["id"]}}"onclick = "clickclick(this)">
-            {{elem["ユーザー名"]}}<span>{{elem["スレッド名"]}}</span> : {{elem["スレッドを立てた時間"]}}
+            {{elem["スレッド名"]}}
+            <br>
+            <span>投稿者：{{elem["ユーザー名"]}}　投稿時間：{{elem["スレッドを立てた時間"]}}</span>
             <br>
             {{elem["内容"]}}
             </div>
+            <br>
             <br>
             {%endfor%}
         </div>

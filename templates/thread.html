@@ -17,7 +17,8 @@
     <div class="title">
       <p>ようこそ14号館へ</p>
     </div>
-    <h5>a
+    <h5>
+      <span class="aaa">a</span>
       <button class="account">
         <span class="word">ログアウト</span>
       </button>
@@ -32,7 +33,7 @@
             </p>-->
             {% for elem in comments%}
             <div class="elem" id="elem{{comments["id"]}}">
-            <span>{{elem["ユーザ名"]}}</span> : {{elem["投稿時間"]}}
+            <span>{{elem["ユーザ名"]}}</span><span class="time"> : {{elem["投稿時間"]}}</span>
             <br>
             {{elem["コメント"]}}
             </div>
