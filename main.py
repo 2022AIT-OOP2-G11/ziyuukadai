@@ -229,6 +229,23 @@ def signup():
             return render_template("signup.html", message=message, completed=completed)
         #エラーなし
         else:   
+            from email.mime.text import MIMEText
+            import smtplib
+
+            #認証メールを送る
+            from_email = "building14@outlook.jp"
+            to_email = str(student_id) + "@aiteh.ac.jp"
+            subject = "14号館 認証コード"
+            content = """
+                あなたの認証パスワードは
+                <h1>7788</h1>
+                です
+            """
+            print()
+            return render_template("/mail_authorize.html")
+                        
+            
+            
             completed["password"] = password
             #パスワードをハッシュ化してDBに保存
             user_add(username=user_name, password=generate_password_hash(password, method="sha256"), student_number=student_id)

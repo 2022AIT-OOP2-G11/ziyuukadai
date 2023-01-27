@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="mail_authorize" name="mail_authorize" onsubmit="set_value()">
+        <input type="text" name="first" ,maxlength="1">
+        <input type="text" name="second" ,maxlength="1">
+        <input type="text" name="thrird",maxlength="1">
+        <input type="text" name="fourth" ,maxlength="1">
+        <input type="hidden" name="authorize_num" name= value=""> 
+        <button type="submit"></button>
+    </form>
+
+    <script>
+        function set_value(){
+            
+            authorize_num = 
+            document.forms["mail_authorize"].elements["fitst"].value+
+            document.forms["mail_authorize"].elements["second"].value+
+            document.forms["mail_authorize"].elements["thrird"].value+
+            document.forms["mail_authorize"].elements["fourth"].value
+            
+            document.forms["mail_authorize"].elements["authorize_num"].value = authorize_num
+            console.log(authorize_num)
+            return false
+        }
+    </script>
+</body>
+</html>
