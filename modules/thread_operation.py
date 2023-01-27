@@ -318,8 +318,9 @@ def Search_Thread(word: str):
     #ユーザー名のみを検索した時はそのまま検索SQL文として使用
     elif search_user_flag:
         search_sql = search_user_sql
-
-    
+    #どちらも検索しなかった場合全てのスレッドを表示
+    else:
+        search_sql = "SELECT * FROM スレッド一覧"
 
 
     #検索の結果を取得
