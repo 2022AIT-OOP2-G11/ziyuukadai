@@ -61,6 +61,7 @@ def index():
         #読み込むファイルパスの指定
         json_file = open("json/All_thread.json",'r')
         json_dict = json.load(json_file)
+        json_file.close()
         #値を格納する場所
         thread_dict_list= []
         #json取り出してdictでまとめる
@@ -100,6 +101,7 @@ def search():
         #読み込むファイルパスの指定
         json_file = open("json/Search_thread.json",'r')
         json_dict = json.load(json_file)
+        json_file.close()
 
         #値を格納する場所
         search_thread_list= []
@@ -267,6 +269,7 @@ def thread():
          #json読み込み
          json_file1 = open("json/thread_id_content.json",'r')
          json_dict1 = json.load(json_file1)
+         json_file1.close()
          print(json_dict1)
           #値を格納する場所
          thread_dict_list= []
@@ -284,6 +287,7 @@ def thread():
          Get_Thread_One(Thread_ID=thread_id)
          json_file1 = open("json/One_thread.json",'r')
          json_dict1 = json.load(json_file1)
+         json_file1.close()
          print(json_dict1)
          thread_name = json_dict1[str(thread_id)]["スレッド名"]   
          
@@ -299,6 +303,7 @@ def thread():
         #json読み込み
         json_file1 = open("json/thread_id_content.json",'r')
         json_dict1 = json.load(json_file1)
+        json_file1.close()
         #最新のコメントのスレッドidを取得
         
 
