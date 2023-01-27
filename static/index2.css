@@ -71,7 +71,7 @@ h5 {
   position: right;
   display: none;
   padding: 2px;
-  color: aliceblue;
+ 
   border-radius: 10px;
   background-color: #800000;
   width: 150px;
@@ -79,6 +79,11 @@ h5 {
   left: 0px;
   font-size: 10px;
   text-align: center;
+}
+
+.word a{
+  text-decoration: none;
+  color: aliceblue;
 }
 
 .comment {
