@@ -241,7 +241,7 @@ def signup():
                 <h1>7788</h1>
                 です
             """
-            print()
+            print(to_email)
             return render_template("/mail_authorize.html")
                         
             
@@ -251,7 +251,10 @@ def signup():
             user_add(username=user_name, password=generate_password_hash(password, method="sha256"), student_number=student_id)
             return redirect("/login")
         
-        
+# @app.route("mail_authorize")
+# def mail_authorize():
+#     request.form.get
+    
 #ログインしていない状態でログインが必要なページにアクセスしたときの処理
 @login_manager.unauthorized_handler
 def unauthorized():
