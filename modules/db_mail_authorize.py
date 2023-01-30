@@ -18,14 +18,14 @@ def new_temp_user(tmp_user:dict):
         
         #テーブル作成SQL文
         con.execute("CREATE TABLE 認証メール(ID INTEGER PRIMARY KEY, ユーザ名 STRING" +
-                        ", 学籍番号 STRING UNIQUE, パスワード STRING, 認証コード STRING, 送信時間 TIMESTAMP)")
+                        ", 学籍番号 STRING UNIQUE, パスワード STRING, 認証コード STRING, 送信時間 TIMESTAMP, 送信回数 INTEGER)")
 
         #新規作成した時スレッドIDが0のため1を代入
         count = 1
 
         #テーブル追加SQL文
-        con.execute("INSERT INTO 認証メール(ID, ユーザ名, 学籍番号, パスワード, 認証コード, 送信時間)" +
-                    f" values('{count}', '{tmp_user['user_name']}', '{tmp_user['student_id']}', '{tmp_user['password']}',  '{tmp_user['authorize_num']}', datetime('now', 'localtime'))"
+        con.execute("INSERT INTO 認証メール(ID, ユーザ名, 学籍番号, パスワード, 認証コード, 送信時間, 送信回数)" +
+                    f" values('{count}', '{tmp_user['user_name']}', '{tmp_user['student_id']}', '{tmp_user['password']}',  '{tmp_user['authorize_num']}', datetime('now', 'localtime'), {tmp_user['count']})"
                     )
 
     else: #あったらスレッドの個数を取得して追加する
@@ -38,8 +38,8 @@ def new_temp_user(tmp_user:dict):
         count += 1
 
         #テーブル追加SQL文
-        con.execute("INSERT INTO 認証メール(ID, ユーザ名, 学籍番号, パスワード, 認証コード, 送信時間)" +
-                        f" values('{count}', '{tmp_user['user_name']}', '{tmp_user['student_id']}', '{tmp_user['password']}',  '{tmp_user['authorize_num']}', datetime('now', 'localtime'))"
+        con.execute("INSERT INTO 認証メール(ID, ユーザ名, 学籍番号, パスワード, 認証コード, 送信時間, 送信回数)" +
+                        f" values('{count}', '{tmp_user['user_name']}', '{tmp_user['student_id']}', '{tmp_user['password']}',  '{tmp_user['authorize_num']}', datetime('now', 'localtime'), {tmp_user['count']})"
                     )
 
     con.commit()
@@ -58,7 +58,7 @@ def get_mail_data(student_num):
     if table_count == 0:
         #テーブル作成SQL文
          con.execute("CREATE TABLE 認証メール(ID INTEGER PRIMARY KEY, ユーザ名 STRING" +
-                        ", 学籍番号 STRING UNIQUE, パスワード STRING, 認証コード STRING, 送信時間 TIMESTAMP)")
+                        ", 学籍番号 STRING UNIQUE, パスワード STRING, 認証コード STRING, 送信時間 TIMESTAMP, 送信回数 INTEGER)")
 
     #スレッドIDの内容を取得
     # try:
@@ -76,6 +76,7 @@ def get_mail_data(student_num):
         mail_data["password"] = data_array[3]
         mail_data["authorize_num"] = data_array[4]
         mail_data["send_time"] = data_array[5]
+        mail_data["count"] = data_array[6]
 
     con.commit()
     con.close()

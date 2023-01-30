@@ -8,7 +8,7 @@ from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One,
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
-from modules.tmp_user_operator import *
+from modules.db_mail_authorize import *
 
 from email.mime.text import MIMEText
 import smtplib
@@ -254,6 +254,7 @@ def signup():
             print(student_id)
             print(mail_data)
             #あったら前の送信から24時間経っているか確認
+            count = 1
             if mail_data:
                 now = datetime.now()
                 now = int(now.strftime("%Y%m%d%H%M%S"))
@@ -262,9 +263,10 @@ def signup():
                 if now-send_time > 1000000:
                     #24時間経過していたら
                     delete_mail_data(mail_data["id"])
+                    count = mail_data["count"]+1
                 else:
-                    stmt = "メールが送られています。送られた認証コードはは24時間有効です。"
-                    return render_template("/mail_authorize.html", message=stmt)
+                    stmt = "すでにメールが送られています。送られた認証コードは24時間有効です。"
+                    return render_template("/mail_authorize.html", message=stmt,  student_id=student_id)
             
             #送られていなかったらメールを送信
                 
@@ -289,14 +291,14 @@ def signup():
             message["To"] = to_email
             message["From"] = from_email
             
-            smtp = smtplib.SMTP("smtp.office365.com", 587)
-            smtp.set_debuglevel(True)
-            smtp.ehlo()
-            if smtp.has_extn("STARTTLS"):
-                smtp.starttls()
-            smtp.ehlo()
-            smtp.login(from_email, from_password)
-            smtp.send_message(message)
+            # smtp = smtplib.SMTP("smtp.office365.com", 587)
+            # smtp.set_debuglevel(True)
+            # smtp.ehlo()
+            # if smtp.has_extn("STARTTLS"):
+            #     smtp.starttls()
+            # smtp.ehlo()
+            # smtp.login(from_email, from_password)
+            # smtp.send_message(message)
             
             #メール認証画面に遷移する間一時的に入力情報を保持する必要がある
             tmp_user = {}
@@ -304,6 +306,7 @@ def signup():
             tmp_user["student_id"] = student_id
             tmp_user["authorize_num"] = generate_password_hash(authorize_num, method="sha256")
             tmp_user["password"] = generate_password_hash(password, method="sha256")
+            tmp_user["count"] = count
             new_temp_user(tmp_user)
             
             return render_template("/mail_authorize.html", student_id=student_id, message = None)
