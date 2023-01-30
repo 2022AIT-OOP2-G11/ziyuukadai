@@ -7,29 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="mail_authorize" name="mail_authorize" onsubmit="set_value()" method="POST">
-        <input type="text" name="first" ,maxlength="1">
-        <input type="text" name="second" ,maxlength="1">
-        <input type="text" name="thrird",maxlength="1">
-        <input type="text" name="fourth" ,maxlength="1">
-        <input type="hidden" name="authorize_num" name= value=""> 
-        <button type="submit"></button>
+    {% if message %}
+    <div>{{message}}</div>
+    {% endif %}
+    <form action="/mail_authorize" name="mail_authorize" method="POST">
+        <input type="text" name="authorize_num" ,maxlength="4" minlength="4">
+        <input type="hidden" name="student_id" ,maxlength="4" minlength="4", value={{student_id}}>
+        <button type="submit">送信</button>
     </form>
 
-    <script>
-        function set_value(){
-            alert("a")
-
-            authorize_num = 
-            document.forms["mail_authorize"].elements["fitst"].value+
-            document.forms["mail_authorize"].elements["second"].value+
-            document.forms["mail_authorize"].elements["thrird"].value+
-            document.forms["mail_authorize"].elements["fourth"].value
-            
-            document.forms["mail_authorize"].elements["authorize_num"].value = authorize_num
-            console.log(authorize_num)
-            
-        }
-    </script>
 </body>
 </html>
