@@ -312,14 +312,14 @@ def signup():
             message["To"] = to_email
             message["From"] = from_email
             
-            # smtp = smtplib.SMTP("smtp.office365.com", 587)
-            # smtp.set_debuglevel(True)
-            # smtp.ehlo()
-            # if smtp.has_extn("STARTTLS"):
-            #     smtp.starttls()
-            # smtp.ehlo()
-            # smtp.login(from_email, from_password)
-            # smtp.send_message(message)
+            smtp = smtplib.SMTP("smtp.office365.com", 587)
+            smtp.set_debuglevel(True)
+            smtp.ehlo()
+            if smtp.has_extn("STARTTLS"):
+                smtp.starttls()
+            smtp.ehlo()
+            smtp.login(from_email, from_password)
+            smtp.send_message(message)
             
             #メール認証画面に遷移する間一時的に入力情報を保持する必要がある
             tmp_user = {}
