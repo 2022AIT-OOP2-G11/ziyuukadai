@@ -2,7 +2,7 @@ import sqlite3  #DB使用のためのimport文
 import json
 
 #スレッド新規作成
-def new_thread(Thread_Name, Make_User_Name):
+def new_thread(Thread_Name, Make_User_Name, Student_Num):
     
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
@@ -15,14 +15,14 @@ def new_thread(Thread_Name, Make_User_Name):
         
         #テーブル作成SQL文
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
-                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+                        ", ユーザー名 STRING, 学籍番号 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
 
         #新規作成した時スレッドIDが0のため1を代入
         count = 1
 
         #テーブル追加SQL文
-        con.execute("INSERT INTO スレッド一覧(スレッドID, スレッド名, ユーザー名, 最終更新時間, スレッドを立てた時間)" +
-                        f" values('{count}', '{Thread_Name}', '{Make_User_Name}' ,datetime('now', 'localtime')" +
+        con.execute("INSERT INTO スレッド一覧(スレッドID, スレッド名, ユーザー名, 学籍番号, 最終更新時間, スレッドを立てた時間)" +
+                        f" values('{count}', '{Thread_Name}', '{Make_User_Name}', '{Student_Num}' ,datetime('now', 'localtime')" +
                             ", datetime('now', 'localtime'))")
 
     else: #あったらスレッドの個数を取得して追加する
@@ -35,8 +35,8 @@ def new_thread(Thread_Name, Make_User_Name):
         count += 1
 
         #テーブル追加SQL文
-        con.execute("INSERT INTO スレッド一覧(スレッドID, スレッド名, ユーザー名, 最終更新時間, スレッドを立てた時間)" +
-                        f" values('{count}', '{Thread_Name}', '{Make_User_Name}' ,datetime('now', 'localtime')" +
+        con.execute("INSERT INTO スレッド一覧(スレッドID, スレッド名, ユーザー名, 学籍番号, 最終更新時間, スレッドを立てた時間)" +
+                        f" values('{count}', '{Thread_Name}', '{Make_User_Name}', '{Student_Num}' ,datetime('now', 'localtime')" +
                             ", datetime('now', 'localtime'))")
 
 
@@ -55,7 +55,7 @@ def Get_Thread_All():
     if table_count == 0:
         #テーブル作成SQL文
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
-                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+                        ", ユーザー名 STRING, 学籍番号 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
     
     #スレッド全ての内容を取得
     get_all = con.execute("SELECT * FROM スレッド一覧").fetchall()
@@ -91,7 +91,7 @@ def Get_Thread_One(Thread_ID):
     if table_count == 0:
         #テーブル作成SQL文
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
-                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+                        ", ユーザー名 STRING, 学籍番号 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
 
     #スレッドIDの内容を取得
     get_one = con.execute(f"SELECT * FROM スレッド一覧 WHERE スレッドID = {Thread_ID}").fetchone()
@@ -115,7 +115,7 @@ def Get_Thread_One(Thread_ID):
 #辞書型にする関数
 def dictionary(results: list):
     #辞書型の鍵の配列
-    dict_item = ["スレッド名", "ユーザー名", "最終更新時間", "スレッドを立てた時間"]
+    dict_item = ["スレッド名", "ユーザー名", "学籍番号", "最終更新時間", "スレッドを立てた時間"]
     array = []
 
     #先頭のスレッドIDを取得して削除
@@ -139,15 +139,15 @@ def Update_Thread_Time(Thread_ID):
 
 #引数にスレッドIDとスレッドを消そうとしてるユーザー名をいれ、スレッドの作成者と消そうとしてるユーザー名の時は消せるようにし、
 #違ったら消せないようにする
-def Delete_One_Thread(Thread_ID, User_name):
+def Delete_One_Thread(Thread_ID, Student_Num):
     # DB接続。ファイルがなければ作成する
     con = sqlite3.connect('./DB/DataBase.db')
 
     #DBにあるスレッド作成者のユーザー名を取得する
-    check = con.execute(f"SELECT ユーザー名 FROM スレッド一覧 WHERE スレッドID = {Thread_ID}").fetchone()[0]
+    check = con.execute(f"SELECT 学籍番号 FROM スレッド一覧 WHERE スレッドID = {Thread_ID}").fetchone()[0]
 
     #スレッドの作成者が削除できる
-    if check == User_name:
+    if check == Student_Num:
         con.execute(f"DELETE from スレッド一覧 WHERE スレッドID = {Thread_ID}")
 
         con.execute(f"UPDATE スレッド一覧 SET スレッドID = (スレッドID - 1) WHERE スレッドID > {Thread_ID}")
@@ -176,7 +176,7 @@ def Search_Thread(word: str):
     if table_count == 0:
         #テーブル作成SQL文
         con.execute("CREATE TABLE スレッド一覧(スレッドID INTEGER PRIMARY KEY, スレッド名 STRING" +
-                        ", ユーザー名 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
+                        ", ユーザー名 STRING, 学籍番号 STRING, 最終更新時間 TIMESTAMP, スレッドを立てた時間 TIMESTAMP)")
 
     
     #スレッド検索とユーザ名検索分割

@@ -7,6 +7,9 @@ body {
   background-attachment: fixed; /* 固定 */
   background-position: center center;
 }
+.wrapper {
+  
+}
 
 .title {
   margin: 0 1em 3em;
@@ -113,4 +116,8 @@ textarea {
   box-shadow: 0px 0px 0px 10px #c0c0c0;
   border: dashed 2px #000;
   opacity: 0.8;
+}
+
+.search_container > input{
+  margin-right: 10px;
 }
