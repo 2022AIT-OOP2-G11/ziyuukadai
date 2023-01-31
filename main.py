@@ -1,9 +1,12 @@
 from flask import Flask, request ,render_template, redirect, url_for  # Flaskは必須、requestはリクエストパラメータを処理する場合に使用します。
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
 import json
+import os
+from os.path import join, dirname
 from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One, Update_Thread_Time, Delete_One_Thread, Search_Thread
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import comment_add,comment_get_id
@@ -13,8 +16,14 @@ app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["SESSION_COOKIE_SECURE"] = True #Cookieの送信をhttpsに限定
 
+
+load_dotenv(verbose=True)
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
 #ログイン機能で必要な設定
-app.secret_key = "ahf))ajh>|f<hiwtakoyaki-ehf{haoj!w#g#+=)h"
+
+app.secret_key =os.environ.get("FLASK_SECRET")
 login_manager = LoginManager()
 login_manager.init_app(app)
 
