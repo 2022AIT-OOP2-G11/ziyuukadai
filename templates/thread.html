@@ -17,13 +17,20 @@
     <div class="title">
       <p>ようこそ14号館へ</p>
     </div>
-    <h5>a
+    <h5>
+      <span class="aaa">a</span>
       <button class="account">
-        <span class="word">ログアウト</span>
+        <span class="word"><a href="/logout">ログアウト</a></span>
       </button>
       </h5>
     <h1 class="heading">{{thread_name}}
       <a href="/" class="btn"><</a>
+      {% if student_id==current_user.student_id %}
+      <!--<div onclick="show_popup()">このスレッドを削除</div>-->
+      <!--<img src="static/images/delete.png" alt="" srcset="">-->
+      <svg onclick="show_popup()" id="delete" width="48" height="48" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40"><defs></defs><g class="cls-3"><path class="cls-1" d="m1.09,9.24h27c1.45,0,1.45-2.25,0-2.25H1.09c-1.45,0-1.45,2.25,0,2.25h0Z"/></g><g class="cls-3"><path class="cls-1" d="m1.6,9.13v27.8c0,1.45,2.25,1.45,2.25,0V9.13c0-1.45-2.25-1.45-2.25,0h0Z"/></g><g class="cls-3"><path class="cls-1" d="m25.42,9.1v27.8c0,1.45,2.25,1.45,2.25,0V9.1c0-1.45-2.25-1.45-2.25,0h0Z"/></g><g class="cls-3"><path class="cls-2" d="m26.17,36.12H2.89c-1.45,0-1.45,2.25,0,2.25h23.28c1.45,0,1.45-2.25,0-2.25h0Z"/></g><g class="cls-3"><path class="cls-1" d="m10.1,7.84v-2.35c0-.29-.13-.59-.33-.8s-.52-.34-.8-.33c-.61.03-1.12.49-1.12,1.12v2.35c0,.29.13.59.33.8s.52.34.8.33c.61-.03,1.12-.49,1.12-1.12h0Z"/></g><g class="cls-3"><path class="cls-1" d="m21.1,7.51v-1.86c0-.29-.13-.59-.33-.8s-.52-.34-.8-.33-.59.11-.8.33-.33.49-.33.8v1.86c0,.29.13.59.33.8s.52.34.8.33.59-.11.8-.33.33-.49.33-.8h0Z"/></g><g class="cls-3"><path class="cls-1" d="m8.97,6.37h10.93c1.45,0,1.45-2.25,0-2.25h-10.93c-1.45,0-1.45,2.25,0,2.25h0Z"/></g><g class="cls-3"><path class="cls-1" d="m6.82,14.3v17.93c0,1.45,2.25,1.45,2.25,0V14.3c0-1.45-2.25-1.45-2.25,0h0Z"/></g><g class="cls-3"><path class="cls-1" d="m13.29,14.28v17.93c0,1.45,2.25,1.45,2.25,0V14.28c0-1.45-2.25-1.45-2.25,0h0Z"/></g><g class="cls-3"><path class="cls-1" d="m20.14,14.28v17.93c0,1.45,2.25,1.45,2.25,0V14.28c0-1.45-2.25-1.45-2.25,0h0Z"/></g></svg>
+
+      {% endif %}
     </h1>
     <div id="main">
         <div class="comment">
@@ -32,7 +39,7 @@
             </p>-->
             {% for elem in comments%}
             <div class="elem" id="elem{{comments["id"]}}">
-            <span>{{elem["ユーザ名"]}}</span> : {{elem["投稿時間"]}}
+            <span>{{elem["ユーザ名"]}}</span><span class="time"> : {{elem["投稿時間"]}}</span>
             <br>
             {{elem["コメント"]}}
             </div>
@@ -47,6 +54,7 @@
             <p>
               <h2 class="heading">コメント入力</h2>
               <input type="hidden" name="user_name" maxlength="10" placeholder="氏名"value={{current_user.user_name}}>
+              <input type="hidden" name="student_id" maxlength="10" placeholder="氏名"value={{current_user.student_id}}>
             </br>
             </br>
             <textarea name="content" maxlength="100" placeholder="コメント"></textarea>
@@ -58,5 +66,126 @@
           </form>
         </div>
     </nav>
+
+   
+    <div class="popup_wrapper">
+        <div class="popup hide_popup">
+            <p>このスレッドを削除しますか？<br>書き込まれたコメントも全て消去されます</p>
+            <form action="/delete_thread" method="POST" class="delete_thread_form">
+                <input type="hidden" name="thread_id" value={{thread_id}}>
+                <input type="password" name="password" id="delete_password" placeholder="パスワードを入力">
+            
+                <div class="buttons">
+                    <button type="button" class="cancel_btn" onclick="hide_popup()">キャンセル</button>
+                    <button type="submit" class="delete_btn">削除</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+
+  <style>
+    .popup_wrapper{
+        position: fixed;
+        top: 50%;
+        left: 48%;
+        transform: translateY(-50%) translateX(-50%);
+    }
+    .popup{
+        background-color: #444;
+        width: 480px;
+        height:320px;
+        padding: 1px;
+        border-radius: 2px;
+    }
+    .popup button {
+        margin: 0 16px 16px 0px;
+        padding: 6px 10px;
+        border: none;
+        border-radius: 2px;
+    }
+    .popup button:hover {
+        transform: scaleX(110%) scaleY(110%);
+    }
+    .popup p {
+        font-size:20px;
+        line-height:32px;
+        color: #d0d0d0;
+        margin: 60px 0 16px 0;
+        text-align: center;
+    }
+
+    .popup .buttons {
+        text-align: end;
+        margin-right: 32px;
+    }
+    .popup .delete_btn {
+        font-size:18px;
+    }
+    .popup .cancel_btn {
+        font-size:18px;
+        color: #fff;
+        background-color: #40bbdd;
+    }
+    .popup > p{
+        opacity: 1;
+    }
+    .show_popup {
+        opacity: 1;
+        background: rgba(0, 0, 0, .85)
+    }
+    .hide_popup {
+        opacity: 0;
+        
+    }
+    .delete_thread_form {
+      display:flex;
+      flex-direction: column;
+      padding: 0 32px;
+    }
+    .delete_thread_form > input{
+      margin: 16px 0 32px 0;
+    }
+  </style>
+
+    <script>
+      flag = 0
+
+      function toggle(){
+          //スレッドidを取得
+          
+          var thread_id = url_search.replace("?=th", "")
+          console.log("a")
+          if (flag == 0) {
+              show_popup()
+              flag = 1
+          }
+          else if (flag == 1) {
+              hide_popup()
+              flag = 0 
+          }
+      }
+      function delete_thread(){
+          var url_search = document.location.search.toString()
+          console.log(url_search)
+          var thread_id = url_search.replace("?thid=", "")
+          console.log(thread_id)
+          document.location.href = "/delete_thread?thid="
+      }
+       
+      function show_popup() {
+          //ポップアップを表示
+          document.getElementsByClassName("popup")[0].classList.add("show_popup")
+          document.getElementsByClassName("popup")[0].classList.remove("hide_popup")
+      }
+      function hide_popup(){
+          //ポップアップを隠す
+          document.getElementsByClassName("popup")[0].classList.add("hide_popup")
+          document.getElementsByClassName("popup")[0].classList.remove("show_popup")
+      }
+      
+  </script>
+
   </body>
 </html>

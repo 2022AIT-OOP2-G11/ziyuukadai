@@ -1,5 +1,5 @@
-from flask import Flask, request ,render_template, redirect  # Flaskは必須、requestはリクエストパラメータを処理する場合に使用します。
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from flask import Flask, request ,render_template, redirect, url_for  # Flaskは必須、requestはリクエストパラメータを処理する場合に使用します。
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re #正規表現
@@ -67,6 +67,7 @@ def index():
         #読み込むファイルパスの指定
         json_file = open("json/All_thread.json",'r')
         json_dict = json.load(json_file)
+        json_file.close()
         #値を格納する場所
         thread_dict_list= []
         #json取り出してdictでまとめる
@@ -85,11 +86,12 @@ def index():
 
     elif request.method == "POST":
         #POSTだったらデータを受け取って、データベースに保存する
-        user_name = request.form.get("user_name")
+        user_name = current_user.user_name
+        student_num = current_user.student_id
         tread_name = request.form.get("title")
 
 
-        new_thread(Thread_Name=tread_name,Make_User_Name=user_name)
+        new_thread(Thread_Name=tread_name,Make_User_Name=user_name, Student_Num=student_num)
         
         return redirect("/")
 
@@ -106,6 +108,7 @@ def search():
         #読み込むファイルパスの指定
         json_file = open("json/Search_thread.json",'r')
         json_dict = json.load(json_file)
+        json_file.close()
 
         #値を格納する場所
         search_thread_list= []
@@ -124,7 +127,25 @@ def search():
         return render_template('index.html',threads = search_thread_list)
 
 
-
+@app.route("/delete_thread", methods=["POST"])
+def delete_thread():
+    
+    thread_id = request.form.get("thread_id")
+    student_id = current_user.student_id
+    password = request.form.get("password")
+    
+    get_id_by_user(id=current_user.id)
+    with open("json/Num_by_Users.json", "r") as f:
+        user_json = json.load(f)
+    user_id = [key for key in user_json.keys()][0]
+    password_hash = user_json[user_id]["パスワード"]
+    if check_password_hash(password=password, pwhash=password_hash):
+        Delete_One_Thread(Thread_ID=thread_id, Student_Num=student_id)
+        return redirect("/")
+    else:
+        return redirect("/thread?thid=th"+thread_id)
+        #return redirect(url_for("thread", message_delete="パスワードが違います"))
+        
 
 
 
@@ -367,6 +388,7 @@ def thread():
          #json読み込み
          json_file1 = open("json/thread_id_content.json",'r')
          json_dict1 = json.load(json_file1)
+         json_file1.close()
          print(json_dict1)
           #値を格納する場所
          thread_dict_list= []
@@ -384,28 +406,39 @@ def thread():
          Get_Thread_One(Thread_ID=thread_id)
          json_file1 = open("json/One_thread.json",'r')
          json_dict1 = json.load(json_file1)
+         json_file1.close()
          print(json_dict1)
          thread_name = json_dict1[str(thread_id)]["スレッド名"]   
+         student_id = json_dict1[str(thread_id)]["学籍番号"]   
          
-         
-         return render_template("thread.html",comments = thread_dict_list, thread_name = thread_name, thread_id=thread_id)
+         return render_template("thread.html",
+                                comments = thread_dict_list,
+                                thread_name = thread_name, 
+                                thread_id=thread_id, 
+                                student_id=student_id, 
+                                )
     elif request.method == "POST":
 
         #POSTだったらデータを受け取って、データベースに保存する
 
         user_name = request.form.get("user_name")
+        student_num = request.form.get("student_id")
         content_name = request.form.get("content")
         id = request.form.get("thread_id")
         #json読み込み
         json_file1 = open("json/thread_id_content.json",'r')
         json_dict1 = json.load(json_file1)
+        json_file1.close()
         #最新のコメントのスレッドidを取得
         
 
-        comment_add(thread_id=id, content=content_name, user_name=user_name)
+        comment_add(thread_id=id, content=content_name, user_name=user_name, student_num=student_num)
         url = "/thread?thid=th" + str(id)
         print(url)
+        
         return redirect(url)
+
+
         
 
 if __name__ == '__main__':

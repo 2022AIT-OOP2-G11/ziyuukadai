@@ -46,6 +46,12 @@ h1 {
 h5 {
   color: #c0c0c0;
 }
+.aaa {
+  opacity: 0;
+}
+.time {
+  color: #808080;
+}
 .account {
   border: #fff 2px solid; /*境界線の指定*/
   border-radius: 50%;
@@ -65,7 +71,7 @@ h5 {
   position: right;
   display: none;
   padding: 2px;
-  color: aliceblue;
+ 
   border-radius: 10px;
   background-color: #800000;
   width: 150px;
@@ -73,6 +79,11 @@ h5 {
   left: 0px;
   font-size: 10px;
   text-align: center;
+}
+
+.word a{
+  text-decoration: none;
+  color: aliceblue;
 }
 
 .comment {
@@ -105,11 +116,21 @@ a.btn {
   width: 10px;
   height: 10px;
   margin: auto;
-  padding: 1rem 1rem;
+  padding: 1.3rem ;
   font-weight: normal;
   color: #800000;
   transition: 0.5s;
   float: left;
+}
+#delete {
+  vertical-align: middle;
+  margin-bottom: 10px;
+  fill: #901111;
+}
+#delete:hover {
+  fill: #c0c0c0;
+  background: #800000;
+  transition-duration: .2s;
 }
 a.btn:hover {
   color: #fff;
