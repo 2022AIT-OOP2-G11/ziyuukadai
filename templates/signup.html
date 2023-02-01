@@ -49,10 +49,17 @@
 
                         <!-- <p>{{completed}}</p> -->
                 </div>
+                <div class="move-botton">
+                    <button type="button"  class="btn btn-primarybtn btn--signup" id="move" onclick="move2login()">ログイン画面へ</button>
+                </div>
             </div>
         </form>
     </div>
-    
+    <script>
+        function move2login() {
+            document.location.href = "/login"
+        }
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 </body>

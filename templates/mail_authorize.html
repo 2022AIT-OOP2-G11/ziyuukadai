@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/signup.css">
+    <title>メール認証画面</title>
+</head>
+<body>
+    
+    <div class="box">
+        {% if message %}
+        <div class="err_message"><p>{{message}}</p></div>
+        {% endif %}
+        <form action="/mail_authorize" name="mail_authorize" method="POST" class="form-group">
+            <input type="text" name="authorize_num" ,maxlength="4" minlength="4" placeholder="4桁の認証コード">
+            <input type="hidden" name="student_id" ,maxlength="4" minlength="4", value={{student_id}}>
+            <button type="submit" >送信</button>
+        </form>
+    </div>
+    
+
+</body>
+</html>

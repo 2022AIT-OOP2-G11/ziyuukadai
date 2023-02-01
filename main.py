@@ -11,6 +11,12 @@ from modules.thread_operation import new_thread, Get_Thread_All, Get_Thread_One,
 from modules.debug_login import new_user, Get_user_All, get_user_by_id, get_user_by_name, dictionary
 from modules.comment_operation import comment_add,comment_get_id
 from modules.user_operation import user_add, get_all_users, get_id_by_user, get_studentnumber_by_user
+from modules.db_mail_authorize import *
+
+from email.mime.text import MIMEText
+import smtplib
+import random
+
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -22,7 +28,6 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 #ログイン機能で必要な設定
-
 app.secret_key =os.environ.get("FLASK_SECRET")
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -223,10 +228,23 @@ def signup():
             # email = request.form.get("email")
             password = request.form.get("password")
         
-        #バリデーション　
+        
+        
+        
+        
         message = [] #エラーがあるごとにメッセージを配列に追加していく
         completed = {} #正しく入力されたところは、再入力の必要をなくす
         
+        
+        #すでに登録済みでないかを確認
+        get_studentnumber_by_user(student_number=student_id)
+        with open('./json/Num_by_Users.json', "r") as f:
+            user = json.load(f)
+        if user:
+            message.append("この学籍番号はすでに登録されています。")
+            return render_template("signup.html", message=message, completed=[])
+        
+        #バリデーション　
         #ユーザ名
         if not user_name: message.append("ユーザ名を入力してください")
         else: completed["user_name"] = user_name
@@ -259,12 +277,93 @@ def signup():
             return render_template("signup.html", message=message, completed=completed)
         #エラーなし
         else:   
-            completed["password"] = password
-            #パスワードをハッシュ化してDBに保存
-            user_add(username=user_name, password=generate_password_hash(password, method="sha256"), student_number=student_id)
-            return redirect("/login")
+            
+            #同じ学籍番号にメールが送られていないか確認
+            mail_data = get_mail_data(student_id)
+            print(student_id)
+            print(mail_data)
+            #あったら前の送信から24時間経っているか確認
+            count = 1
+            if mail_data:
+                now = datetime.now()
+                now = int(now.strftime("%Y%m%d%H%M%S"))
+                send_time = int(re.sub(r"\D", "", mail_data["send_time"]))
+                print(now, send_time)
+                if now-send_time > 1000000:
+                    #24時間経過していたら
+                    delete_mail_data(mail_data["id"])
+                    count = mail_data["count"]+1
+                else:
+                    stmt = "すでにメールが送られています。送られた認証コードは24時間有効です。"
+                    return render_template("/mail_authorize.html", message=stmt,  student_id=student_id)
+            
+            #送られていなかったらメールを送信
+                
+            #4桁のランダムな数字を生成
+            authorize_num = "".join(str(num) for num in random.sample(range(10), 4))
+            
+            #認証メールを送る
+            from_password = os.environ.get("MAIL_PASSWORD")
+            from_email = "building14@outlook.jp"
+            to_email = str(student_id) + "@aitech.ac.jp"
+            subject = "14号館 認証コード"
+            content = """
+                あなたの認証パスワードは
+                <h1>""" +authorize_num+"""</h1>
+                です。
+                このメールはAIT掲示板アプリ 14号館 から送られています。
+                心当たりのない場合は無視してください。
+            """
+            print(content)
+            message = MIMEText(content, "html")
+            message["Subject"] = subject
+            message["To"] = to_email
+            message["From"] = from_email
+            
+            smtp = smtplib.SMTP("smtp.office365.com", 587)
+            smtp.set_debuglevel(True)
+            smtp.ehlo()
+            if smtp.has_extn("STARTTLS"):
+                smtp.starttls()
+            smtp.ehlo()
+            smtp.login(from_email, from_password)
+            smtp.send_message(message)
+            
+            #メール認証画面に遷移する間一時的に入力情報を保持する必要がある
+            tmp_user = {}
+            tmp_user["user_name"] = user_name
+            tmp_user["student_id"] = student_id
+            tmp_user["authorize_num"] = generate_password_hash(authorize_num, method="sha256")
+            tmp_user["password"] = generate_password_hash(password, method="sha256")
+            tmp_user["count"] = count
+            new_temp_user(tmp_user)
+            
+            return render_template("/mail_authorize.html", student_id=student_id, message = None)
+                            
+                
         
-        
+@app.route("/mail_authorize", methods=["POST"])
+def mail_authorize():
+    #認証番号を取得
+    authorize_num = request.form.get("authorize_num")
+    studemt_id = request.form.get("student_id")
+    #ユーザデータを取得
+    mail_data = get_mail_data(student_num=studemt_id)
+    print(mail_data)
+    print(authorize_num)
+
+    if check_password_hash(mail_data["authorize_num"], authorize_num):
+        #DBに保存
+        user_add(username=mail_data["user_name"], password=mail_data["password"], student_number=mail_data["student_num"])
+        return redirect("/login")
+    else :
+        completed = {}
+        completed["user_name"] = mail_data["user_name"]
+        completed["student_id"] = mail_data["student_id"]
+        print(completed)
+        return render_template("signup.html", message=["認証コードが違います"], completed=[])
+    
+    
 #ログインしていない状態でログインが必要なページにアクセスしたときの処理
 @login_manager.unauthorized_handler
 def unauthorized():
