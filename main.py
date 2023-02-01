@@ -28,7 +28,6 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 #ログイン機能で必要な設定
-
 app.secret_key =os.environ.get("FLASK_SECRET")
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -304,7 +303,7 @@ def signup():
             authorize_num = "".join(str(num) for num in random.sample(range(10), 4))
             
             #認証メールを送る
-            from_password = "zN&XM4mkkG/KX_7"
+            from_password = os.environ.get("MAIL_PASSWORD")
             from_email = "building14@outlook.jp"
             to_email = str(student_id) + "@aitech.ac.jp"
             subject = "14号館 認証コード"
