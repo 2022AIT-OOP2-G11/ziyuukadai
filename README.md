@@ -11,6 +11,7 @@ flask-login|0.6.2
 Jinja2|3.1.2
 
 
+
 ## インストール
 
 flaskのインストール
