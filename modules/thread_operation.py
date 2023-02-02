@@ -346,8 +346,8 @@ def Search_Thread(word: str):
     
 
 if __name__ == "__main__":
-    new_thread(Thread_Name="これはテスト", Make_User_Name="nikoniko", Student_Num="K88888KK")
-    new_thread(Thread_Name="今日の朝ごはんは何！？", Make_User_Name="nikoniko", Student_Num="K88888KK")
+    #new_thread(Thread_Name="これはテスト", Make_User_Name="nikoniko", Student_Num="K88888KK")
+    #new_thread(Thread_Name="今日の朝ごはんは何！？", Make_User_Name="nikoniko", Student_Num="K88888KK")
 
     # Get_Thread_All()
     # Get_Thread_One(2)
