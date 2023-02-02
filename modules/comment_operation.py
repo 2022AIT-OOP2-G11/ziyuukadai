@@ -99,5 +99,5 @@ def Delete_Comment(Comment_ID, User_name):
 
 
 if __name__ == "__main__":
-    comment_add(thread_id=1,content="takoyaki",user_name="testkun",student_num="K")
-    comment_get_id(1)
+    comment_add(thread_id=4,content="www",user_name="nikoniko",student_num="k88888kk")
+    #comment_get_id(1)

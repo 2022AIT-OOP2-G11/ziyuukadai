@@ -346,12 +346,13 @@ def Search_Thread(word: str):
     
 
 if __name__ == "__main__":
-    # new_thread(Thread_Name="ffff", Make_User_Name="そろ")
+    new_thread(Thread_Name="これはテスト", Make_User_Name="nikoniko", Student_Num="K88888KK")
+    new_thread(Thread_Name="今日の朝ごはんは何！？", Make_User_Name="nikoniko", Student_Num="K88888KK")
+
     # Get_Thread_All()
     # Get_Thread_One(2)
     # Update_Thread_Time(2)
-    # print(Delete_One_Thread(2, "yug"))
-    # Search_Thread_Name('f') 
-    Search_User_Name('tomo')
-
+    #print(Delete_One_Thread(1, None))
+    #Search_Thread_Name('f') 
+    #Search_User_Name('tomo')
     pass
